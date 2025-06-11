@@ -1,7 +1,6 @@
 # NAME: AdBlock
 # AUTHOR: 7Star
 # REPO: https://github.com/Star7-Files-Hub/Files/yaml
-# UPDATED: 2025-06-10 02:04:47
 payload:
   - 'api.biliapi.com'
   - 'api.biliapi.net'

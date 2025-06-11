@@ -519,6 +519,13 @@ rule-providers:
     path: ./ruleset/Download.yaml
     interval: 86400
 
+  ZhihuAds:
+    type: http
+    behavior: classical
+    url: https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ZhihuAds/ZhihuAds.yaml
+    path: ./ruleset/ZhihuAds.yaml
+    interval: 86400
+
   ChinaIP:
     type: http
     behavior: ipcidr
@@ -531,6 +538,7 @@ rules:
   - RULE-SET,Emby,📹Emby库
   - RULE-SET,iPv6,📮 IPV6节点
   - RULE-SET,Ad,🆎 AdBlock
+  - RULE-SET,ZhihuAds,🆎 AdBlock
   - RULE-SET,AdBlock,🆎 AdBlock
   - RULE-SET,PTDIRECT,🇨🇳 站点直连
   - RULE-SET,PTPROXY,🌍 代理站点

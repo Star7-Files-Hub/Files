@@ -1,1 +1,20 @@
-1
+# NAME: AdBlock
+# AUTHOR: 7Star
+# REPO: https://github.com/Star7-Files-Hub/Files/yaml
+# UPDATED: 2025-06-10 02:04:47
+payload:
+  - 'api.biliapi.com'
+  - 'api.biliapi.net'
+  - 'appcloud.zhihu.com'
+  - 'appcloud2.in.zhihu.com'
+  - 'crash2.zhihu.com'
+  - 'mqtt.zhihu.com'
+  - 'sugar.zhihu.com'
+  - 'zxid-m.mobileservice.com'
+  - 'iadmat.nosdn.127.net'
+  - 'iadmatapk.nosdn.127.net'
+  - 'iadmusicmat.music.126.net'
+  - 'iadmusicmatvideo.music.126.net'
+  - 'ipv4.music.163.com'
+  - 'ipv6.music.163.com'
+  - 'mon.zijieapi.com'

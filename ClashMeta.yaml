@@ -383,7 +383,7 @@ rule-providers:
   AdBlock:
     type: http
     behavior: domain
-    url: https://raw.githubusercontent.com/Star7-Files-Hub/yaml/refs/heads/main/AdBlock.yaml
+    url: https://raw.githubusercontent.com/Star7-Files-Hub/Files/refs/heads/main/yaml/AdBlock.yaml
     path: ./ruleset/AdBlock.yaml
 
   PTDIRECT:

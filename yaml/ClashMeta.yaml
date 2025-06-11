@@ -531,6 +531,7 @@ rules:
   - RULE-SET,Emby,📹Emby库
   - RULE-SET,iPv6,📮 IPV6节点
   - RULE-SET,Ad,🆎 AdBlock
+  - RULE-SET,AdBlock,🆎 AdBlock
   - RULE-SET,PTDIRECT,🇨🇳 站点直连
   - RULE-SET,PTPROXY,🌍 代理站点
   - RULE-SET,OpenAi,🤖 OpenAi

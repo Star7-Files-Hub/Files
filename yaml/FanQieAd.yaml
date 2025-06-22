@@ -8,7 +8,6 @@
 # TOTAL: 69
 
 payload:
-  # 核心广告域名拦截
   - DOMAIN,static
   - DOMAIN,sealaly
   - DOMAIN,toutiao
@@ -56,11 +55,7 @@ payload:
   - DOMAIN,p6-novel1-sign.byteimg.com
   - DOMAIN,p9-novel1-sign.byteimg.com
   - DOMAIN,p*-novel-sign.byteimg.com/novel-pic/
-  
-  # 通配符域名拦截（使用正则表达式）
   - DOMAIN-KEYWORD,-normal\.zijieapi\.com
   - DOMAIN-KEYWORD,applog
   - DOMAIN-KEYWORD,ads*-normal-*\.zijieapi\.com
-  
-  # 应用标识拦截（匹配包名）
   - PROCESS-NAME,com.dragon.read

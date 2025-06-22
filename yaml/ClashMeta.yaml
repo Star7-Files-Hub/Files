@@ -543,7 +543,7 @@ rule-providers:
   FanQieAd:
     type: http
     behavior: classical
-    url: https://raw.githubusercontent.com/Star7-Files-Hub/Files/095848bd6a7648b1159f17ed937c5a64bc7c7c7e/yaml/FanQieAd.yaml
+    url: https://raw.githubusercontent.com/Star7-Files-Hub/Files/refs/heads/main/yaml/FanQieAd.yaml
     path: ./ruleset/FanQieAd.yaml
     interval: 86400
     

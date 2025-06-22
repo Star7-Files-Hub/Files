@@ -533,7 +533,13 @@ rule-providers:
     path: ./ruleset/ChinaIP.yaml
     interval: 86400
 
-
+  Lucky:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/Star7-Files-Hub/Files/refs/heads/main/yaml/Lucky.yaml
+    path: ./ruleset/Lucky.yaml
+    interval: 86400
+    
 rules:
   - RULE-SET,Emby,📹Emby库
   - RULE-SET,iPv6,📮 IPV6节点
@@ -555,6 +561,7 @@ rules:
   - RULE-SET,Game,🎮 游戏平台
   - RULE-SET,ProxyLite,🌏 全球加速
   - RULE-SET,Direct,DIRECT
+  - RULE-SET,Lucky,DIRECT
   - RULE-SET,Lan,DIRECT
   - RULE-SET,Download,DIRECT
   - RULE-SET,ChinaIP,DIRECT

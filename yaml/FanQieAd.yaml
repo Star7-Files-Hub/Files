@@ -1,0 +1,60 @@
+! 番茄屠龙刀
+! Version: 0.0.8    
+! 最后更新: 2025-06-22  
+
+
+### 核心广告拦截  
+||com.dragon.read^$important  
+|*static*|com.dragon.read^$important  
+|*sealaly*|com.dragon.read^$important  
+|*toutiao*|com.dragon.read^$important  
+|*bsgslb*|com.dragon.read^$important  
+|*misc*|com.dragon.read^$important  
+|*douyin*|com.dragon.read^$important  
+|*ecombd*|com.dragon.read^$important  
+|*byte*|com.dragon.read^$important  
+|*0kkkkkt*|com.dragon.read^$important  
+|*cjjd14*|com.dragon.read^$important  
+|*ietheivaicai*|com.dragon.read^$important  
+|*stream*|com.dragon.read^$important  
+|*siomxity*|com.dragon.read^$important  
+
+
+### 域名拦截规则  
+[a-zA-Z0-9.-]*-normal\.zijieapi\.com^$com.dragon.read,important  
+mssdk.zijieapi.com^$com.dragon.read,important  
+lf3-reading.fqnovelpic.com^$com.dragon.read,important  
+*applog*.*.*^$com.dragon.read,important  
+feedback-c.zijieapi.com^$com.dragon.read,important  
+ads*-normal-*.zijieapi.com^$com.dragon.read,important  
+*pstatp*|com.dragon.read^$important  
+dig.bdurl.net^$com.dragon.read,important  
+*qtaeixd*|com.dragon.read^$important  
+*erer*|com.dragon.read^$important  
+*ttweb*|com.dragon.read^$important  
+*sinfonlinec*|com.dragon.read^$important  
+mssdk.volces.com^$com.dragon.read,important  
+mon.snssdk.com^$com.dragon.read,important  
+toblog.ctobsnssdk.com^$com.dragon.read,important  
+mon.zijieapi.com^$com.dragon.read,important  
+dig.zjurl.cn^$com.dragon.read,important  
+gecko*.zijieapi.com^$com.dragon.read,important  
+polaris.zijieapi.com^$com.dragon.read,important  
+snssdk.com^$com.dragon.read,important  
+
+
+### 功能修复规则  
+||reading.snssdk.com^$com.dragon.read,important  
+||lf-fe.fqnovelstatic.com^$com.dragon.read,important  
+||lf-normal-gr-sourcecdn.bytegecko.com^$com.dragon.read,important  
+||api*-sinfnormal.fqnovel.com^$com.dragon.read,important  
+||api5-normal-sinfonlinec.fqnovel.com/reading/bookapi/$com.dragon.read,important  
+||security.snssdk.com^$com.dragon.read,important  
+||lf-sourcecdn-tos.bytegecko.com^$com.dragon.read,important  
+
+
+### 漫画与插图修复  
+||p3-novel1-sign.byteimg.com^$com.dragon.read,important  
+||p6-novel1-sign.byteimg.com^$com.dragon.read,important  
+||p9-novel1-sign.byteimg.com^$com.dragon.read,important  
+||p*-novel-sign.byteimg.com/novel-pic/$com.dragon.read,important  

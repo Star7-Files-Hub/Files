@@ -6,7 +6,6 @@
 # IP-CIDR: 0
 # PROCESS-NAME: 1
 # TOTAL: 69
-
 payload:
   - DOMAIN,static
   - DOMAIN,sealaly

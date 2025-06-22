@@ -539,11 +539,19 @@ rule-providers:
     url: https://raw.githubusercontent.com/Star7-Files-Hub/Files/refs/heads/main/yaml/Lucky.yaml
     path: ./ruleset/Lucky.yaml
     interval: 86400
+
+  FanQieAd:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/Star7-Files-Hub/Files/095848bd6a7648b1159f17ed937c5a64bc7c7c7e/yaml/FanQieAd.yaml
+    path: ./ruleset/FanQieAd.yaml
+    interval: 86400
     
 rules:
   - RULE-SET,Emby,📹Emby库
   - RULE-SET,iPv6,📮 IPV6节点
   - RULE-SET,Ad,🆎 AdBlock
+  - RULE-SET,FanQieAd,🆎 AdBlock
   - RULE-SET,ZhihuAds,🆎 AdBlock
   - RULE-SET,AdBlock,🆎 AdBlock
   - RULE-SET,PTDIRECT,🇨🇳 站点直连

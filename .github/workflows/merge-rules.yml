@@ -39,7 +39,7 @@ jobs:
             WECHAT_WEBHOOK: ${{ secrets.WECHAT_WEBHOOK }}
         run: |
           RULE_COUNT=$(grep -v '^!' Ad/AdBlock.txt | grep -v '^$' | wc -l)
-          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
+          TIMESTAMP=$(TZ="Asia/Shanghai" date +"%Y-%m-%d %H:%M CST")
           REPO="Star7-Files-Hub/Files"
           JSON=$(cat <<EOF
           {

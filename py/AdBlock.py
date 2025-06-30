@@ -11,7 +11,7 @@ rule_sources = {
     "https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/aiqiyi": "aiqiyi",
     "https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/genery_rules": "genery_rules",
     "https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/xmlyjsb": "xmlyjsb",
-    "https://raw.githubusercontent.com/Star7-Files-Hub/Files/refs/heads/main/Ad/Manual_input.txt": "Manual_input.txt"
+    "https://ghfast.top/raw.githubusercontent.com/Star7-Files-Hub/Files/refs/heads/main/Ad/Manual_input.txt": "Manual_input.txt",
     "https://ghfast.top/raw.githubusercontent.com/8680/GOODBYEADS/master/data/rules/dns.txt": "dns.txt"
 }
 

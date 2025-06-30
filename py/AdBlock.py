@@ -83,7 +83,7 @@ for i, rule in enumerate(sorted(duplicate_rules)):
         break
     log_lines.append(rule)
 
-with open("Ad/merge_log.txt", "w", encoding="utf-8") as f:
+with open("log/merge_log.txt", "w", encoding="utf-8") as f:
     f.write("\n".join(log_lines))
 
-print("✅ 合并完成，生成：Ad/AdBlock.txt 和 Ad/merge_log.txt")
+print("✅ 合并完成，生成：Ad/AdBlock.txt 和 log/merge_log.txt")

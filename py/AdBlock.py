@@ -24,7 +24,7 @@ combined_rules = []
 log_lines = []
 
 beijing_tz = timezone(timedelta(hours=8))
-timestamp = datetime.now(beijing_tz).strftime("%Y-%m-%d %H:%M:%S CST")
+timestamp = datetime.now(beijing_tz).strftime("%Y-%m-%d %H:%M:%S UTC+8")
 header = [
     "! Auto-generated AdGuard rules",
     f"! Generated at: {timestamp}",

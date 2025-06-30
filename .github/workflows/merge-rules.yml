@@ -33,3 +33,18 @@ jobs:
           git add Ad/AdBlock.txt
           git diff --cached --quiet || git commit -m "🤖 自动合并规则文件"
           git push
+      - name: Send WeChat Notification (Markdown)
+        if: success()
+        env:
+            WECHAT_WEBHOOK: ${{ secrets.WECHAT_WEBHOOK }}
+        run: |
+          RULE_COUNT=$(grep -v '^!' Ad/AdBlock.txt | grep -v '^$' | wc -l)
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
+          curl "$WECHAT_WEBHOOK" \
+            -H 'Content-Type: application/json' \
+            -d '{
+              "msgtype": "markdown",
+              "markdown": {
+              "content": "**✅ AdGuard 规则已自动合并完成！**\n\n> 📅 时间：'$TIMESTAMP'\n> 📜 合并后规则总数：**'$RULE_COUNT'** 条\n\n🔗 [点击查看合并结果](https://github.com/'"${{ github.repository }}"'/blob/main/Ad/AdBlock.txt)\n🧾 [查看详细日志](https://github.com/'"${{ github.repository }}"'/blob/main/Ad/merge_log.txt)"
+              }
+            }'

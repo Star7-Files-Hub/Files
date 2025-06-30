@@ -37,7 +37,7 @@ header = [
     ""
 ]
 
-with open("AdBlock.txt", "w", encoding="utf-8") as f:
+with open("Ad/AdBlock.txt", "w", encoding="utf-8") as f:
     f.write("\n".join(header + combined_rules))
 
 print("✅ 规则合并完成，文件已保存为 AdBlock.txt")

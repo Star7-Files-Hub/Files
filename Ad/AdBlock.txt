@@ -1,6 +1,9 @@
-! Auto-generated AdGuard rules
-! Generated at: 2025-06-30 06:13:37 UTC
-! Total rules: 99364
+! Title: 7Star's_Ad_Rules
+! Homepage: https://github.com/Star7-Files-Hub/Files/Ad
+! Expires: 12 Hours
+! Version: 2025-06-30 15:32:18（北京时间）
+! Description: 适用于AdGuard的去广告规则，合并优质上游规则并去重整理排列
+! Total count: 99367
 
 ! Source: https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/fq2.txt (fq2.txt)
 ||*^$all,app=com.dragon.read,important
@@ -6670,6 +6673,11 @@ ikan6.vip,www.1111modruba.cc##IMG[src$='.gif']
 ||log-auth.zztfly.com^
 ||imagev2.*.xmcdn.com/storages/*jpg!xmagick=webp$app=com.ximalaya.ting.lite
 ||imagev2.xmcdn.com/storages/*jpg!xmagick=webp$app=com.ximalaya.ting.lite
+
+! Source: https://ghfast.top/raw.githubusercontent.com/Star7-Files-Hub/Files/refs/heads/main/Ad/Manual_input.txt (Manual_input.txt)
+hdfans.org###outer > div:first-child > a:first-child > img
+blog.csdn.net###sidecolumn-deepseek
+blog.csdn.net###swiper-remuneration-container
 
 ! Source: https://ghfast.top/raw.githubusercontent.com/8680/GOODBYEADS/master/data/rules/dns.txt (dns.txt)
 [Adblock Plus 2.0]

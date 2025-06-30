@@ -23,7 +23,8 @@ duplicate_rules = set()
 combined_rules = []
 log_lines = []
 
-timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+beijing_tz = timezone(timedelta(hours=8))
+timestamp = datetime.now(beijing_tz).strftime("%Y-%m-%d %H:%M:%S CST")
 header = [
     "! Auto-generated AdGuard rules",
     f"! Generated at: {timestamp}",

@@ -47,9 +47,7 @@ jobs:
               "markdown": {
               "content": "**✅ AdGuard 规则已自动合并完成！**
           > 📅 时间：${TIMESTAMP}
-          > 📜 合并后规则总数：**${RULE_COUNT}** 条
-          🔗 [点击查看合并结果](https://github.com/${REPO}/blob/main/Ad/AdBlock.txt)
-          🧾 [查看详细日志](https://github.com/${REPO}/blob/main/Ad/merge_log.txt)"
+          > 📜 合并后规则总数：**${RULE_COUNT}** 条"
             }
           }
           EOF

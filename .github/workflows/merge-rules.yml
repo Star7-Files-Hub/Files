@@ -54,3 +54,7 @@ jobs:
           }
           EOF
           )
+          
+          curl -s -X POST "$WECHAT_WEBHOOK" \
+            -H 'Content-Type: application/json' \
+            -d "$JSON"

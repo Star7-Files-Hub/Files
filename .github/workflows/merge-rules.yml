@@ -41,13 +41,16 @@ jobs:
           RULE_COUNT=$(grep -v '^!' Ad/AdBlock.txt | grep -v '^$' | wc -l)
           TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
           REPO="Star7-Files-Hub/Files"
-          JSON=$(printf '{
+          JSON=$(cat <<EOF
+          {
               "msgtype": "markdown",
               "markdown": {
-              "content": "**✅ AdGuard 规则已自动合并完成！**\n\n> 📅 时间：'$TIMESTAMP'\n> 📜 合并后规则总数：**'$RULE_COUNT'** 条\n\n🔗 [点击查看合并结果](https://github.com/'"${{ github.repository }}"'/blob/main/Ad/AdBlock.txt)\n🧾 [查看详细日志](https://github.com/'"${{ github.repository }}"'/blob/main/Ad/merge_log.txt)"
-              }
-            }' "$TIMESTAMP" "$RULE_COUNT" "$REPO" "$REPO")
-
-            curl -s -X POST "$WECHAT_WEBHOOK" \
-              -H 'Content-Type: application/json' \
-              -d "$JSON"
+              "content": "**✅ AdGuard 规则已自动合并完成！**
+          > 📅 时间：${TIMESTAMP}
+          > 📜 合并后规则总数：**${RULE_COUNT}** 条
+          🔗 [点击查看合并结果](https://github.com/${REPO}/blob/main/Ad/AdBlock.txt)
+          🧾 [查看详细日志](https://github.com/${REPO}/blob/main/Ad/merge_log.txt)"
+            }
+          }
+          EOF
+          )

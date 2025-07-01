@@ -14,8 +14,8 @@ rule_sources = {
     "https://ghfast.top/raw.githubusercontent.com/Star7-Files-Hub/Files/refs/heads/main/Ad/Manual_input.txt": "Manual_input.txt",
     "https://ghfast.top/raw.githubusercontent.com/8680/GOODBYEADS/master/data/rules/dns.txt": "dns.txt"
     "https://raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt": "ADgk.txt"
-    "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-hosts.txt", "AWAvenue-Ads-Rule-hosts.txt"
-    "http://rssv.cn/adguard/api.php?type=black", "QY.txt"
+    "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-hosts.txt": "AWAvenue-Ads-Rule-hosts.txt"
+    "http://rssv.cn/adguard/api.php?type=black": "QY.txt"
 }
 
 # 创建输出目录

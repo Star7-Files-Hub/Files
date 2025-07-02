@@ -40,3 +40,7 @@ $cookie=_ym_d
 $cookie=_ym_isad
 ||googlesyndication.com^
 ||yandex.ru/metrika/
+##.adSocial
+##.ad-unit:not(html,body,:empty)
+/fakepage.html|$important
+/.*/$permissions=identity-credentials-get=(),document

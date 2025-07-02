@@ -1,3 +1,22 @@
 hdfans.org###outer > div:first-child > a:first-child > img
 blog.csdn.net###sidecolumn-deepseek
 blog.csdn.net###swiper-remuneration-container
+csdn.net###kp_box_www_swiper
+csdn.net###kp_box_986 > iframe:first-child
+aiqicha.baidu.com##div.detail.base.page-detail.has-search-tab:nth-child(2) > div.aqc-home-float-wrapper:last-child
+cloud.tencent.com##div.cdc-portal-wrapper:nth-child(16) > div.cdc-modal__wrap
+cloud.tencent.com###content-product-container
+cloud.tencent.com###__next > div.cdc-responsive-layout:last-child > div.cdc-article-page.cdc-global.is-bannerFocus.show-ad > div.cdc-global__main:nth-child(6) > div.cdc-article__body > div.cdc-layout > div.cdc-layout__side:last-child > div.mod-sticky-act.is-sticky:last-child > div.cdc-commercial-card.mod-group-card:nth-child(2)
+cloud.tencent.com###community-top-sticky-header-product-container > div.ad-content__Ptf.cdc-top-ad
+cloud.tencent.com###community-top-header-product-container > div.ad-content__Ptf.cdc-top-ad
+cloud.tencent.com###__next > div.cdc-responsive-layout:last-child > div.cdc-article-page.cdc-global.is-bannerFocus.show-ad > div.cdc-global__main:nth-child(6) > div.cdc-article__body > div.cdc-layout > div.cdc-layout__side:last-child > div.mod-sticky-act.is-sticky.is-confine:last-child > div.cdc-mod-product2:nth-child(4) > div.cdc-card
+cloud.tencent.com###__next > div.cdc-responsive-layout:last-child > div.cdc-article-page.cdc-global.is-bannerFocus.show-ad > div.cdc-widget-global:nth-child(7) > div.cdc-widget-global__btn.code:first-child
+cloud.tencent.com###cloud-header-product-container > a.ad-content__Y46.ad-link__QDu
+cloud.tencent.com###community-header-product-container > a.ad-content__Sgq.cdc-header__capsule
+blog.csdn.net###kp_box_57 > iframe:first-child
+blog.csdn.net###csdn-toolbar > div.toolbar-inside.exp3 > div.toolbar-container > div.toolbar-container-right:last-child > div.toolbar-btns.onlyUser > div.toolbar-btn.toolbar-btn-vip.csdn-toolbar-fl:nth-child(2) > a > img
+blog.csdn.net###toolbar-c-box-button
+blog.csdn.net###csdn-toolbar > div.toolbar-inside.exp3 > div.toolbar-container > div.toolbar-container-right:last-child > div.toolbar-btns.onlyUser > div.toolbar-btn.toolbar-btn-mp.csdn-toolbar-fl:nth-child(5) > div.csdn-toolbar-creative-mp:last-child
+ubits.club###outer > div:first-child > a > img
+nicept.net###outer > div:first-child > font > span > a:last-child > img
+blog.csdn.net###mainBox > aside.blog_container_aside:nth-child(3) > div.swiper-slide-box-remuneration:nth-child(2)

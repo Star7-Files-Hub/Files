@@ -1,9 +1,9 @@
 ! Title: 7Star's_Ad_Rules
-! Homepage: https://github.com/Star7-Files-Hub/Files/Ad
+! Homepage: https://github.com/Star7-Files-Hub/Files/tree/main/Ad
 ! Expires: 12 Hours
-! Version: 2025-07-02 16:50:14（北京时间）
+! Version: 2025-07-02 20:30:31（北京时间）
 ! Description: 适用于AdGuard的去广告规则，合并优质上游规则并去重整理排列
-! Total count: 110697
+! Total count: 110701
 
 ! Source: https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/fq2.txt (fq2.txt)
 ||*^$all,app=com.dragon.read,important
@@ -6725,6 +6725,10 @@ $cookie=_ym_isad
 */pagead$script
 /.*/$permissions=join-ad-interest-group=(),document
 /widget/ads.
+weixin.qq.com##div[class^="ad_ori"]
+mp.weixin.qq.com###js_bottom_ad_area
+mp.weixin.qq.com##div[id^="ad_div_"]
+mp.weixin.qq.com##div[class^="video_ad_mask"]
 
 ! Source: https://ghfast.top/raw.githubusercontent.com/8680/GOODBYEADS/master/data/rules/dns.txt (dns.txt)
 [Adblock Plus 2.0]

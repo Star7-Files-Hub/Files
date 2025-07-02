@@ -20,3 +20,4 @@ blog.csdn.net###csdn-toolbar > div.toolbar-inside.exp3 > div.toolbar-container >
 ubits.club###outer > div:first-child > a > img
 nicept.net###outer > div:first-child > font > span > a:last-child > img
 blog.csdn.net###mainBox > aside.blog_container_aside:nth-child(3) > div.swiper-slide-box-remuneration:nth-child(2)
+blog.csdn.net###kp_box_58

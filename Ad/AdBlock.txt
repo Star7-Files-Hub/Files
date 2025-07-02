@@ -1,9 +1,9 @@
 ! Title: 7Star's_Ad_Rules
 ! Homepage: https://github.com/Star7-Files-Hub/Files/Ad
 ! Expires: 12 Hours
-! Version: 2025-07-02 09:13:27（北京时间）
+! Version: 2025-07-02 16:50:14（北京时间）
 ! Description: 适用于AdGuard的去广告规则，合并优质上游规则并去重整理排列
-! Total count: 109959
+! Total count: 110697
 
 ! Source: https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/fq2.txt (fq2.txt)
 ||*^$all,app=com.dragon.read,important
@@ -6678,6 +6678,53 @@ ikan6.vip,www.1111modruba.cc##IMG[src$='.gif']
 hdfans.org###outer > div:first-child > a:first-child > img
 blog.csdn.net###sidecolumn-deepseek
 blog.csdn.net###swiper-remuneration-container
+csdn.net###kp_box_www_swiper
+csdn.net###kp_box_986 > iframe:first-child
+aiqicha.baidu.com##div.detail.base.page-detail.has-search-tab:nth-child(2) > div.aqc-home-float-wrapper:last-child
+cloud.tencent.com##div.cdc-portal-wrapper:nth-child(16) > div.cdc-modal__wrap
+cloud.tencent.com###content-product-container
+cloud.tencent.com###__next > div.cdc-responsive-layout:last-child > div.cdc-article-page.cdc-global.is-bannerFocus.show-ad > div.cdc-global__main:nth-child(6) > div.cdc-article__body > div.cdc-layout > div.cdc-layout__side:last-child > div.mod-sticky-act.is-sticky:last-child > div.cdc-commercial-card.mod-group-card:nth-child(2)
+cloud.tencent.com###community-top-sticky-header-product-container > div.ad-content__Ptf.cdc-top-ad
+cloud.tencent.com###community-top-header-product-container > div.ad-content__Ptf.cdc-top-ad
+cloud.tencent.com###__next > div.cdc-responsive-layout:last-child > div.cdc-article-page.cdc-global.is-bannerFocus.show-ad > div.cdc-global__main:nth-child(6) > div.cdc-article__body > div.cdc-layout > div.cdc-layout__side:last-child > div.mod-sticky-act.is-sticky.is-confine:last-child > div.cdc-mod-product2:nth-child(4) > div.cdc-card
+cloud.tencent.com###__next > div.cdc-responsive-layout:last-child > div.cdc-article-page.cdc-global.is-bannerFocus.show-ad > div.cdc-widget-global:nth-child(7) > div.cdc-widget-global__btn.code:first-child
+cloud.tencent.com###cloud-header-product-container > a.ad-content__Y46.ad-link__QDu
+cloud.tencent.com###community-header-product-container > a.ad-content__Sgq.cdc-header__capsule
+blog.csdn.net###kp_box_57 > iframe:first-child
+blog.csdn.net###csdn-toolbar > div.toolbar-inside.exp3 > div.toolbar-container > div.toolbar-container-right:last-child > div.toolbar-btns.onlyUser > div.toolbar-btn.toolbar-btn-vip.csdn-toolbar-fl:nth-child(2) > a > img
+blog.csdn.net###toolbar-c-box-button
+blog.csdn.net###csdn-toolbar > div.toolbar-inside.exp3 > div.toolbar-container > div.toolbar-container-right:last-child > div.toolbar-btns.onlyUser > div.toolbar-btn.toolbar-btn-mp.csdn-toolbar-fl:nth-child(5) > div.csdn-toolbar-creative-mp:last-child
+ubits.club###outer > div:first-child > a > img
+nicept.net###outer > div:first-child > font > span > a:last-child > img
+blog.csdn.net###mainBox > aside.blog_container_aside:nth-child(3) > div.swiper-slide-box-remuneration:nth-child(2)
+blog.csdn.net###kp_box_58
+bilibili.com###i_cecream > div.bili-feed4:last-child > main.bili-feed4-layout:nth-child(3) > div.feed2:last-child > div.recommended-container_floor-aside > div.container.is-version8:first-child > div.bili-feed-card
+imagehub.cc###home_before_title > a
+imagehub.cc###ad-banner-homepage > a > img
+imagehub.cc###home_after_cta > a
+kdocs.cn###app > div.manager-container-wrapper:first-child > div.manager-container:first-child > div.manager-container-body:nth-child(2) > div.menu-aside-wrapper:first-child > div.menu-aside-content:first-child > div.menu-aside-main-wrapper.scroll-list:nth-child(2) > div.menu-aside-main > div.menu-aside-activity:last-child
+kdocs.cn###app > div.manager-container-wrapper:first-child > div.manager-container:first-child > div.header-container.manager-container-header:first-child > div.header-content:last-child > div.header-menu:last-child > div.header-menu-ad:first-child
+||sentry-cdn.com^$third-party,domain=~sentry.dev|~sentry.io
+||googletagmanager.com/gtag/$third-party
+||mc.yandex.ru/metrika/tag.js$script,redirect=metrika-yandex-tag,domain=~id.x5.ru|~aiondb.ru
+$cookie=_ym_uid
+$cookie=_ym_d
+$cookie=_ym_isad
+||googlesyndication.com^
+||yandex.ru/metrika/
+##.adSocial
+##.ad-unit:not(html,body,:empty)
+/fakepage.html|$important
+/.*/$permissions=identity-credentials-get=(),document
+|http*://*.*$document,domain=~0.0.0.0|~127.0.0.1|~[::1]|~[::]|~local|~localhost|~stooq.com|~stooq.pl,permissions=autoplay=()
+/.*/$permissions=private-state-token-redemption=(),document
+/.*/$permissions=private-state-token-issuance=(),document
+/.*/$permissions=browsing-topics=(),document
+/.*/$permissions=run-ad-auction=(),document
+||gc.zgo.at^$third-party
+*/pagead$script
+/.*/$permissions=join-ad-interest-group=(),document
+/widget/ads.
 
 ! Source: https://ghfast.top/raw.githubusercontent.com/8680/GOODBYEADS/master/data/rules/dns.txt (dns.txt)
 [Adblock Plus 2.0]
@@ -9637,6 +9684,7 @@ blog.csdn.net###swiper-remuneration-container
 ||5pub.com^
 ||5toft8or7on8tt.com^
 ||5u.com^
+||5uazcu2o1.com^
 ||5umpz4evlgkm.com^
 ||5vbs96dea.com^
 ||5vpbnbkiey24.com^
@@ -10048,6 +10096,7 @@ blog.csdn.net###swiper-remuneration-container
 ||7nt9p4d4.de^
 ||7o2l520r0a.com^
 ||7q1z79gxsi.global.ssl.fastly.net^
+||7rag9q1on.com^
 ||7tc.fun^
 ||7u4b8l1zt.com^
 ||7wind.ru^
@@ -18352,6 +18401,7 @@ blog.csdn.net###swiper-remuneration-container
 ||agilewhirlpoolorator.com^
 ||agingcrawledarose.com^
 ||agingravenous.com^
+||agipnllerotwte.com^
 ||agisdayra.com^
 ||agitatechampionship.com^
 ||agitatecough.com^
@@ -19910,6 +19960,7 @@ blog.csdn.net###swiper-remuneration-container
 ||analytics.lunge.de^
 ||analytics.ly200.com^
 ||analytics.m7g.twitch.tv^
+||analytics.macpaw.com^
 ||analytics.maikel.pro^
 ||analytics.maileon.com^
 ||analytics.mailmunch.co^
@@ -20336,7 +20387,6 @@ blog.csdn.net###swiper-remuneration-container
 ||analyticswritenew.xerevo.com^
 ||analyzer.fc2.com^
 ||analyzer2.fc2.com^
-||analyzer51.fc2.com^
 ||anamaembush.com^
 ||anamuel-careslie.com^
 ||anapirate.com^
@@ -22228,6 +22278,7 @@ blog.csdn.net###swiper-remuneration-container
 ||aroundcommoditysway.com^
 ||aroundridicule.com^
 ||arousedimitateplane.com^
+||arozyzigxyfnt.online^
 ||arpentsyogis.shop^
 ||arphzc.woodica.pl^
 ||arqjnojtrrwfd.space^
@@ -22806,6 +22857,7 @@ blog.csdn.net###swiper-remuneration-container
 ||attachedkneel.com^
 ||attainthreatfluffy.com^
 ||attaintobiit.shop^
+||attaleaasmile.shop^
 ||attarpantoon.click^
 ||attelaoe.com^
 ||attemptingstray.com^
@@ -23445,6 +23497,7 @@ blog.csdn.net###swiper-remuneration-container
 ||ayensexilic.com^
 ||ayerbo.xhost.ro^
 ||ayerjjnzwkqqj.top^
+||ayfsfqjauuzvm.space^
 ||aygccr.eonet.jp^
 ||ayjvwlrbjaerm.top^
 ||ayjvwlrbjamrb.top^
@@ -23689,6 +23742,7 @@ blog.csdn.net###swiper-remuneration-container
 ||b3stcond1tions.com^
 ||b41732fb1b.com^
 ||b41eaf5815.197ca1c853.com^
+||b42fb8d81e.com^
 ||b42rracj.com^
 ||b43bc6681c.4bad5cdf48.com^
 ||b4c797e677.e4f7e35c25.com^
@@ -25440,6 +25494,7 @@ blog.csdn.net###swiper-remuneration-container
 ||bmudhianrfat.com^
 ||bmufqfnqgfh.com^
 ||bmwebm.org^
+||bmxlcqungg.xyz^
 ||bmycupptafr.com^
 ||bmyudk.clarins.de^
 ||bmzgcv-eo.rocks^
@@ -25817,6 +25872,7 @@ blog.csdn.net###swiper-remuneration-container
 ||bpuf.cn^
 ||bpxxgkoj.icu^
 ||bqacmp.vidaxl.no^
+||bqbgwwvnmwnn.top^
 ||bqdhrr.top^
 ||bqgrsgchpqt.com^
 ||bqhkix.mosmexa.ru^
@@ -26836,6 +26892,7 @@ blog.csdn.net###swiper-remuneration-container
 ||c1.china.cn^
 ||c1.czcol.cn^
 ||c1.wfinterface.com^
+||c1068112e7.com^
 ||c12c813990.com^
 ||c1595223cf.com^
 ||c16fd5228c.73a435bfaf.com^
@@ -27469,6 +27526,7 @@ blog.csdn.net###swiper-remuneration-container
 ||causliparid.shop^
 ||caustopa.net^
 ||cautiousfill.pro^
+||cautiouslyanalysecrystal.com^
 ||cautols.com^
 ||cautommityring.com^
 ||cauvousy.net^
@@ -30071,6 +30129,7 @@ blog.csdn.net###swiper-remuneration-container
 ||connect.becker.com^
 ||connect.blackboard.com^
 ||connect.blackmesh.com^
+||connect.blockboardtech.com^
 ||connect.blog.netapp.com^
 ||connect.build.com^
 ||connect.businessldn.co.uk^
@@ -33270,6 +33329,7 @@ blog.csdn.net###swiper-remuneration-container
 ||daicagrithi.com^
 ||daichoho.com^
 ||daicoaky.net^
+||daidlepulps.top^
 ||daifez.thebay.com^
 ||daihoozaiweptoo.com^
 ||daiitmk.cn^
@@ -35947,6 +36007,7 @@ blog.csdn.net###swiper-remuneration-container
 ||documentaryselfless.com^
 ||docyjy.ryderwear.com^
 ||dodaihoptu.xyz^
+||doddetalage.top^
 ||dodgyfactoidprecut.com^
 ||dodgyresources.com^
 ||dodk8rb03jif9.cloudfront.net^
@@ -36396,6 +36457,7 @@ blog.csdn.net###swiper-remuneration-container
 ||dropletevaporateumpire.com^
 ||droppingprofessionmarine.com^
 ||drovedkooky.com^
+||drowndchow.top^
 ||drowneddicing.com^
 ||droxvik.cfd^
 ||drsmediaexchange.com^
@@ -36472,6 +36534,7 @@ blog.csdn.net###swiper-remuneration-container
 ||dskesrsbhqdnlta.xyz^
 ||dsldtohkgc.com^
 ||dslfndqpednqu.xyz^
+||dsnijkqq.com^
 ||dsnymrk0k4p3v.cloudfront.net^
 ||dsoxgdjv.icu^
 ||dsoxjxin5jji.controlconceptsusa.com^
@@ -36766,6 +36829,7 @@ blog.csdn.net###swiper-remuneration-container
 ||dx6uy6q3udhkj.cloudfront.net^
 ||dx7.sosporntube.com^
 ||dxakvollzguju.tech^
+||dxaobbhcuiech.online^
 ||dxaop.bcbsla.com^
 ||dxbyvgsd.com^
 ||dxe2.heip.fr^
@@ -38887,6 +38951,7 @@ blog.csdn.net###swiper-remuneration-container
 ||epimetheus.navigator.web.de^
 ||epiv.cardlytics.com^
 ||epixkf.dentrodahistoria.com.br^
+||epkkeumsxbnc.com^
 ||epldjrxblnvpa.store^
 ||eplndhtrobl.com^
 ||epm.mailperformance.com^
@@ -39822,9 +39887,11 @@ blog.csdn.net###swiper-remuneration-container
 ||expressmealdelivery.shop^
 ||expressproducer.com^
 ||exptlgooney.com^
+||exqbxfzcrslqg.store^
 ||exqixvhgjugsmq.com^
 ||exqvak.xyz^
 ||exr-mms.expertreviews.co.uk^
+||exrlcolqvqr.com^
 ||exrtbsrv.com^
 ||exrzo.love^
 ||ext-jscdn.com^
@@ -40544,6 +40611,7 @@ blog.csdn.net###swiper-remuneration-container
 ||ff.sweetconnect.site^
 ||ff.trakerton.com^
 ||ff118a8047.0b74655a28.com^
+||ff1232f5f3.com^
 ||ff2f72443e.096f5e98aa.com^
 ||ff8453ee2f.2d5ac65613.com^
 ||ffbbbdc6d3c353211fe2ba39c9f744cd.com^
@@ -42439,6 +42507,7 @@ blog.csdn.net###swiper-remuneration-container
 ||gaquxe8.site^
 ||garbagebanquetintercept.com^
 ||garbageshallotsnowiness.com^
+||gardenian8.top^
 ||gardoult.com^
 ||garglingably.com^
 ||gariguemancala.uno^
@@ -42755,6 +42824,7 @@ blog.csdn.net###swiper-remuneration-container
 ||geotg.jp^
 ||geotrkclknow.com^
 ||geovisite.com^
+||gepwiollijtq.com^
 ||geqetreadyf.com^
 ||geqshb22.fun^
 ||geqzt6tkg.top^
@@ -44298,7 +44368,6 @@ blog.csdn.net###swiper-remuneration-container
 ||googleoptimize-cn.com^
 ||googleoptimize.com^
 ||googleshopping.sapoapps.vn^
-||googlesyndication.com^
 ||googletagmanager-cn.com^
 ||googletagservices.com^
 ||googlevads-cn.com^
@@ -44425,6 +44494,7 @@ blog.csdn.net###swiper-remuneration-container
 ||gpt.throatbulge.com^
 ||gpt.tubetruck.com^
 ||gpukye.holabirdsports.com^
+||gpviryfjyadhj.website^
 ||gpwkcgvhjobnua.com^
 ||gpzhcc.lapeyre.fr^
 ||gqalqi656.com^
@@ -45187,6 +45257,7 @@ blog.csdn.net###swiper-remuneration-container
 ||hallanjerbil.com^
 ||hallohaus.co^
 ||hallowcichlid.shop^
+||halluxbarwal.shop^
 ||halo.actonservice.com^
 ||haloedessed.top^
 ||halogennetwork.com^
@@ -45403,6 +45474,7 @@ blog.csdn.net###swiper-remuneration-container
 ||hbo5.concours-pass.com^
 ||hborq.com^
 ||hbphppfjuonez.site^
+||hbppmvlkr.xyz^
 ||hbstqpvrzpfx.com^
 ||hbudqnvaytwdc.world^
 ||hbx.df-srv.de^
@@ -46053,6 +46125,7 @@ blog.csdn.net###swiper-remuneration-container
 ||hivaqfofkche.com^
 ||hivorltuk.com^
 ||hiway.actonservice.com^
+||hiwluqdmtglpav.com^
 ||hixsutkzy.com^
 ||hixtzumpygmi.com^
 ||hiy.vidzi.tv/socket.io^
@@ -49698,6 +49771,7 @@ blog.csdn.net###swiper-remuneration-container
 ||ip356694986.ahcdn.com^
 ||ip7prksb2muxvmmh25t6rxl2te0tfulc.lambda-url.eu-west-1.on.aws^
 ||ipad.pc899.cn^
+||ipallhpscbdou.site^
 ||ipcc.vnpt.com.vn^
 ||ipcejez.com^
 ||ipcfgw.pieces.com^
@@ -49899,6 +49973,7 @@ blog.csdn.net###swiper-remuneration-container
 ||isopodaupcock.com^
 ||isoualkcjushz.website^
 ||isovav.akomeya.jp^
+||isozvtdtzqefl.website^
 ||isparkmedia.com^
 ||isquitehappymut.org^
 ||isready2.online^
@@ -50534,6 +50609,7 @@ blog.csdn.net###swiper-remuneration-container
 ||jggleds.shop^
 ||jgiyadntcqakjyp.com^
 ||jgjyxf.xyz^
+||jgkbbvqvqvmz.top^
 ||jgqaainj.buzz^
 ||jgtdptiivqmxubk.com^
 ||jgtjw.com^
@@ -50734,6 +50810,7 @@ blog.csdn.net###swiper-remuneration-container
 ||jn23.madeindesign.ch^
 ||jn23.madeindesign.it^
 ||jncx1s.michaellindahl.com^
+||jndcdxcoqjroj.store^
 ||jnhjpdayvpzj.com^
 ||jnjslk.top^
 ||jnkqnf.cifraclub.com.br^
@@ -50760,6 +50837,7 @@ blog.csdn.net###swiper-remuneration-container
 ||joathath.com^
 ||joawaubaufa.com^
 ||jobappplus.actonservice.com^
+||jobefogyish.shop^
 ||joberopolicycr.com^
 ||jobestzipolike.org^
 ||jobeyeball.com^
@@ -50906,6 +50984,7 @@ blog.csdn.net###swiper-remuneration-container
 ||jowtkv.vertbaudet.de^
 ||jowxbrrtyt.com^
 ||jowyylklbvmz.top^
+||jowyylklklmb.top^
 ||joxaviri.com^
 ||joxmvhwkqhqvb.site^
 ||joy.ochronus.online^
@@ -51527,6 +51606,7 @@ blog.csdn.net###swiper-remuneration-container
 ||kaurieseluxate.com^
 ||kaushichie.net^
 ||kaushooptawo.net^
+||kautefaunenit.net^
 ||kavalimeys.top^
 ||kavanga.ru^
 ||kawcuhscyapn.com^
@@ -51702,6 +51782,7 @@ blog.csdn.net###swiper-remuneration-container
 ||kfewmylmeadf.com^
 ||kfexihwcej.com^
 ||kffnjkvxbhyzl.vip^
+||kfgelwiwwjwwf.com^
 ||kfiopkln.com^
 ||kfjhd.com^
 ||kfmmfyrkrgipm.love^
@@ -51977,6 +52058,7 @@ blog.csdn.net###swiper-remuneration-container
 ||kmhmmhmj.com^
 ||kmisln.com^
 ||kmjveezxebpqs.website^
+||kmlastitytyea.org^
 ||kmlnllmoajnwa.top^
 ||kmmgoogle.oss-ap-southeast-1.aliyuncs.com^
 ||kmmrukqrphix.com^
@@ -52361,6 +52443,7 @@ blog.csdn.net###swiper-remuneration-container
 ||kvibsqutr.com^
 ||kvkcei.xyz^
 ||kvnkjd.kaigoshoku.mynavi.jp^
+||kvobmcyslpxwy.online^
 ||kvozsayiewspf.rocks^
 ||kvqp.cn^
 ||kvsadman.com^
@@ -53294,6 +53377,7 @@ blog.csdn.net###swiper-remuneration-container
 ||lgsmartad.com^
 ||lgtdkpfnor.com^
 ||lgtvcommon.com^
+||lgumeekgcqlwigm.com^
 ||lgvlbd.icu^
 ||lgvowkkifkdzk.online^
 ||lgylib.dg-home.ru^
@@ -53422,6 +53506,7 @@ blog.csdn.net###swiper-remuneration-container
 ||lijjk.space^
 ||lijlrz.xyz^
 ||lijobkzugan.com^
+||lijqfqpdavjhs.store^
 ||like.reply.de^
 ||likeads.com^
 ||likelyguy.com^
@@ -53445,6 +53530,7 @@ blog.csdn.net###swiper-remuneration-container
 ||limpet.eddiehinkle.com^
 ||limpet.pioneerlandscapingllc.com^
 ||limpet.yago.dev^
+||limping-gather.com^
 ||limping-plane.pro^
 ||limpingpick.com^
 ||lin01.bid^
@@ -54533,6 +54619,7 @@ blog.csdn.net###swiper-remuneration-container
 ||ljvmokwyromeq.top^
 ||ljvmokwyromjj.top^
 ||ljvmokwyrozjk.top^
+||ljybpjbp.xyz^
 ||ljybybyerzoev.top^
 ||ljybybyerzrjj.top^
 ||ljyipz.nugnes1920.com^
@@ -55805,6 +55892,7 @@ blog.csdn.net###swiper-remuneration-container
 ||lvvbqeaqvrmvy.top^
 ||lvw7k4d3j.com^
 ||lvyowwrjeqev.top^
+||lvyowwrjewjj.top^
 ||lvyrokjbvvoor.top^
 ||lw.b.inhaabit.com^
 ||lw.musictarget.com^
@@ -56473,6 +56561,7 @@ blog.csdn.net###swiper-remuneration-container
 ||marazma.com^
 ||marbil24.co.za^
 ||marceline.wantsext.me^
+||marcelspinder.shop^
 ||march.landing.ni.com^
 ||marcherfilippo.com^
 ||marchex.com^
@@ -60678,6 +60767,7 @@ blog.csdn.net###swiper-remuneration-container
 ||misfields.com^
 ||misguidedfind.com^
 ||misgyeflative.top^
+||misjudgedistilentice.com^
 ||misknewrerow.shop^
 ||misputidemetome.com^
 ||missaliambize.shop^
@@ -61550,6 +61640,7 @@ blog.csdn.net###swiper-remuneration-container
 ||mshues.com^
 ||msi.msigts.com^
 ||msigbs.actonservice.com^
+||msincsayqmji.com^
 ||msioay.backcountry.com^
 ||msitec.actonservice.com^
 ||msjdveaigxlx.xyz^
@@ -61608,6 +61699,7 @@ blog.csdn.net###swiper-remuneration-container
 ||mtesbbxdi.com^
 ||mtest.fontself.com^
 ||mtfc8.com^
+||mtg.macpaw.com^
 ||mtga.setapp.com^
 ||mtgbhhzgsfp.com^
 ||mthhhuq.cn^
@@ -61718,6 +61810,7 @@ blog.csdn.net###swiper-remuneration-container
 ||murkymouse.online^
 ||murmursutta.shop^
 ||murolwsi.com^
+||murozwuddtow.com^
 ||murphydrying.com^
 ||musedemeanouregyptian.com^
 ||musersantonio.shop^
@@ -62285,6 +62378,7 @@ blog.csdn.net###swiper-remuneration-container
 ||nceexam.quantresear.ch^
 ||nceneverdreamsofc.org^
 ||nceyeykhnltr.com^
+||ncikugowxotj.com^
 ||ncipledeclinerybel.org^
 ||ncjqjp.icu^
 ||ncojkokhi.com^
@@ -63800,6 +63894,7 @@ blog.csdn.net###swiper-remuneration-container
 ||obqclg.dadway-onlineshop.com^
 ||obqj2.com^
 ||obqj5.com^
+||obqogsrafon.com^
 ||obqvss.debameubelen.be^
 ||obqxfeaxptut.com^
 ||obrazy.dlabiznesu.pracuj.pl^
@@ -64129,6 +64224,7 @@ blog.csdn.net###swiper-remuneration-container
 ||ogvandsa.com^
 ||ogvaqxjzfm-n.top^
 ||ogvomwvkygm.com^
+||ogvwbovkgvbg.top^
 ||ogwzby.peek-und-cloppenburg.de^
 ||ogxntutl.fun^
 ||ogz4n3ke.xyz^
@@ -64303,6 +64399,7 @@ blog.csdn.net###swiper-remuneration-container
 ||oldh.cn^
 ||oleggurge.com^
 ||olgcpwc.icu^
+||olgeckbicrdms.com^
 ||olgrae.com^
 ||olhqou.realsimple.com^
 ||olichoogrulsom.com^
@@ -69214,6 +69311,7 @@ blog.csdn.net###swiper-remuneration-container
 ||pvoheg.bubbleroom.se^
 ||pvopqweuwmjl.com^
 ||pvpffqip.com^
+||pvqaibgkxuoeoz.com^
 ||pvrugd.nieruchomosci-online.pl^
 ||pvstat.html5.qq.com^
 ||pvtag.yahoo.co.jp^
@@ -69583,6 +69681,7 @@ blog.csdn.net###swiper-remuneration-container
 ||qguusmmvndeor.website^
 ||qgwgweoxulrb.com^
 ||qgxbluhsgad.com^
+||qgxkovmtwlrhkyt.com^
 ||qhaccid.com^
 ||qhanphietd.com^
 ||qhatarsl.com^
@@ -69751,6 +69850,7 @@ blog.csdn.net###swiper-remuneration-container
 ||qnp16tstw.com^
 ||qnqdpy.edreams.net^
 ||qnqtgyq.icu^
+||qnravllmrkpdo.space^
 ||qnsabgtfnvgb.com^
 ||qnsr.com^
 ||qnsxtvhfnajnw.global^
@@ -69769,6 +69869,7 @@ blog.csdn.net###swiper-remuneration-container
 ||qogonsuqq.com^
 ||qogrux.com^
 ||qohlsl.drawer.fr^
+||qoicyijenvvc.com^
 ||qokoylbzaqhnmt.com^
 ||qolemambyxqib.site^
 ||qonbibff.icu^
@@ -70122,6 +70223,7 @@ blog.csdn.net###swiper-remuneration-container
 ||qwursery.top^
 ||qwvqbeqorrobv.top^
 ||qwvqbeqorrovj.top^
+||qwvvoamqyzvb.top^
 ||qwvvoamqyzyr.top^
 ||qwwsbnfspagbbn.com^
 ||qwylpm.teljoy.co.za^
@@ -70481,6 +70583,7 @@ blog.csdn.net###swiper-remuneration-container
 ||raxxkxvipsusz.site^
 ||raylnk.com^
 ||raymondcarryingordered.com^
+||rayonsfurled.top^
 ||razzedwhimsic.website^
 ||razzlebuyer.com^
 ||rb-ya.ru^
@@ -70493,6 +70596,7 @@ blog.csdn.net###swiper-remuneration-container
 ||rb.sveto-sharik.ru^
 ||rb.umspecrek.ru^
 ||rba-screen.healthsafe-id.com^
+||rbalwumziccm.com^
 ||rbbgnn.hanshintigers.jp^
 ||rbbutton.bid^
 ||rbcore-wlc-3.net.jumia.co.ke^
@@ -70589,6 +70693,7 @@ blog.csdn.net###swiper-remuneration-container
 ||rdilgjxfabtiu.life^
 ||rdllzz.icu^
 ||rdlrbm.studying.jp^
+||rdncetfegztbp.space^
 ||rdoq.cn^
 ||rdovertop.shop^
 ||rdqonejxzdwym.store^
@@ -71918,6 +72023,7 @@ blog.csdn.net###swiper-remuneration-container
 ||rnybul.gismeteo.lv^
 ||rnybul.gismeteo.md^
 ||rnyhid.pepperfry.com^
+||rnyryywomrwnh.space^
 ||ro-go.experian.com^
 ||ro.aiwan4399.com^
 ||roacuthauzir.com^
@@ -72025,6 +72131,7 @@ blog.csdn.net###swiper-remuneration-container
 ||romperspardesi.com^
 ||rompishvariola.com^
 ||romulusniuan.com^
+||romvtsmpevy.com^
 ||roobetaffiliates.com^
 ||roofprison.com^
 ||roohoozy.net^
@@ -74627,6 +74734,7 @@ blog.csdn.net###swiper-remuneration-container
 ||seaskydvd.com^
 ||seasx.cfd^
 ||seatrackingdomain.com^
+||seatslaurelblemish.com^
 ||seattleunderly.top^
 ||seawantocelots.click^
 ||seawmmibmf.com^
@@ -79883,6 +79991,7 @@ blog.csdn.net###swiper-remuneration-container
 ||snippystowstool.com^
 ||snitchtidying.com^
 ||snitswaspshaft.com^
+||snitzsauteur.shop^
 ||snjfasp.com^
 ||snjuyxiogfde.com^
 ||snnmgdt.icu^
@@ -81754,6 +81863,7 @@ blog.csdn.net###swiper-remuneration-container
 ||staiderkha.com^
 ||staigaulicm.com^
 ||staimpaissoy.net^
+||stainedmacrame.top^
 ||staipseegnauw.com^
 ||staitcfile.org^
 ||staivoiks.com^
@@ -85774,6 +85884,7 @@ blog.csdn.net###swiper-remuneration-container
 ||tctrbtdxbscuw.site^
 ||tcubtawuv.com^
 ||tcucadojvogr.com^
+||tcwgmjsjgtsrm.space^
 ||tcwouq1gmw.com^
 ||tczulp.econea.cz^
 ||td.airdroid.com^
@@ -85893,6 +86004,7 @@ blog.csdn.net###swiper-remuneration-container
 ||teatyoverput.top^
 ||tebrand.asia^
 ||tebrand.vn^
+||tececoungooboa.com^
 ||tech-script.ru^
 ||tech.finalto.com^
 ||tech.jiukang.org^
@@ -87139,6 +87251,7 @@ blog.csdn.net###swiper-remuneration-container
 ||togmoxwnw.com^
 ||togothermany.com^
 ||togothitaa.com^
+||tohirnxtewemj.website^
 ||toiletpaper.life^
 ||toilunfaithful.com^
 ||toireink.top^
@@ -87227,6 +87340,7 @@ blog.csdn.net###swiper-remuneration-container
 ||tooreldretpl.com^
 ||toostaupsoobaul.net^
 ||toothcauldron.com^
+||toothedchimed.shop^
 ||tootoukoustegru.com^
 ||toots-a.akamaihd.net/priority/pushdown^
 ||toourmarketingef.org^
@@ -87332,6 +87446,7 @@ blog.csdn.net###swiper-remuneration-container
 ||tortoise.trysmartplan.com^
 ||tortoisesun.com^
 ||torulasphytate.com^
+||torusesnewts.top^
 ||toscytheran.com^
 ||tosfeed.com^
 ||tossquicklypluck.com^
@@ -91025,6 +91140,7 @@ blog.csdn.net###swiper-remuneration-container
 ||turbostats.xyz^
 ||turbulentconformityhomes.com^
 ||turbulentimpuresoul.com^
+||turbulentobject.com^
 ||turbulentupstairs.pro^
 ||turesdi.top^
 ||tureukworektob.info^
@@ -91352,6 +91468,7 @@ blog.csdn.net###swiper-remuneration-container
 ||uaemarketing.sedgwick.com^
 ||uafkcvpvvelp.com^
 ||uafwhndhhwjw.com^
+||uagguqbcvgar.xyz^
 ||uahivaqettl.com^
 ||uaiosio.top^
 ||uaiqp.top^
@@ -91630,6 +91747,7 @@ blog.csdn.net###swiper-remuneration-container
 ||ujtgtmj.com^
 ||ujvh.pandasuite.io^
 ||ujvqrs.meandem.com^
+||ujvscbgowdk.com^
 ||ujw1y54r.fun^
 ||ujwfrf.uniformix.pl^
 ||ujzqud.bestsecret.se^
@@ -91842,6 +91960,7 @@ blog.csdn.net###swiper-remuneration-container
 ||unfamllliardates.com^
 ||unfeltsizzler.com^
 ||unfortunate-can.com^
+||unfortunatelyafter.com^
 ||unfortunatelydestroyedfuse.com^
 ||unfortunatelydroopinglying.com^
 ||unframebullish.top^
@@ -91900,6 +92019,7 @@ blog.csdn.net###swiper-remuneration-container
 ||unknowncheats.me/forum/images/ez^
 ||unl1zvy2zuyn.franchiseplus.nl^
 ||unlawful-conversation.pro^
+||unlawfuldamage.com^
 ||unlawfulstrategy.com^
 ||unleanmyrrhs.shop^
 ||unleash.livepix.gg^
@@ -92000,6 +92120,7 @@ blog.csdn.net###swiper-remuneration-container
 ||unwelcomegardenerinterpretation.com^
 ||unwelcomehurry.com^
 ||unwindirenebank.com^
+||unwindrevision.com^
 ||unwivebrooky.shop^
 ||unwontcajun.top^
 ||unwoobater.com^
@@ -92110,6 +92231,8 @@ blog.csdn.net###swiper-remuneration-container
 ||upsidejolly.com^
 ||upskittyan.com^
 ||upsloperoyalet.com^
+||upstackdata.io^
+||upstackified.com^
 ||upstats.yadro.ru^
 ||upsups.click^
 ||uptafashib.com^
@@ -92861,6 +92984,7 @@ blog.csdn.net###swiper-remuneration-container
 ||uxzqnsss.com^
 ||uy8f8z9uy.com^
 ||uydyqlnebqlwe.global^
+||uygjexgubaaueiy.xyz^
 ||uyislot.top^
 ||uyiteasacomsys.info^
 ||uyivht.robertgraham.us^
@@ -93093,6 +93217,7 @@ blog.csdn.net###swiper-remuneration-container
 ||vbllxaaj.icu^
 ||vbmjlevwwvqvz.top^
 ||vbmjlevwwvqzm.top^
+||vbnlwqmnlljw.top^
 ||vboiutv.xyz^
 ||vbozbkzejzeol.top^
 ||vbozbkzejzyoy.top^
@@ -94071,6 +94196,7 @@ blog.csdn.net###swiper-remuneration-container
 ||vvnhhb.mebeles1.lv^
 ||vvprcztaw.com^
 ||vvqizy.witt-weiden.de^
+||vvrjezyxwxhqd.store^
 ||vvsalar.top^
 ||vvttpn.xyz^
 ||vvtwasjebvswf.website^
@@ -94111,6 +94237,7 @@ blog.csdn.net###swiper-remuneration-container
 ||vxrdwo.cn^
 ||vxsdibhjeyvwf.space^
 ||vxtehkhkv.com^
+||vxtgnbxrhqirjv.com^
 ||vxvibc.asahi-kasei.co.jp^
 ||vxwmkbtkhtpru.today^
 ||vyebzzqlojjry.top^
@@ -94131,6 +94258,7 @@ blog.csdn.net###swiper-remuneration-container
 ||vyrpoe.cn^
 ||vytn.cn^
 ||vyuodh.your-look-for-less.nl^
+||vyvjoevkyvoy.top^
 ||vywblbqoojwjj.top^
 ||vywvncjascsrw.world^
 ||vyyikx.sixt.ch^
@@ -95358,6 +95486,7 @@ blog.csdn.net###swiper-remuneration-container
 ||winr.online^
 ||winslinks.com^
 ||winter05032026.shop^
+||winterpraised.com^
 ||wintrck.com^
 ||wintricksbanner.googlepages.com^
 ||winzessolicit.com^
@@ -95495,6 +95624,7 @@ blog.csdn.net###swiper-remuneration-container
 ||wlxhzn.godfreys.com.au^
 ||wlyazbaqggqyn.top^
 ||wlyikeacon.org^
+||wlyyqvjawkyz.top^
 ||wlzzwzeevbjww.top^
 ||wlzzwzeevbwez.top^
 ||wlzzwzeevbyak.top^
@@ -97079,6 +97209,7 @@ blog.csdn.net###swiper-remuneration-container
 ||wyvw.cn^
 ||wywkwqzkavlvw.top^
 ||wywkwqzkavmvm.top^
+||wywtpkeai.com^
 ||wywvyf.discuss.com.hk^
 ||wywvyf.price.com.hk^
 ||wywvyf.uwants.com^
@@ -99660,6 +99791,7 @@ blog.csdn.net###swiper-remuneration-container
 ||zykumw.com^
 ||zylizz.xyz^
 ||zymakzaeddla.com^
+||zymjzwvmjjqz.top^
 ||zymoidarrame.com^
 ||zynewaylxyxex.buzz^
 ||zyns.com^
@@ -99696,7 +99828,7 @@ blog.csdn.net###swiper-remuneration-container
 ||zzynmuog.com^
 ||zzzjvqzmkamlb.top^
 
-! Source: https://raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt (ADgk.txt)
+! Source: https://ghfast.top/raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt (ADgk.txt)
 /killcovid2021\.com/\d\.mp4/$mp4
 dmhy.org###pkpk
 dmhy.org##div[id*="_ad"]
@@ -108324,7 +108456,7 @@ $$div[class="ad_top"]
 ||caoys1998.xyz^
 ||magicflute.club^
 
-! Source: https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-hosts.txt (AWAvenue-Ads-Rule-hosts.txt)
+! Source: https://ghfast.top/raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-hosts.txt (AWAvenue-Ads-Rule-hosts.txt)
 127.0.0.1 localhost
 ::1 localhost
 0.0.0.0 1500020991.vodplayer.wxamedia.com
@@ -109985,3 +110117,615 @@ $$div[class="ad_top"]
 :: zeus.ad.xiaomi.com
 0.0.0.0 zhihu-web-analytics.zhihu.com
 :: zhihu-web-analytics.zhihu.com
+
+! Source: https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/refs/heads/main/rule.txt (rules.txt)
+some sources: https://github.com/jdlingyu/ad-wars
+||tt.cn^
+||umeng.com.gds.alibabadns.com^
+||alogs.umengcloud.com^
+||alogsus.umengcloud.com^
+||utoken.umeng.com^
+||umeng.co^
+||alog.umeng.co^
+||au.umeng.co^
+||oc.umeng.co^
+||alog-default.umeng.com^
+||alogs.umeng.com^
+||alogsus.umeng.com^
+||at.umeng.com^
+||au.umeng.com^
+||oc.umeng.com^
+||ocx.umeng.com^
+||ouplog.umeng.com^
+||uop.umeng.com^
+||*.bjmantis.net^
+||ad-channel.diwodiwo.xyz^
+||ad.api.3g.tudou.com^
+||chance-ad.com^
+||adx.apiok.net^
+||ad-sdk.aiclk.com^
+||www.adsage.cn^
+||download.adsage.com^
+||mws.adsage.com^
+||trc.adsage.com^
+||config.mobisage.cn^
+||@adsmogo.com^
+||click*forhz.adsmogo.com^
+||my.adsmogo.com^
+||www.adsmogo.com^
+||w.inmobi.com^
+||cf.cdn.inmobi.com^
+||ad.sohu.com^
+||adsyndication.msn.com^
+||ad.gtbrowser.com^
+||adx.xiaodutv.com^
+||adx-static.ksosoft.com^
+||e.duomeng.org^
+||ad.madserving.com^
+||ads.static.madserving.com^
+||adv.madserving.com^
+@@||aeventlog.beacon.qq.com^
+@@||cfg.flurry.com^
+@@||data.flurry.com^
+#@@||otheve.beacon.qq.com^
+||media.mobpartner.mobi^
+||ads2.mediaarmor.com^
+||cdn.nearbyad.com^
+||admin.vserv.mobi^
+||c.vserv.mobi^
+||ads.vserv.mobi^
+||sf.vserv.mobi^
+||a.medialytics.com^
+||c.medialytics.com^
+||wanba.baidu.com^
+||iwan.baidu.com^
+||wan.baidu.com^
+||youxi.baidu.com^
+||adm.baidu.com^
+||tnc*.zijieapi.com^
+||p*-ad.adukwai.com^
+||track.xiachufang.com^
+||trackbeat.xiachufang.com^
+||data.bilibili.cn^
+||track.ucdns.uc.cn^
+||cc-api-data.adobe.io^
+||log*.aliyuncs.com^
+||api.sec.miui.com^
+||beacons*.gvt3.com^
+||report.*.qq.com^
+||log*-misc-lf.amemv.com^
+||*.nrb.footprintdns.com^
+||tracker.didistatic.com^
+||*-inapps.appsflyersdk.com^
+||fp-it*.fengkongcloud.com^
+||*-launches.appsflyersdk.com^
+||api.installer.xiaomi.com^$important
+||ping.pinyin.sogou.com^
+||*.mcdn.bilivideo.cn^
+||punch.p2p.qq.com^
+||musicps.p2p.qq.com^
+||musicstun.p2p.qq.com^
+||musicpunch.p2p.qq.com^
+||dns.qq.com^
+||httpdns.kg.qq.com^
+||httpsdns.baidu.com^
+||dns.alidns.com^
+||httpdns.alicdn.com^
+||dns.weixin.qq.com*^
+||apd-pcdnvodstat.teg.tencent-cloud.net^
+||apd-vodp2plogin.teg.tencent-cloud.net^
+||doh.dns.apple.com^
+||dns.jd.com^
+||httpdns.danuoyi.tbcache.com^
+||music.httpdns.c.163.com^
+||httpdns.n.netease.com^
+||httpdns.music.163.com^
+||httpdns.volcengineapi.com^
+||httpdns-sdk.n.netease.com^
+||lofter.httpdns.c.163.com^
+||httpdns.gslb.yy.com^
+||passport.dns.iqiyi.com^
+||cz15.now-dns.top^
+||httpdns-sc.aliyuncs.com^
+||jnox.now-dns.top^
+||h1-us.iot-dns.com^
+||gaut.now-dns.net^
+||doujin-assets.dns.doujin.dmm.co.jp^
+||httpdns.yunxindns.com^
+||httpdns.n.shifen.com^
+||*.dns.cross.gt^
+||*.compute.hwclouds-dns.com^
+||httpdns.c.cdnhwc2.com^
+||httpdns1.cc.cdnhwc5.com^
+||httpdns.platform.dbankcloud.cn^
+||httpdns.huaweicloud.com^
+||dig-ec.bdurl.net^
+||dns.cyida.com^
+||dns-info-static.hitwh.net.cn^
+||wlay.dd-dns.de^
+||now-dns.net^
+||httpdns.kwd.inkuai.com^
+||dns.jd.com.gslb.qianxun.com^
+||httpdns.push.oppomobile.com^
+||*.dns-detect.alicdn.com^
+||httpdns.music.ntes53.netease.com^
+||dig-tlsv3.bdurl.net^
+||dns.loveimgmoe.com^
+||v6-data.video.dns.iqiyi.com^
+||httpdns.bilivideo.com^
+||dns.icoa.cn^
+||httpdns.baidubce.com^
+||now-dns.org^
+||dns-test.research.a10protects.com^
+||iface2.dns.iqiyi.com^
+||bj.vip.waf.dns.iqiyi.com^
+||ipv6-static.dns.iqiyi.com^
+||data.video.dns.iqiyi.com^
+||static.dns.qiyipic.iqiyi.com^
+||api.yuedu.dns.iqiyi.com^
+||httpdns.meituan.com^
+||httpdns-api.aliyuncs.com^
+||api-env.dropbox-dns.com^
+||oss.dns.aliyun.com.dalvhe.com^
+||dns.supfree.net^
+||anti-sdk-report.m.jd.com^
+||dns*po.lzn376.com^
+||dnsa*f.*zzy.com^
+||dns-*.eastus.cloudapp.azure.com^
+||dnsnio.*.com^
+||dnszcp.zzg*.com^
+||dns*.londrimarketing.com.br^
+||dnss-blocklist.flinteger.com^
+||dnsin.in.zapto.xyz^
+||dns1.dimassa.net^
+||dnsrr9.wym*.com^
+||dnsxyc.wym*.com^
+||httpdns.tantanapp.com^
+||httpdns.*.yy.com^
+||*dns*.adobe.com
+
+! Source: https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/main/bad_apple.txt (bad_apple.txt)
+||gateway.fe.apple-dns.cn^
+||gateway.icloud.com.cn^
+||*.apple-dns.cn^
+||*.apple-dns.net^
+
+! Source: https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/refs/heads/main/whitelist.txt (whitelist.txt)
+@@||albert.apple.com^$important
+@@||captive.apple.com^$important
+@@||gs.apple.com^$important
+@@||humb.apple.com^$important
+@@||static.ips.apple.com^$important
+@@||sq-device.apple.com^$important
+@@||tbsc.apple.com^$important
+@@||time-ios.apple.com^$important
+@@||time.apple.com^$important
+@@||time-macos.apple.com^$important
+@@||push.apple.com^$important
+@@||deviceenrollment.apple.com^$important
+@@||deviceservices-external.apple.com^$important
+@@||gdmf.apple.com^$important
+@@||identity.apple.com^$important
+@@||iprofiles.apple.com^$important
+@@||mdmenrollment.apple.com^$important
+@@||setup.icloud.com^$important
+@@||vpp.itunes.apple.com^$important
+@@||business.apple.com^$important
+@@||school.apple.com^$important
+@@||appleid.cdn-apple.com^$important
+@@||idmsa.apple.com^$important
+@@||itunes.apple.com^$important
+@@||mzstatic.com^$important
+@@||api.ent.apple.com^$important
+@@||api.edu.apple.com^$important
+@@||statici.icloud.com^$important
+@@||vertexsmb.com^$important
+@@||www.apple.com.cn^$important
+@@||upload.appleschoolcontent.com^$important
+@@||axm-adm-enroll.apple.com^$important
+@@||axm-adm-mdm.apple.com^$important
+@@||axm-adm-scep.apple.com^$important
+@@||axm-app.apple.com^$important
+@@||apple-mapkit.com^$important
+@@||icons.axm-usercontent-apple.com^$important
+@@||s.mzstatic.com^$important
+@@||play.itunes.apple.com^$important
+@@||ws-ee-maidsvc.icloud.com^$important
+@@||ws.school.apple.com^$important
+@@||pg-bootstrap.itunes.apple.com^$important
+@@||cls-iosclient.itunes.apple.com^$important
+@@||cls-ingest.itunes.apple.com^$important
+@@||appldnld.apple.com^$important
+@@||configuration.apple.com^$important
+@@||gg.apple.com^$important
+@@||ig.apple.com^$important
+@@||mesu.apple.com^$important
+@@||ns.itunes.apple.com^$important
+@@||oscdn.apple.com^$important
+@@||osrecovery.apple.com^$important
+@@||skl.apple.com^$important
+@@||swcdn.apple.com^$important
+@@||swdist.apple.com^$important
+@@||swdownload.apple.com^$important
+@@||swscan.apple.com^$important
+@@||updates-http.cdn-apple.com^$important
+@@||updates.cdn-apple.com^$important
+@@||xp.apple.com^$important
+@@||apps.apple.com^$important
+@@||ppq.apple.com^$important
+@@||appldnld.apple.com.edgesuite.net^$important
+@@||itunes.com^$important
+@@||lcdn-registration.apple.com^$important
+@@||suconfig.apple.com^$important
+@@||xp-cdn.apple.com^$important
+@@||lcdn-locator.apple.com^$important
+@@||serverstatus.apple.com^$important
+@@||api.apple-cloudkit.com^$important
+@@||appattest.apple.com^$important
+@@||bpapi.apple.com^$important
+@@||cssubmissions.apple.com^$important
+@@||fba.apple.com^$important
+@@||diagassets.apple.com^$important
+@@||certs.apple.com^$important
+@@||crl.apple.com^$important
+@@||crl.entrust.net^$important
+@@||crl3.digicert.com^$important
+@@||crl4.digicert.com^$important
+@@||ocsp.apple.com^$important
+@@||ocsp.digicert.cn^$important
+@@||ocsp.digicert.com^$important
+@@||ocsp.entrust.net^$important
+@@||ocsp2.apple.com^$important
+@@||valid.apple.com^$important
+@@||appleid.apple.com^$important
+@@||gsa.apple.com^$important
+@@||apple-cloudkit.com^$important
+@@||apple-livephotoskit.com^$important
+@@||apzones.com^$important
+@@||cdn-apple.com^$important
+@@||gc.apple.com^$important
+@@||icloud.com^$important
+@@||icloud.com.cn^$important
+@@||icloud.apple.com^$important
+@@||icloud-content.com^$important
+@@||iwork.apple.com^$important
+@@||mask.icloud.com^$important
+@@||mask-h2.icloud.com^$important
+@@||mask-api.icloud.com^$important
+@@||guzzoni.apple.com^$important
+@@||smoot.apple.com^$important
+@@||app-site-association.cdn-apple.com^$important
+@@||app-site-association.networking.apple^$important
+@@||pos-device.apple.com^$important
+@@||phonesubmissions.apple.com^$important
+@@||audiocontentdownload.apple.com^$important
+@@||devimages-cdn.apple.com^$important
+@@||download.developer.apple.com^$important
+@@||playgrounds-assets-cdn.apple.com^$important
+@@||playgrounds-cdn.apple.com^$important
+@@||sylvan.apple.com^$important
+@@||identity.ess.apple.com^$important
+@@||outlook.office.com^$important
+@@||outlook.office365.com^$important
+@@||smtp.office365.com^$important
+@@||*.outlook.com^
+@@||autodiscover.*.onmicrosoft.com
+@@||*.protection.outlook.com
+@@||*.mail.protection.outlook.com
+@@||*.lync.com^
+@@||*.teams.microsoft.com^
+@@||teams.microsoft.com^$important
+@@||*.keydelivery.mediaservices.windows.net^
+@@||"*.streaming.mediaservices.windows.net^
+@@||"mlccdn.blob.core.windows.net^
+@@||*.users.storage.live.com^
+@@||adl.windows.com^$important
+@@||*.secure.skypeassets.com^
+@@||mlccdnprod.azureedge.net^$important
+@@||*.sharepoint.com^
+@@||ssw.live.com^$important
+@@||*.search.production.*.trafficmanager.net^
+@@||*.wns.windows.com^
+@@||admin.onedrive.com^$important
+@@||officeclient.microsoft.com^$important
+@@||g.live.com^$important
+@@||oneclient.sfx.ms^$important
+@@||*.sharepointonline.com^
+@@||spoprod-a.akamaihd.net^$important
+@@||*.svc.ms^
+@@||*.microsoftstream.com^
+@@||nps.onyx.azure.net^$important
+@@||*.azureedge.net^
+@@||*.media.azure.net^
+@@||*.streaming.mediaservices.windows.net^
+@@||*.officeapps.live.com^
+@@||*.online.office.com^
+@@||office.live.com^$important
+@@||*.office.net^
+@@||*.onenote.com^
+@@||*.microsoft.com^
+@@||*cdn.onenote.net^
+@@||ajax.aspnetcdn.com^
+@@||apis.live.net^$important
+@@||officeapps.live.com^$important
+@@||www.onedrive.com^$important
+@@||*.auth.microsoft.com^
+@@||*.msftidentity.com^
+@@||*.msidentity.com^
+@@||account.activedirectory.windowsazure.com^$important
+@@||accounts.accesscontrol.windows.net^$important
+@@||adminwebservice.microsoftonline.com^$important
+@@||api.passwordreset.microsoftonline.com^$important
+@@||autologon.microsoftazuread-sso.com^$important
+@@||becws.microsoftonline.com^$important
+@@||ccs.login.microsoftonline.com^$important
+@@||clientconfig.microsoftonline-p.net^$important
+@@||companymanager.microsoftonline.com^$important
+@@||device.login.microsoftonline.com^$important
+@@||graph.microsoft.com^$important
+@@||graph.windows.net^$important
+@@||login.microsoft.com^$important
+@@||login.microsoftonline.com^$important
+@@||login.microsoftonline-p.com^$important
+@@||login.windows.net^$important
+@@||logincert.microsoftonline.com^$important
+@@||loginex.microsoftonline.com^$important
+@@||login-us.microsoftonline.com^$important
+@@||nexus.microsoftonline-p.com^$important
+@@||passwordreset.microsoftonline.com^$important
+@@||provisioningapi.microsoftonline.com^$important
+@@||*.hip.live.com^
+@@||*.microsoftonline.com^
+@@||*.microsoftonline-p.com^
+@@||*.msauth.net^
+@@||*.msauthimages.net^
+@@||*.msecnd.net^
+@@||*.msftauth.net^
+@@||*.msftauthimages.net^
+@@||*.phonefactor.net^
+@@||enterpriseregistration.windows.net^$important
+@@||policykeyservice.dc.ad.msft.net^$important
+@@||*.compliance.microsoft.com^
+@@||*.protection.office.com^
+@@||*.security.microsoft.com^
+@@||compliance.microsoft.com^$important
+@@||defender.microsoft.com^$important
+@@||protection.office.com^$important
+@@||security.microsoft.com^$important
+@@||*.portal.cloudappsecurity.com^
+@@||*.blob.core.windows.net^
+@@||firstpartyapps.oaspapps.com^$important
+@@||prod.firstpartyapps.oaspapps.com.akadns.net^$important
+@@||telemetryservice.firstpartyapps.oaspapps.com^$important
+@@||wus-firstpartyapps.oaspapps.com^$important
+@@||*.aria.microsoft.com^
+@@||*.events.data.microsoft.com^
+@@||*.o365weve.com^
+@@||amp.azure.net^$important
+@@||appsforoffice.microsoft.com^$important
+@@||assets.onestore.ms^$important
+@@||auth.gfx.ms^$important
+@@||c1.microsoft.com^$important
+@@||dgps.support.microsoft.com^$important
+@@||docs.microsoft.com^$important
+@@||msdn.microsoft.com^$important
+@@||platform.linkedin.com^$important
+@@||prod.msocdn.com^$important
+@@||shellprod.msocdn.com^$important
+@@||support.microsoft.com^$important
+@@||technet.microsoft.com^$important
+@@||*.office365.com^
+@@||*.aadrm.com^
+@@||*.azurerms.com^
+@@||*.informationprotection.azure.com
+@@||ecn.dev.virtualearth.net^$important
+@@||informationprotection.hosting.portal.azure.net^$important
+@@||dc.services.visualstudio.com^
+@@||mem.gfx.ms^$important
+@@||staffhub.ms^$important
+@@||*.msocdn.com^
+@@||*.onmicrosoft.com^
+@@||o15.officeredir.microsoft.com^$important
+@@||officepreviewredir.microsoft.com^$important
+@@||officeredir.microsoft.com^$important
+@@||r.office.microsoft.com^$important
+@@||activation.sls.microsoft.com^$important
+@@||crl.microsoft.com^$important
+@@||office15client.microsoft.com^$important
+@@||go.microsoft.com^$important
+@@||ajax.aspnetcdn.com^$important
+@@||cdn.odc.officeapps.live.com^$important
+@@||officecdn.microsoft.com^$important
+@@||officecdn.microsoft.com.edgesuite.net^$important
+@@||otelrules.azureedge.net^$important
+@@||*.virtualearth.net^
+@@||c.bing.net^$important
+@@||ocos-office365-s2s.msedge.net^$important
+@@||tse1.mm.bing.net^$important
+@@||www.bing.com^$important
+@@||*.acompli.net^
+@@||*.outlookmobile.com^
+@@||login.windows-ppe.net^$important
+@@||account.live.com^$important
+@@||login.live.com^$important
+@@||www.acompli.com^$important
+@@||*.appex.bing.com^
+@@||*.appex-rf.msn.com^
+@@||c.bing.com^$important
+@@||c.live.com^$important
+@@||d.docs.live.net^$important
+@@||docs.live.net^$important
+@@||partnerservices.getmicrosoftkey.com^$important
+@@||signup.live.com^$important
+@@||*.yammer.com^
+@@||*.yammerusercontent.com^
+@@||*.assets-yammer.com
+@@||www.outlook.com^$important
+@@||*-www.sway-cdn.com^
+@@||*-www.sway-extensions.com^
+@@||sway.com^$important
+@@||www.sway.com^$important
+@@||*.entrust.net^
+@@||*.geotrust.com^
+@@||*.omniroot.com^
+@@||*.public-trust.com^
+@@||*.symcb.com^
+@@||*.symcd.com^
+@@||*.verisign.com^
+@@||*.verisign.net^
+@@||apps.identrust.com^$important
+@@||cacerts.digicert.com^$important
+@@||cert.int-x3.letsencrypt.org^$important
+@@||crl.globalsign.com^$important
+@@||crl.globalsign.net^$important
+@@||crl.identrust.com^$important
+@@||isrg.trustid.ocsp.identrust.com^$important
+@@||mscrl.microsoft.com^$important
+@@||ocsp.globalsign.com^$important
+@@||ocsp.msocsp.com^$important
+@@||ocsp2.globalsign.com^$important
+@@||ocspx.digicert.com^$important
+@@||secure.globalsign.com^$important
+@@||www.digicert.com^$important
+@@||www.microsoft.com^$important
+@@||officespeech.platform.bing.com^$important
+@@||*.skype.com^
+@@||*.office.com^
+@@||www.microsoft365.com^$important
+@@||*.microsoftusercontent.com^
+@@||*.azure-apim.net^
+@@||*.flow.microsoft.com^
+@@||*.powerapps.com^
+@@||*.powerautomate.com^
+@@||*.activity.windows.com^
+@@||activity.windows.com^$important
+@@||*.cortana.ai^
+@@||admin.microsoft.com^$important
+@@||cdn.uci.officeapps.live.com^$important
+@@||compass-ssl.microsoft.com^$important
+@@||*.cloud.microsoft^
+@@||*.static.microsoft^
+@@||*.usercontent.microsoft^
+@@||account.xiaomi.com^$important
+@@||api.account.xiaomi.com^$important
+@@||ruac.account.xiaomi.com^$important
+@@||sgpac.account.xiaomi.com^$important
+@@||api.io.mi.com^$important
+@@||i2.api.io.mi.com^$important
+@@||find.api.micloud.xiaomi.net^$important
+@@||*.find.api.micloud.xiaomi.net^
+@@||global.market.xiaomi.com^$important
+@@||update.intl.miui.com^$important
+@@||update.miui.com^$important
+@@||*.1e100.net1^
+@@||accounts.google.com^$important
+@@||accounts.google.*^
+@@||accounts.gstatic.com^$important
+@@||accounts.youtube.com^$important
+@@||alt*.gstatic.com3^
+@@||chromeos-ca.gstatic.com^$important
+@@||chromeosquirksserver-pa.googleapis.com^$important
+@@||clients1.google.com^$important
+@@||clients2.google.com^$important
+@@||clients3.google.com^$important
+@@||clients4.google.com^$important
+@@||clients2.googleusercontent.com^$important
+@@||cloudsearch.googleapis.com^$important
+@@||commondatastorage.googleapis.com^$important
+@@||cros-omahaproxy.appspot.com^$important
+@@||dl.google.com^$important
+@@||dl-ssl.google.com^$important
+@@||enterprise-safebrowsing.googleapis.com^$important
+@@||firebaseperusertopics-pa.googleapis.com^$important
+@@||*.googleusercontent.com^
+@@||*.gvt1.com^
+@@||gweb-gettingstartedguide.appspot.com^$important
+@@||m.google.com^$important
+@@||*mtalk.google.com^$important
+@@||omahaproxy.appspot.com^$important
+@@||pack.google.com^$important
+@@||policies.google.com^$important
+@@||printerconfigurations.googleusercontent.com^$important
+@@||safebrowsing-cache.google.com^$important
+@@||safebrowsing.google.com^$important
+@@||safebrowsing.googleapis.com^$important
+@@||sb-ssl.google.com^$important
+@@||scone-pa.clients6.google.com^$important
+@@||ssl.gstatic.com^$important
+@@||storage.googleapis.com^$important
+@@||tools.google.com^$important
+@@||www.googleapis.com^$important
+@@||www.gstatic.com^$important
+@@||youtubeeducation.com^$important
+@@||fast.com^$important
+@@||*netflix.ca^
+@@||*netflix.com^
+@@||*netflix.net^
+@@||*netflixinvestor.com^
+@@||*netflixtechblog.com^
+@@||*nflxext.com^
+@@||*nflximg.com^
+@@||*nflximg.net^
+@@||*nflxsearch.net^
+@@||*nflxso.net^
+@@||*nflxvideo.net^
+@@||*steampowered.com^
+@@||*steamcommunity.com^
+@@||*steamchina.com^
+@@||my.steamchina.com^$important
+@@||*steamgames.com^
+@@||*steamusercontent.com^
+@@||*steamcontent.com^
+@@||*steamstatic.com^
+@@||*akamaihd.net^
+@@||dispatcher.is.autonavi.com^$important
+@@||amp-api*apple.com.*^
+@@||amp-api.music.apple.com^
+@@||weather-data.apple.com*^
+@@||gspe*.apple.com*^
+@@||*apple.com*^
+@@||quota*apple*^
+@@||support.apple.com*^
+@@||*microsoft.com*akadns.net*^
+@@||*microsoft.com.edgekey.net*^
+@@||*office.net.edgekey.net*^
+@@||*office*akadns.net*^
+@@||*microsoft.akadns.net*^
+@@||*onedrive.akadns.net*^
+@@||*live.com.akadns.net*^
+@@||*akamaiedge.net*^
+@@||*msedge.net*^
+@@||*googlevideo.com*^
+@@||*ggpht.com^
+@@||account-public-service-prod03.ol.epicgames.com^$important
+@@||launcherwaitingroom-public-service-prod06.ol.epicgames.com^$important
+@@||launcher-public-service-prod06.ol.epicgames.com^$important
+@@||www.epicgames.com^$important
+@@||launcher-website-prod07.ol.epicgames.com^$important
+@@||accounts.launcher-website-prod07.ol.epicgames.com^$important
+@@||accounts.epicgames.com^$important
+@@||cdn1.unrealengine.com^$important
+@@||cdn2.unrealengine.com^$important
+@@||datarouter.ol.epicgames.com^$important
+@@||entitlement-public-service-prod08.ol.epicgames.com^$important
+@@||orderprocessor-public-service-ecomprod01.ol.epicgames.com^$important
+@@||catalog-public-service-prod06.ol.epicgames.com^$important
+@@||friends-public-service-prod06.ol.epicgames.com^$important
+@@||lightswitch-public-service-prod06.ol.epicgames.com^$important
+@@||accountportal-website-prod07.ol.epicgames.com^$important
+@@||ut-public-service-prod10.ol.epicgames.com^$important
+@@||epicgames-download1.akamaized.net^$important
+@@||download.epicgames.com^$important
+@@||download2.epicgames.com^$important
+@@||download3.epicgames.com^$important
+@@||download4.epicgames.com^$important
+@@||static-assets-prod.epicgames.com^$important
+@@||store-site-backend-static.ak.epicgames.com^$important
+@@||store-content.ak.epicgames.com^$important
+@@||library-service.live.use1a.on.epicgames.com^$important
+@@||datastorage-public-service-liveegs.live.use1a.on.epicgames.com^$important
+@@||fastly-download.epicgames.com^$important
+@@||store.epicgames.com^$important
+@@||launcher.store.epicgames.com^$important
+@@||*epicgames*myqcloud.com*^
+@@||*unrealengine*myqcloud.com*^

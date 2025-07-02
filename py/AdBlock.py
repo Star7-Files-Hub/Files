@@ -15,7 +15,6 @@ rule_sources = {
     "https://ghfast.top/raw.githubusercontent.com/8680/GOODBYEADS/master/data/rules/dns.txt": "dns.txt",
     "https://ghfast.top/raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt": "ADgk.txt",
     "https://ghfast.top/raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-hosts.txt": "AWAvenue-Ads-Rule-hosts.txt",
-    "http://rssv.cn/adguard/api.php?type=black": "QY.txt",
     "https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/refs/heads/main/rule.txt": "rules.txt",
     "https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/main/bad_apple.txt": "bad_apple.txt",
     "https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/refs/heads/main/whitelist.txt": "whitelist.txt"

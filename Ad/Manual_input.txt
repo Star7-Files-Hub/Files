@@ -31,3 +31,12 @@ imagehub.cc###ad-banner-homepage > a > img
 imagehub.cc###home_after_cta > a
 kdocs.cn###app > div.manager-container-wrapper:first-child > div.manager-container:first-child > div.manager-container-body:nth-child(2) > div.menu-aside-wrapper:first-child > div.menu-aside-content:first-child > div.menu-aside-main-wrapper.scroll-list:nth-child(2) > div.menu-aside-main > div.menu-aside-activity:last-child
 kdocs.cn###app > div.manager-container-wrapper:first-child > div.manager-container:first-child > div.header-container.manager-container-header:first-child > div.header-content:last-child > div.header-menu:last-child > div.header-menu-ad:first-child
+||sentry-cdn.com^$third-party,domain=~sentry.dev|~sentry.io
+||googletagmanager.com/gtag/$third-party
+||hotjar.com^$third-party
+||mc.yandex.ru/metrika/tag.js$script,redirect=metrika-yandex-tag,domain=~id.x5.ru|~aiondb.ru
+$cookie=_ym_uid
+$cookie=_ym_d
+$cookie=_ym_isad
+||googlesyndication.com^
+||yandex.ru/metrika/

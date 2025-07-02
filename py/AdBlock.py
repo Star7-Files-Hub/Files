@@ -69,7 +69,7 @@ for url, label in rule_sources.items():
 # 构建规则文件头部（元信息）
 header = [
     "! Title: 7Star's_Ad_Rules",
-    "! Homepage: https://github.com/Star7-Files-Hub/Files/Ad",
+    "! Homepage: https://github.com/Star7-Files-Hub/Files/tree/main/Ad",
     "! Expires: 12 Hours",
     f"! Version: {version_str}",
     "! Description: 适用于AdGuard的去广告规则，合并优质上游规则并去重整理排列",

@@ -1,4 +1,4 @@
-! Title: 7Star's_Ad_Rules
+! Title: 7Star's_Ad_Rules_input
 ! Homepage: https://github.com/Star7-Files-Hub/Files/Ad
 ! Description: 适用于AdGuard的网页去广告规则，手动更新我所看见的广告
 hdfans.org###outer > div:first-child > a:first-child > img

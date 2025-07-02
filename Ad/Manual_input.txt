@@ -54,3 +54,7 @@ $cookie=_ym_isad
 /.*/$permissions=join-ad-interest-group=(),document
 /.*/$permissions=identity-credentials-get=(),document
 /widget/ads.
+weixin.qq.com##div[class^="ad_ori"]
+mp.weixin.qq.com###js_bottom_ad_area
+mp.weixin.qq.com##div[id^="ad_div_"]
+mp.weixin.qq.com##div[class^="video_ad_mask"]

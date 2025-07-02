@@ -53,3 +53,4 @@ $cookie=_ym_isad
 */pagead$script
 /.*/$permissions=join-ad-interest-group=(),document
 /.*/$permissions=identity-credentials-get=(),document
+/widget/ads.

@@ -44,3 +44,12 @@ $cookie=_ym_isad
 ##.ad-unit:not(html,body,:empty)
 /fakepage.html|$important
 /.*/$permissions=identity-credentials-get=(),document
+|http*://*.*$document,domain=~0.0.0.0|~127.0.0.1|~[::1]|~[::]|~local|~localhost|~stooq.com|~stooq.pl,permissions=autoplay=()
+/.*/$permissions=private-state-token-redemption=(),document
+/.*/$permissions=private-state-token-issuance=(),document
+/.*/$permissions=browsing-topics=(),document
+/.*/$permissions=run-ad-auction=(),document
+||gc.zgo.at^$third-party
+*/pagead$script
+/.*/$permissions=join-ad-interest-group=(),document
+/.*/$permissions=identity-credentials-get=(),document

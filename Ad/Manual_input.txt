@@ -21,3 +21,10 @@ ubits.club###outer > div:first-child > a > img
 nicept.net###outer > div:first-child > font > span > a:last-child > img
 blog.csdn.net###mainBox > aside.blog_container_aside:nth-child(3) > div.swiper-slide-box-remuneration:nth-child(2)
 blog.csdn.net###kp_box_58
+blog.csdn.net###kp_box_58
+bilibili.com###i_cecream > div.bili-feed4:last-child > main.bili-feed4-layout:nth-child(3) > div.feed2:last-child > div.recommended-container_floor-aside > div.container.is-version8:first-child > div.bili-feed-card
+imagehub.cc###home_before_title > a
+imagehub.cc###ad-banner-homepage > a > img
+imagehub.cc###home_after_cta > a
+kdocs.cn###app > div.manager-container-wrapper:first-child > div.manager-container:first-child > div.manager-container-body:nth-child(2) > div.menu-aside-wrapper:first-child > div.menu-aside-content:first-child > div.menu-aside-main-wrapper.scroll-list:nth-child(2) > div.menu-aside-main > div.menu-aside-activity:last-child
+kdocs.cn###app > div.manager-container-wrapper:first-child > div.manager-container:first-child > div.header-container.manager-container-header:first-child > div.header-content:last-child > div.header-menu:last-child > div.header-menu-ad:first-child

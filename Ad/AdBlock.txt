@@ -1,9 +1,9 @@
 ! Title: 7Star's_Ad_Rules
 ! Homepage: https://github.com/Star7-Files-Hub/Files/tree/main/Ad
 ! Expires: 12 Hours
-! Version: 2025-07-10 09:14:41（北京时间）
+! Version: 2025-07-10 20:31:40（北京时间）
 ! Description: 适用于AdGuard的去广告规则，合并优质上游规则并去重整理排列
-! Total count: 112707
+! Total count: 112904
 
 ! Source: https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/fq2.txt (fq2.txt)
 ||*^$all,app=com.dragon.read,important
@@ -9829,10 +9829,12 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||66f5dd9691.com^
 ||66jo.societegenerale.fr^
 ||671c.pandasuite.io^
+||678b4c02d9.com^
 ||67trackdomain.com^
 ||67u36vmzm.com^
 ||68-175.net.jumia.co.ke^
 ||6806.notify.optimizesrv.com^
+||680642cdf3.com^
 ||6820tp1.com^
 ||68261736.xyz^
 ||68287zubo85737.com^
@@ -9898,6 +9900,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||6f472074c3.6a0d38e347.com^
 ||6fb77be0c7.c0636e54f1.com^
 ||6fb7f2651f.ac359edaf2.com^
+||6fbce8ec59.com^
 ||6ft8a.icu^
 ||6gi0edui.xyz^
 ||6glece4homah8dweracea.com^
@@ -14820,6 +14823,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||aardwolf.meinsmartplan.de^
 ||aardwolf.relaycorp.tech^
 ||aarghclothy.com^
+||aariedbtr.com^
 ||aaronabel.com^
 ||aaronautosandtrucks.com^
 ||aarossqnat.com^
@@ -15743,6 +15747,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||acv.xn--lck7b0fy49k9y1b.com^
 ||acxajt.jimmykey.com^
 ||aczaqkaxbwu.com^
+||aczopdxfy.com^
 ||aczqkeofzrag.com^
 ||ad*.on.cc^
 ||ad-1258444056.cos.accelerate.myqcloud.com^
@@ -19082,6 +19087,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||alive-ua.com^
 ||aliveprompt.com^
 ||aliwjo.com^
+||aliyosstormer.top^
 ||alizebruisiaculturer.org^
 ||alizedusud.free.fr^
 ||aljasdgc.com^
@@ -19498,6 +19504,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||amoutjsvp-u.club^
 ||amp-error-reporting.appspot.com^
 ||amp.services^
+||ampbnifxs.com^
 ||ampcr.io^
 ||ampelisgulps.top^
 ||amphibian.pinestc.com^
@@ -22115,6 +22122,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||appropriateinaction.com^
 ||approved.website^
 ||approvelongestrepel.com^
+||approximatedriver.com^
 ||apps-pbd.ctraffic.io^
 ||apps-test.spectrum-member.com^
 ||apps.airmeet.com^
@@ -22362,6 +22370,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||aria.inhaabit.com^
 ||ariane.abtasty.com^
 ||ariessifts.click^
+||arietidgrieced.top^
 ||arigng.door.ac^
 ||arimogdjucslstc.com^
 ||arincol.arin-innovation.com^
@@ -22932,6 +22941,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ationforeathyougla.com^
 ||atiteasexam.quantresear.ch^
 ||atiws.aipai.com^
+||atjbbflsi.com^
 ||atjigglypuffor.com^
 ||atjogdfzivre.com^
 ||atjtzuva.com^
@@ -23052,6 +23062,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||aucdn.net^
 ||auchoahy.net^
 ||auchoons.net^
+||aucmistaibs.net^
 ||aucmoartoas.com^
 ||aucqdk.autodoc.es^
 ||auctionads.com^
@@ -23462,6 +23473,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ax.mpcdn.top^
 ||ax.xrea.com^
 ||ax4.xmoviesland.com^
+||axaldobl.top^
 ||axalgyof.xyz^
 ||axaskafs.com^
 ||axbcipfigw.com^
@@ -23695,6 +23707,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||azcmcacuc.com^
 ||azcoct.bikkembergs.com^
 ||azeleiljkpywl.vip^
+||azelvid.com^
 ||azenco.xyz^
 ||azenka.one^
 ||azeriondigital.com^
@@ -24440,6 +24453,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||bawovzjweqhi.com^
 ||bayctrk.com^
 ||bayfoxtrot.top^
+||baygpuglqgzoi.store^
 ||bayshoresystems.actonservice.com^
 ||bayshorline.com^
 ||baywednesday.com^
@@ -24748,6 +24762,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||beckoverreactcasual.com^
 ||becode.xiao84.com^
 ||becomeapartner.io^
+||becomeo21.com^
 ||becomesfusionpriority.com^
 ||becomessamish.top^
 ||becominggunpowderpalette.com^
@@ -25293,6 +25308,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||bikolsurbase.top^
 ||bilahh.feuvert.fr^
 ||bilboadiobol.top^
+||bildarentrep.top^
 ||bilder11.markt.de^
 ||bildrat.com^
 ||bilgesmsource.shop^
@@ -25318,6 +25334,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||bindirect.click^
 ||bineukdwithme.com^
 ||bineukdwithmef.org^
+||bingedhava.shop^
 ||binibeetfly.com^
 ||binmanoboles.com^
 ||binocule21c.merriam-webster.com^
@@ -25620,6 +25637,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||bloxplay.com^
 ||blprgctcgxjreyu.com^
 ||blqsrexczsqht.site^
+||blqwbyqqbvwbb.top^
 ||blrpylpcpal.com^
 ||blsoof.wirwinzer.de^
 ||blspqefzfmazg.site^
@@ -25950,6 +25968,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||boreasnetsuke.com^
 ||boredhippie.com^
 ||boreusorgans.top^
+||borfaulx.top^
 ||borghjism.com^
 ||borhaj.com^
 ||boringherbalprewashed.com^
@@ -26678,6 +26697,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||buckumoore.com^
 ||bucnmtv.top^
 ||bucnwtv.top^
+||bucraneburet.top^
 ||buddedbotoyan.shop^
 ||buddyguests.com^
 ||budfduwa.xyz^
@@ -27729,6 +27749,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||casl.couch-associates.com^
 ||caspionlog.appspot.com^
 ||cassatabayard.com^
+||cassheencash.top^
 ||cassinamawger.top^
 ||cast.net.anwalt.de^
 ||castify-trk.playitviral.com^
@@ -27759,7 +27780,9 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||catfish.phuclh.com^
 ||catfish.pressure.cooking^
 ||catfish.sofatido.ch^
+||catgutssendal.top^
 ||catherinebrochure.com^
+||cathodecynodon.shop^
 ||catholicprevalent.com^
 ||cathrynslues.com^
 ||catoixeam.click^
@@ -27902,6 +27925,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ccg90.com^
 ||ccgcg.com^
 ||cchdbond.com^
+||cchkvtejdnqov.space^
 ||cchlhb.budgetsport.fi^
 ||ccinmaf.top^
 ||ccinvdf.top^
@@ -27928,6 +27952,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ccztgy.elgiganten.dk^
 ||cd.chemistanddruggist.co.uk^
 ||cd037385e0.b67f1b04e9.com^
+||cd2bkmz3rz.com^
 ||cd717179d0.569f43f295.com^
 ||cd7211716b.935eadb976.com^
 ||cda7k-ddok.com^
@@ -28834,6 +28859,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||choppyevectic.shop^
 ||choptacache.com^
 ||chordeehepcats.shop^
+||chordspetrous.top^
 ||chorninsm.com^
 ||choruscompanion.com^
 ||chorwatcurlike.com^
@@ -28962,6 +28988,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||cionstuxedo.com^
 ||cipledecline.buzz^
 ||cipledeclinerybe.org^
+||cipohailed.shop^
 ||ciqtracking.com^
 ||ciqvaiywqpkpk.club^
 ||cir-smart.baidu.com^
@@ -29954,6 +29981,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||cohesive.actonservice.com^
 ||cohibitegos.com^
 ||cohtsfkwaa.com^
+||coifingpicong.shop^
 ||coifstarheel.shop^
 ||coinad.media^
 ||coinadster.com^
@@ -30154,6 +30182,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||comalonger.com^
 ||comarind.com^
 ||combatboatsplaywright.com^
+||combfathoms.top^
 ||combia-tellector.com^
 ||combinedawfully.com^
 ||combinestronger.com^
@@ -30896,6 +30925,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||coogoanu.net^
 ||coohauwhob.net^
 ||coojohoaboapee.xyz^
+||cooked-manufacturer.pro^
 ||cookeryshed.com^
 ||cookevegas.com^
 ||cookie-guard-erdee.ey.r.appspot.com^
@@ -31066,6 +31096,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||coublif.top^
 ||coucalhidated.com^
 ||couchedbliny.top^
+||couchedkestrel.top^
 ||coudswamper.com^
 ||cougar.augmentedmindapp.com^
 ||cougar.wzulfikar.com^
@@ -31963,6 +31994,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||cunlagadzwu.com^
 ||cupbearergrowllurch.com^
 ||cupboardgold.com^
+||cupeleralfur.top^
 ||cupi-meetparadise.com^
 ||cupidirresolute.com^
 ||cupidonmedia.com^
@@ -33772,6 +33804,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||damararegalio.top^
 ||damdoor.com^
 ||damedamehoy.xyz^
+||damfooluncomic.shop^
 ||damierbrain.top^
 ||dammywealth.com^
 ||dampdock.com^
@@ -33805,6 +33838,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||darcyjellynobles.com^
 ||dardzeglhpsqv.tech^
 ||daredjadedormitory.com^
+||dargersniffs.shop^
 ||darghinruskin.com^
 ||daringdemand.com^
 ||daringsupport.com^
@@ -35072,6 +35106,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||demowebcode.online^
 ||denamebauleah.click^
 ||denariibrocked.com^
+||denariichamal.shop^
 ||denayphlox.top^
 ||denbeigemark.com^
 ||dendrito.name^
@@ -35461,6 +35496,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||diagramjawlineunhappy.com^
 ||diagramwrangleupdate.com^
 ||dial.rencontres-celibataires.info^
+||dialampfly.shop^
 ||dialer.leads360.com^
 ||dialer.velocify.com^
 ||dialeroilman.top^
@@ -35761,6 +35797,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||diligentcloset.com^
 ||dilmcrybf.com^
 ||dilowhang.com^
+||dilsaithautsu.net^
 ||diltqdxecyicf.com^
 ||dilutesnoopzap.com^
 ||dilvyi2h98h1q.cloudfront.net^
@@ -35771,6 +35808,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||dimensionvegana.com^
 ||dimessing-parker.com^
 ||dimfarlow.com^
+||diminrankers.shop^
 ||dimlmhowvkrag.xyz^
 ||dimmerlingowashable.com^
 ||dimmosit.live^
@@ -35979,6 +36017,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||disquietwokesupersede.com^
 ||disqusads.com^
 ||disrespectpreceding.com^
+||dissectmuts.shop^
 ||dissemblebendnormally.com^
 ||dissipatecombinedcolon.com^
 ||dist.belnk.com^
@@ -36418,6 +36457,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||dochmiiresidue.com^
 ||dockdigestion.com^
 ||docketsfurzed.shop^
+||dockingsedovic.top^
 ||doclec.supersmart.com^
 ||doclen.hypedc.com^
 ||docomo-analytics.com^
@@ -36464,6 +36504,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||dolehum.com^
 ||dolekaraokeoversleep.com^
 ||dolhuvumjpzwv.website^
+||doljqrkgovqce.website^
 ||dolmansunhose.top^
 ||dolohen.com^
 ||dolphin.brandname.tech^
@@ -36646,6 +36687,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||douserdoo.top^
 ||dousoavaisoup.com^
 ||douthosh.net^
+||doutouskillas.shop^
 ||douveejoalastu.net^
 ||douwhaiwupe.net^
 ||douzvrswnkxzv.icu^
@@ -37700,6 +37742,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||eastern2.secureforms.mcafee.com^
 ||eastfeukufu.info^
 ||eastfeukufu.org^
+||eastmanpained.shop^
 ||eastrk-dn.com^
 ||eastrk-lg.com^
 ||easy-contact-club.com^
@@ -38111,6 +38154,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||eeaczcf.icu^
 ||eebeaabd98.574ae48fe5.com^
 ||eeberoasfqxwg.global^
+||eebsoockizoo.com^
 ||eebsootchassoo.com^
 ||eec.crunchyroll.com^
 ||eecd.xyz^
@@ -38144,6 +38188,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||eemaibsemtushaz.net^
 ||eemgl.com^
 ||eemoenekqxnmss.com^
+||eempimsexy.net^
 ||eemseptouby.net^
 ||eemsouchaurdun.com^
 ||eengange.com^
@@ -38286,6 +38331,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ehmhqcn.cn^
 ||ehmnmovcnwkyb.website^
 ||ehmqlr.com^
+||ehojmgibkv.com^
 ||ehokeeshex.com^
 ||ehrlgb.izlato.sk^
 ||ehrydnmdoe.com^
@@ -39399,6 +39445,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||eokzre.jd-sports.com.au^
 ||eolioadwse.xyz^
 ||eolvci.olx.ro^
+||eomecondormy.top^
 ||eonads.com^
 ||eondunpea.com^
 ||eoneintheworldw.com^
@@ -40198,6 +40245,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ewutoxapaffqc.site^
 ||ewuvpujntjoael.com^
 ||ewvz.cn^
+||ewwswscg.com^
 ||ewxufqs.cn^
 ||ewygto.swanicoco.co.kr^
 ||ewyvuznndlmrk.online^
@@ -40660,6 +40708,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||faggrim.com^
 ||faginsbonav.top^
 ||fagloafexeele.com^
+||fagoubibzmov.com^
 ||fagrirtn.com^
 ||fagtgb.acorn.com^
 ||fahbagxhu.com^
@@ -40846,6 +40895,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||faugrich.info^
 ||faugstat.info^
 ||faultsmtge.com^
+||fautonoacasogly.com^
 ||fauzxn.hairlavie.com^
 ||favorbort.guru^
 ||favoredkuwait.top^
@@ -40972,6 +41022,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||fea-cfd.simutechgroup.com^
 ||feableandworld.com^
 ||feadrope.net^
+||fearergulpin.shop^
 ||fearinvulnerablediagnosis.com^
 ||fearjav11.fun^
 ||feastfirefly.shop^
@@ -41090,6 +41141,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ferret.tailgraph.com^
 ||ferrisoisin.com^
 ||ferritemegapod.shop^
+||ferrugofinland.shop^
 ||fertojolalsu.net^
 ||ferukentaspects.com^
 ||fervcbytncxaj.icu^
@@ -41655,6 +41707,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||fiu07080kl.com^
 ||fiu07081kl.com^
 ||fiu07090kl.com^
+||fiu07100kl.com^
 ||fivulsou.xyz^
 ||fiwhibse.com^
 ||fiwinet.firmenwissen.com^
@@ -41822,6 +41875,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||flog.pressplay.cc^
 ||flogs.orange.es^
 ||floitcarites.com^
+||floodinglivestock.com^
 ||floodingonion.com^
 ||floodprincipal.com^
 ||floorednightclubquoted.com^
@@ -42035,6 +42089,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||footprintsfurnish.com^
 ||footprintstopic.com^
 ||footy.to^
+||footyfoge.shop^
 ||foouvpofnhhltg.com^
 ||forabomasnowan.com^
 ||foranetter.com^
@@ -42727,6 +42782,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||fussy-highway.pro^
 ||fussysandwich.pro^
 ||fustegriky.com^
+||fustocmillman.shop^
 ||fut.mondo.link^
 ||futbixolrcw.com^
 ||futcceabr.com^
@@ -42802,6 +42858,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||fxbcyvlrr.com^
 ||fxclub.org^
 ||fxdepo.com^
+||fxdgionl.com^
 ||fxdmnmsna.space^
 ||fxfezg.bodylab24.de^
 ||fxipca.americanexpress.ca^
@@ -42993,6 +43050,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||gahejiao.com^
 ||gahhfg.bobo.com.br^
 ||gahnitehrzn.com^
+||gai1359.xyz^
 ||gaia.adage.com/assets/js/min/BlockDetector.js^
 ||gaigloagrogribu.com^
 ||gaikailorouma.com^
@@ -43106,6 +43164,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||garbagebanquetintercept.com^
 ||garbageshallotsnowiness.com^
 ||garbnlwghgtyafd.com^
+||garboillegions.shop^
 ||gardenian8.top^
 ||gardoult.com^
 ||garglingably.com^
@@ -43283,6 +43342,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||gdqhim.icu^
 ||gdqlno.weisshaus.de^
 ||gdrcaguddyj.space^
+||gdsbzmewiwid.com^
 ||gdsngr.chainreactioncycles.com^
 ||gdwudmv.icu^
 ||gdyjs.com^
@@ -43329,6 +43389,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||gelatineabstainads.com^
 ||gelescu.cloud^
 ||gelhp.com^
+||gellyafgod.shop^
 ||gelnhamforma.com^
 ||gelopro.com^
 ||geltegleebsado.com^
@@ -44021,6 +44082,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||glevoloo.com^
 ||gli9.inseec-bs.com^
 ||gliceebe.xyz^
+||glickwaygate.shop^
 ||glideimpulseregulate.com^
 ||gligoubsed.com^
 ||glihoulraiph.net^
@@ -44031,6 +44093,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||gliptoacaft.net^
 ||gliraimsofu.net^
 ||glistening-novel.pro^
+||glitteringovernightflea.com^
 ||glitteringunavoidable.com^
 ||gliybhqdie.xyz^
 ||glizauvo.net^
@@ -44040,6 +44103,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||gloacmemsuds.com^
 ||gloacmug.net^
 ||gloaglahouls.net^
+||gloamsacoudou.net^
 ||gloardaigrith.com^
 ||gloardoali.com^
 ||global-go.experian.com^
@@ -45104,8 +45168,10 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||gp.zaiyunli.cn^
 ||gpcrn.com^
 ||gpdaibmsc.com^
+||gpfhlajkvdhvv.space^
 ||gpfvumsxtbf.com^
 ||gpgijcpdfbvit.com^
+||gpgxmsnmyccekn.com^
 ||gpibcoogfb.com^
 ||gpickufi.com^
 ||gpiljd.thetiebar.com^
@@ -45431,6 +45497,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||gruesome1x.xyz^
 ||gruffsleighrebellion.com^
 ||gruffwhitsun.com^
+||grugnouvauw.com^
 ||grumblestardomtactful.com^
 ||grumpyhopesucceeding.com^
 ||grumpyslayerbarton.com^
@@ -45483,6 +45550,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||gspqch.cake.jp^
 ||gsrctroclqloz.tech^
 ||gsrgjsmymkwt.com^
+||gssblcpzmvdzo.site^
 ||gsshawhfvwpl.com^
 ||gsspat.jp^
 ||gsspcln.jp^
@@ -45602,6 +45670,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||guesswhatnews.com^
 ||guest.vistage.com^
 ||guftibkagam.com^
+||guggletkibitka.shop^
 ||gugliorugate.shop^
 ||gugnoaglugn.net^
 ||guhomnfuzq.com^
@@ -45744,6 +45813,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||gx.idg.se^
 ||gx0.funfuckmovies.com^
 ||gx101.com^
+||gxaswlbqotagx.online^
 ||gxbrowser.net^
 ||gxcaxz.cresus.fr^
 ||gxcdgm.xyz^
@@ -45897,6 +45967,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||hagglernegotiateunnerving.com^
 ||hagnutrient.com^
 ||hahaql.top^
+||haigouthaizik.net^
 ||haigrigo.com^
 ||haikcarlage.com^
 ||hailofficemeasure.com^
@@ -45929,6 +46000,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||halingtackety.com^
 ||hallanjerbil.com^
 ||hallohaus.co^
+||hallooclawk.shop^
 ||hallowcichlid.shop^
 ||halluxbarwal.shop^
 ||halo.actonservice.com^
@@ -46341,6 +46413,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||heedlessplanallusion.com^
 ||heedmicroscope.com^
 ||heemphaers.com^
+||heenojouwofoupt.com^
 ||heezyfreefd.click^
 ||heflewrounda.org^
 ||heflewroundandr.com^
@@ -46509,6 +46582,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||heycryptic.com^
 ||heyjjbkuipsoz.space^
 ||heyos.com^
+||heyuhzdhoxcms.online^
 ||heyyounow.my^
 ||heyzap.com^
 ||hf.forevernetworks.com^
@@ -46590,6 +46664,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||hhuobnajd.com^
 ||hhvbdeewfgpnb.xyz^
 ||hhwcqa.underarmour.com.br^
+||hhwfqljszffgm.website^
 ||hhxqadbgokgtb.online^
 ||hhzcuywygcrk.com^
 ||hi-xgnnkqs.buzz^
@@ -47519,6 +47594,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||huntmad.com^
 ||hunyakkelder.top^
 ||huo07091hy.com^
+||huo07100hy.com^
 ||huohuo.huamuwo.com^
 ||huoxun.wang^
 ||hupot.site^
@@ -47888,6 +47964,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ibmfunk.com^
 ||ibmsqqyrqb.com^
 ||ibmtechnology.arrow.com^
+||ibnfkwbvtlnle.com^
 ||ibnouscav.com^
 ||ibpnfwxcwuth.com^
 ||ibqemk.icu^
@@ -48000,6 +48077,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||idiafix.com^
 ||idianw.warmteservice.nl^
 ||idickeo.top^
+||idiotic-university.pro^
 ||idioticmapping.com^
 ||idipsumo.top^
 ||iditero.top^
@@ -48050,6 +48128,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||iegrozrmvgjfp.online^
 ||iegwze.goldcar.es^
 ||ieix.cn^
+||iejfgwefn.com^
 ||ieluqiqttdwv.com^
 ||iemhotqk.com^
 ||iemiq.com^
@@ -48185,6 +48264,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||iigirlslove.com^
 ||iigmlx.com^
 ||iihlctgte.com^
+||iikvismswaymfy.com^
 ||iiqbttkbfvgyo.com^
 ||iiqtru.aunworks.jp^
 ||iirpzp.novasol.com^
@@ -48274,6 +48354,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||illiterate-tomorrow.pro^
 ||illiticguiding.com^
 ||illscript.com^
+||illudebaffing.shop^
 ||illuminatedusing.com^
 ||illuminateinconveniencenutrient.com^
 ||illuminatelocks.com^
@@ -49994,6 +50075,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||infokz.com^
 ||infola.readingpartners.org^
 ||infoland.actonservice.com^
+||infoldotarine.shop^
 ||infolinks.com^
 ||infonewsz.care^
 ||infontx.readingpartners.org^
@@ -50948,6 +51030,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||iwursero.top^
 ||iwuwkslisixyq.xyz^
 ||iwyfgymlv.com^
+||iwymawvxvox.com^
 ||ix2.deepsexvids.com^
 ||ix4.icu^
 ||ixa9ill0f7bg.grundbuch.zentraler-antragsservice.com^
@@ -51075,6 +51158,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||jaiwhaiglovo.com^
 ||jakseegrutso.net^
 ||jalapicundelve.top^
+||jalapincervix.shop^
 ||jalappickles.com^
 ||jaletemetia.com^
 ||jaltvejugmjjq.online^
@@ -51489,6 +51573,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||jigsrywu.com^
 ||jigtilolwor.com^
 ||jiimputer.shop^
+||jijeahjtjzpxr.space^
 ||jijqzypmeqi.com^
 ||jikbwoozvci.com^
 ||jikklfexh.com^
@@ -51638,6 +51723,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||jn23.madeindesign.it^
 ||jncx1s.michaellindahl.com^
 ||jndcdxcoqjroj.store^
+||jngqqljojzlzv.top^
 ||jnhjpdayvpzj.com^
 ||jnjslk.top^
 ||jnkqnf.cifraclub.com.br^
@@ -52085,6 +52171,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||jucasture.com^
 ||jucnwta.top^
 ||judasesesrogim.com^
+||judazkoxbnhnc.store^
 ||judebelii.com^
 ||judgefraud.com^
 ||judgementcorruptattack.com^
@@ -52303,6 +52390,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||jzleekzaovzjy.top^
 ||jznmkamkabnnv.top^
 ||jzogljnmwamla.top^
+||jzokkejvjbebl.top^
 ||jzokkejvjblrq.top^
 ||jzokkejvjblww.top^
 ||jzokkejvjrvwj.top^
@@ -52370,6 +52458,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||kabakamarbles.top^
 ||kabbeqcgvlwfs.com^
 ||kabokc.webuy.com^
+||kacjbclirfhsp.online^
 ||kacvpeatzlro.com^
 ||kadam.net^
 ||kaden.netoff.co.jp^
@@ -52405,6 +52494,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||kalmukrattail.com^
 ||kalstats.kaltura.com^
 ||kalwub.mizuho-re.co.jp^
+||kamaoebonize.top^
 ||kamasindemaree.top^
 ||kamassmyalia.com^
 ||kamchatka-io.traveler.today^
@@ -53123,6 +53213,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||kousjcignye.com^
 ||koutobey.net^
 ||koutoowekoa.net^
+||koutunagreeh.com^
 ||kouunrov.xyz^
 ||kovmgkwnknqwa.top^
 ||kowj.cn^
@@ -54030,6 +54121,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||leafingcoitus.website^
 ||leafletluckypassive.com^
 ||leafletsmakesunpleasant.com^
+||leafprising.shop^
 ||leafy-feel.com^
 ||leafy-tune.pro^
 ||leagsmk.icu^
@@ -54154,6 +54246,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||lelrouxoay.com^
 ||lelruftoutufoux.net^
 ||lem.nouvelobs.com^
+||lemanealaccic.shop^
 ||lementwrencespri.com^
 ||lementwrencespri.info^
 ||lemetri.info^
@@ -54414,6 +54507,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ligatus.com^
 ||ligatus.de^
 ||ligcooter.shop^
+||ligcspstbrvgf.online^
 ||liggewaeful.com^
 ||lighterthinnerstronger.fiber-line.com^
 ||lightfoot.top^
@@ -55676,6 +55770,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||lmvotk.cn^
 ||lmvrjabakemkk.top^
 ||lmvrjabakemzq.top^
+||lmylfrrogcxdj.com^
 ||lmyvafkazblue.site^
 ||lmzhpzoycxjfn.top^
 ||ln.ameba.jp^
@@ -55719,6 +55814,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||load.nootiz.com^
 ||loader-cdn.azureedge.net^
 ||loader.crosswordsolver.com^
+||loader.motor-talk.de^
 ||loader.netzwelt.de^
 ||loader.nyitvatartas24.hu^
 ||loader.the-crossword-solver.com^
@@ -55746,6 +55842,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||lobbishgrumous.top^
 ||lobby-x.eu^
 ||lobesforcing.com^
+||lobipedgregos.top^
 ||loboclick.com^
 ||lobster.justunderwear.com^
 ||lobster.unionpeer.com^
@@ -56093,6 +56190,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||loggw.alipay.com.cn^
 ||loggw.alipay.com^
 ||loggychops.paulsmith.site^
+||logiaoceanid.shop^
 ||logicanalytics.io^
 ||logicdate.com^
 ||logicschort.com^
@@ -57024,6 +57122,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||lzvwxy.hometogo.pl^
 ||lzvwybvvyrqyk.top^
 ||lzvwybvvyrwbr.top^
+||lzvwybvvyrwyy.top^
 ||lzwxzz.chintaistyle.jp^
 ||lzxdx24yib.com^
 ||lzzqfj.xyz^
@@ -57447,6 +57546,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||maleeprn.click^
 ||maleliteral.com^
 ||malelocated.com^
+||malesnattily.top^
 ||malgrsememe.top^
 ||malikabusers.top^
 ||malikiresids.com^
@@ -57464,6 +57564,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||maltheoverly.com^
 ||maltunfaithfulpredominant.com^
 ||malurusoenone.top^
+||malussynapte.top^
 ||mamamia.vintageporno.stream^
 ||mamblubamblua.com^
 ||mamimp.click^
@@ -57512,6 +57613,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||manholethreatenvowel.com^
 ||maniasensiblecompound.com^
 ||maniconfiscal.top^
+||manillayawny.shop^
 ||manipulativegraphic.com^
 ||maniscloots.shop^
 ||mankinddemocrat.com^
@@ -59893,6 +59995,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||merig.xyz^
 ||meristana.pro^
 ||meritsbunn.top^
+||merligogippy.top^
 ||mernrza.com^
 ||merterpazar.com^
 ||meryt111.fun^
@@ -59958,6 +60061,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||metothepointa.com^
 ||metredesculic.com^
 ||metrepeaches.com^
+||metrialinens.top^
 ||metric-api.newrelic.com^
 ||metric-nonssl.nomura.co.jp^
 ||metric.1035thearrow.com^
@@ -61652,12 +61756,14 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||midribstichel.com^
 ||midwifelangurs.com^
 ||mie-solutions.actonservice.com^
+||miefow.icu^
 ||miexgq.forevernew.co.nz^
 ||mifarttavv.com^
 ||mifoqnwi.com^
 ||miftheoknt.com^
 ||mifvigmz.com^
 ||mig.str.mdt.qq.com^
+||migalewanze.shop^
 ||mignished-sility.com^
 ||migrantspiteconnecting.com^
 ||migviepxbkj.com^
@@ -62302,6 +62408,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||mondaysale.bid^
 ||monerise.com^
 ||monerominer.rocks^
+||monesesganja.top^
 ||monetag.com^
 ||monetarysportystamp.com^
 ||monetizer.co^
@@ -62387,6 +62494,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||moonrocketaffiliates.com^
 ||moophauglouhee.com^
 ||moopsazijop.com^
+||moorshumpies.shop^
 ||moorsmerops.top^
 ||moose.octo.app^
 ||mooshashoocaups.com^
@@ -62706,6 +62814,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||msjdveaigxlx.xyz^
 ||msjukinogbtji.fun^
 ||mskpwqlppxham.life^
+||mslweiring.top^
 ||msm.qq.com^
 ||msmcoa.xyz^
 ||msqwborynxnqd.online^
@@ -62838,6 +62947,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||mulecleared.com^
 ||mulesto.com^
 ||mulleyhoer.shop^
+||mullionconcile.shop^
 ||multicolored-witness.pro^
 ||multiculturalcakelimited.com^
 ||multimedia.netplusentremont.ch^
@@ -62874,7 +62984,9 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||muriheem.net^
 ||murkestminter.com^
 ||murkybrashly.com^
+||murkyfeel.pro^
 ||murkymouse.online^
+||murlingaura.top^
 ||murmursutta.shop^
 ||murolwsi.com^
 ||murozwuddtow.com^
@@ -62922,6 +63034,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||muyusaitcze.com^
 ||muzarabeponym.website^
 ||muzikguide.com^
+||muzjiksnewari.shop^
 ||muzzlequick.com^
 ||mv.outbrain.com^
 ||mv.treehousei.com^
@@ -62956,6 +63069,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||mwcnmtx.top^
 ||mwdsuxowqdr.com^
 ||mweb-hb.presage.io^
+||mwehrmpertjfc.store^
 ||mwerilxx.top^
 ||mwf7.montecarlowellness.com^
 ||mwgehrudb.com^
@@ -63942,6 +64056,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ngwgkhtdykzzz.online^
 ||ngxzkaxf.icu^
 ||ngyxtr.ripcurl.com^
+||nh3ymjjdkx.com^
 ||nh7.icu^
 ||nhbprf.xyz^
 ||nhcgucgrsnupg.online^
@@ -64173,6 +64288,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||nmyfedath.com^
 ||nmzbrd.icu^
 ||nncdtquddmjjb.site^
+||nncffyilavlup.com^
 ||nncistcbohnbt.com^
 ||nnerventualkentin.org^
 ||nnfbxz.icu^
@@ -64812,6 +64928,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ny77jj.washingtonpost.com^
 ||nyadmcncserve-05y06a.com^
 ||nyayamuskies.shop^
+||nybkctzmldnye.space^
 ||nycp-hlb.dvgtm.akadns.net^
 ||nycwfz.kigili.com^
 ||nyetm2mkch.com^
@@ -65180,6 +65297,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||odkvrg.pedrodelhierro.com^
 ||odlhreffucip.com^
 ||odljiphtut.com^
+||odmblhwqplcpt.com^
 ||odnaknopka.ru^
 ||odohwkoeujvpc.site^
 ||odologyelicit.com^
@@ -65511,6 +65629,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||okdigital.me^
 ||okdjakskmgpk.com^
 ||okeaxgugq.com^
+||okeezyxflelvs.website^
 ||okhwxl.rnainc.jp^
 ||okikwul.icu^
 ||okitattler.top^
@@ -66109,9 +66228,11 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||oocrzh.byojet.com^
 ||oodrampi.com^
 ||oofptbhbdb.com^
+||ooftishunlucky.top^
 ||oognaxoudroogru.net^
 ||oogneenu.net^
 ||oogwimwoydwf.com^
+||oohedastroid.shop^
 ||oohougrauh.net^
 ||ookaso.com^
 ||ookresit.net^
@@ -66139,6 +66260,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ooublik.top^
 ||oourmarketingefifort.com^
 ||oowavfddpvuzo.space^
+||oowhoafoab.com^
 ||oowkzpjo-o.click^
 ||ooxenoopsoon.com^
 ||ooyejpjenphbo.online^
@@ -66916,6 +67038,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||owndata.network^
 ||owneriq.net^
 ||ownthmorningb.org^
+||owomjmknjowlz.top^
 ||owosbxbyim.com^
 ||owp-sg-prop.americanexpress.com^
 ||owp-tw.americanexpress.com^
@@ -67990,6 +68113,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||persecutenosypajamas.com^
 ||persecutionpunishlegally.com^
 ||persetoenail.com^
+||persianindiansgenerator.com^
 ||persistarcticthese.com^
 ||persistsaid.com^
 ||perso.aws.arc.pub^
@@ -68104,6 +68228,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||phailropirtom.com^
 ||phailsouforign.net^
 ||phainoirs.com^
+||phaiptoasaicka.com^
 ||phaishusheva.com^
 ||phaitaghy.com^
 ||phaivaju.com^
@@ -68172,6 +68297,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||phloxsub73ulata.com^
 ||phluant.com^
 ||phmdwcoqokplm.store^
+||phmwynnodp.com^
 ||phoackoangu.com^
 ||phoagnukroa.com^
 ||phoalsoagy.net^
@@ -68969,6 +69095,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||plusgo.win^
 ||plush-abuse.com^
 ||plushlyottoman.shop^
+||plushome.co.il^
 ||pluto.smallpdf.com^
 ||plutonium.cointelegraph.com^
 ||plutothejewel.com^
@@ -69076,6 +69203,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||podbooth.martela.com^
 ||podbooth.martela.no^
 ||podbooth.martela.se^
+||poddedcledgy.top^
 ||podefr2.net^
 ||podgejufti.top^
 ||podleysensing.shop^
@@ -69120,6 +69248,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||polarisexpt.shop^
 ||polarmobile.com^
 ||polaronveldt.guru^
+||polatads.com^
 ||poldertourer.com^
 ||poledgrenier.top^
 ||polhvf.bootbarn.com^
@@ -69450,6 +69579,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||pqblsaiiyjcokfo.com^
 ||pqcixi.sparco-official.com^
 ||pqdhda.bluepops.co.kr^
+||pqfdfzjajlqhk.website^
 ||pqfpvb.icu^
 ||pqghqs.eastcl.com^
 ||pqgmffwsmboy.com^
@@ -69707,6 +69837,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||prismlacers.top^
 ||prismtest.epoise.com^
 ||pristine-creative.com^
+||pristineexamination.pro^
 ||pritesol.com^
 ||privacy-api.9gag.com^
 ||privacy-sandbox.appsflyersdk.com^
@@ -70231,6 +70362,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ptlwmstc.com^
 ||ptmcos.beginning.kr^
 ||ptmnd.com^
+||ptnsjwsekjfxx.website^
 ||ptoafauz.net^
 ||ptoahaistais.com^
 ||ptoftashulsee.com^
@@ -70407,6 +70539,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||punprrulfs.xyz^
 ||punrbligpisll.life^
 ||puntingdeg.com^
+||punwnxmqbxop.com^
 ||pupilarouranos.com^
 ||pupilarstylli.shop^
 ||pupkeptale.live^
@@ -70581,6 +70714,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||putrescentsacred.com^
 ||putrr16.com^
 ||putrr7.com^
+||putteecirculi.shop^
 ||puvj-qvbjol.vip^
 ||puwggfudeoleo.store^
 ||puwhoughaugn.com^
@@ -71021,6 +71155,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||qhiatcfrywgse.click^
 ||qhihoins.com^
 ||qhixhrkrviekq.store^
+||qhkcbwfvobqma.space^
 ||qhkflvounmbrq.site^
 ||qhnbiyporodwkao.com^
 ||qhnojvbyxfgcf.click^
@@ -71071,6 +71206,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||qivsvu.creedboutique.com^
 ||qiwqaagnaell.com^
 ||qixipi.kathykuohome.com^
+||qixmzogwiblhf.store^
 ||qiyeb.iaskbus.com^
 ||qiyegongqiu1.qiyegongqiu.com^
 ||qizjkwx9klim.com^
@@ -71129,6 +71265,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||qljqpnbsbggh.com^
 ||qllxvh.shopstyle.com^
 ||qlmfpj.laura.ca^
+||qlnrnmze.com^
 ||qloevv.wikicasa.it^
 ||qlp.egghead.link^
 ||qlqvej.bahia-principe.com^
@@ -71338,6 +71475,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||qrubv.buzz^
 ||qrvsnt.citygrounds.com^
 ||qrwcss.xyz^
+||qrwoayzjybqwv.top^
 ||qrwoayzjybzkz.top^
 ||qrwoayzjybzwo.top^
 ||qrwtlnhol.com^
@@ -71482,6 +71620,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||quinceimaging.actonservice.com^
 ||quinchdeepish.top^
 ||quinelabache.top^
+||quinindrabs.top^
 ||quinst.com^
 ||quintag.com^
 ||quintessential-telephone.pro^
@@ -71503,6 +71642,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||qumulo.actonservice.com^
 ||qunqawarsbij.com^
 ||qunrcibhis.com^
+||quoinupscrew.shop^
 ||quokka.bulkbuyhosting.com^
 ||quokka.curbnumberpro.com^
 ||quokka.joshuawood.net^
@@ -73009,6 +73149,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||retrostingychemical.com^
 ||retsifergoumti.net^
 ||rettornrhema.com^
+||retunesmoils.shop^
 ||reukandthisany.com^
 ||reuniondepadres.unisabana.edu.co^
 ||reusevoyages.shop^
@@ -73086,6 +73227,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||rewindgills.com^
 ||rewindstagger.com^
 ||rewishpannel.shop^
+||rewnunry.top^
 ||rewriteadoption.com^
 ||rewriteworse.com^
 ||rewrwrt4.fun^
@@ -73145,6 +73287,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||rhaphaecelts.com^
 ||rhasonbugs.com^
 ||rhasonimbrown.top^
+||rhatlgah.com^
 ||rhdcmp.maxcolchon.com^
 ||rhdifs.top^
 ||rhendam.com^
@@ -73309,6 +73452,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||riverhit.com^
 ||riversideseizingtightness.com^
 ||riverstressful.com^
+||rivetedkibbeh.shop^
 ||rivetrearrange.com^
 ||rivne.space^
 ||riwhssuoploai.buzz^
@@ -74460,6 +74604,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||rwevib.harmontblaine.com^
 ||rwfkzw.wuerth.it^
 ||rwfwlrhyolok.com^
+||rwhdvurnnbrrv.site^
 ||rwhneg.breaking-news.jp^
 ||rwhnuqxubwqvn.one^
 ||rwix.cn^
@@ -75657,6 +75802,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||sas.samsungcloudsolution.com^
 ||sasc.solidworks.com^
 ||sasdk.3g.qq.com^
+||sashaysfanums.top^
 ||sashayzoist.top^
 ||sashtrizone.com^
 ||sasinator.realestate.com.au^
@@ -75713,6 +75859,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||sauwaistaugleet.net^
 ||sauyv.top^
 ||savableee.com^
+||savantsales.top^
 ||save-apps.monster^
 ||save.salary.com.au^
 ||save.smartsalary.com.au^
@@ -75939,6 +76086,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||scmetrics.exacttarget.com^
 ||scmetrics.shell.com^
 ||scmetrics.vodafone.it^
+||scmiwmxoolipl.store^
 ||scnd-tr.com^
 ||scnd.landsend.co.uk^
 ||scnd.landsend.com^
@@ -77225,6 +77373,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||sewkindmay.live^
 ||sewparamedic.com^
 ||sewrutb.top^
+||sewsemagram.shop^
 ||sex-and-flirt.com^
 ||sex-chat.me^
 ||sex-finder.net^
@@ -77591,6 +77740,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||sheep.vaxstandby.com^
 ||sheepcovings.top^
 ||sheerliteracyquestioning.com^
+||sheerspechs.shop^
 ||sheeshumte.net^
 ||sheesimo.net^
 ||sheeta.nrj-play.fr^
@@ -77937,6 +78087,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||singaporetradingchallengetracker1.com^
 ||singeesaghachi.com^
 ||singelstodate.com^
+||singersplatch.top^
 ||single-range.pro^
 ||singledatetime.com^
 ||singleplatform.actonservice.com^
@@ -82030,6 +82181,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||sonnyadvertise.com^
 ||sonnymagicalsnack.com^
 ||sonobi.com^
+||sontynup.xyz^
 ||sonybivstatic-a.akamaihd.net^
 ||soocaips.com^
 ||soohounaipsee.com^
@@ -85199,6 +85351,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||stildell.com^
 ||stildreans.com^
 ||stimieddiehard.shop^
+||stimiedfeme.shop^
 ||stimiyb.top^
 ||stimtavy.net^
 ||stimulateartificial.com^
@@ -85257,6 +85410,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||stonierteddy.com^
 ||stonkstime.com^
 ||stonysuingtartness.com^
+||stoodfrayed.shop^
 ||stoodthestatueo.com^
 ||stoogoofaltimpu.net^
 ||stoogreeft.net^
@@ -85295,6 +85449,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||storkto.com^
 ||stormwind.actonservice.com^
 ||storyrelatively.com^
+||storyshop.co.il^
 ||storystaffrings.com^
 ||stoursowhol.net^
 ||stoutfoggyprotrude.com^
@@ -85651,6 +85806,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||sukbeingajoytow.org^
 ||sukspcwrnqpbs.life^
 ||sukultingecauyuk.org^
+||sulidesglop.shop^
 ||sulingacestes.click^
 ||sulkvulnerableexpecting.com^
 ||sullenabonnement.com^
@@ -85847,6 +86003,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||svibeacon.onezapp.com^
 ||svjj.cn^
 ||svjjmdcdykykx.site^
+||svkrixovbtkyb.com^
 ||svmarketing.destinationtoronto.com^
 ||svn.notifysrv.com^
 ||svnf.cn^
@@ -86008,6 +86165,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||swdced.open32.nl^
 ||sweareryork.top^
 ||sweaterwarmly.com^
+||sweaty-dig.pro^
 ||sweaty-product.com^
 ||sweatypositive.com^
 ||sweatyroutine.pro^
@@ -86047,6 +86205,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||sweltering-development.com^
 ||sweptomphacy.shop^
 ||swerilxb.top^
+||swertialegpull.shop^
 ||swesomepop.com^
 ||swgvmflsg.com^
 ||swidprxaafwha.store^
@@ -86199,6 +86358,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||syllabusbastardchunk.com^
 ||sylverlight.net^
 ||sylviapettah.com^
+||sylxdejxsto.xyz^
 ||sylxisys.com^
 ||symaa.cn^
 ||symantec.ecs.arrow.com^
@@ -86209,6 +86369,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||sympathetic-frame.com^
 ||sympatheticclassroom.pro^
 ||sympatheticcream.pro^
+||sympatheticprocedure.pro^
 ||sympathizecopierautobiography.com^
 ||sympathizecrewfrugality.com^
 ||symptomprominentfirewood.com^
@@ -87052,6 +87213,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||tamisbestock.shop^
 ||tampedirenica.com^
 ||tamperdepreciate.com^
+||tampoonhopsage.shop^
 ||tamus.net.anwalt.de^
 ||tanbarshenh.org^
 ||tanceteventu.com^
@@ -87844,6 +88006,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||terrapush.com^
 ||terrasdsdstd.com^
 ||terribledeliberate.com^
+||terriblemall.pro^
 ||terrificdark.com^
 ||terrifyingcovert.com^
 ||tersatedtheother.com^
@@ -88126,6 +88289,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||themeillogical.com^
 ||thempoorduts.com^
 ||themselphenyls.com^
+||themselunlearn.top^
 ||themselvessuit.com^
 ||themydatings-matches.com^
 ||thenagemangled.top^
@@ -92081,6 +92245,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||trigsfrisky.shop^
 ||trijetsables.shop^
 ||trikerboughs.com^
+||trikeunpured.com^
 ||trimmoits.com^
 ||trimpur.com^
 ||trinity.notifysrv.com^
@@ -92504,8 +92669,10 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||trlptm.top^
 ||trmit.com^
 ||trmzum.com^
+||trnfyarl.com^
 ||troadforristol.org^
 ||trochiaz.top^
+||trochicomb.top^
 ||trohycv.top^
 ||trokemar.com^
 ||trolleyalnath.top^
@@ -92756,6 +92923,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||tubeultra.com^
 ||tubevideos.biz^
 ||tubfurryhen.com^
+||tubikcurtail.shop^
 ||tubingacater.com^
 ||tubroaffs.org^
 ||tucanaefungous.com^
@@ -92780,6 +92948,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||tuhesok.com^
 ||tuhmkjce.icu^
 ||tuhqixonk.com^
+||tuhruqahto.com^
 ||tui07.shop^
 ||tuitivesahukar.top^
 ||tujourda.net^
@@ -92855,6 +93024,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||tusslestransp.shop^
 ||tuswukjzohac.com^
 ||tutbc1.www.tapmyback.com^
+||tutelaepreux.shop^
 ||tutoads.tv^
 ||tutorygarua.top^
 ||tutvp.com^
@@ -92901,6 +93071,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||tw.wpu.sh^
 ||tw0ihhb04.com^
 ||twaglurtuh.xyz^
+||twasomepiasava.top^
 ||twazzyoidwlfe.com^
 ||twch.femina.ch^
 ||twcnmti.top^
@@ -92929,6 +93100,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||twingesvampers.top^
 ||twinikorb.com^
 ||twinkle-fun.net^
+||twinnedsassies.top^
 ||twinpinenetwork.com^
 ||twinrdack.com^
 ||twinrdengine.com^
@@ -93018,6 +93190,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||tyburnpenalty.com^
 ||tychon.bid^
 ||tyddenover.com^
+||tyddynlucet.top^
 ||tyfqjbuk.one^
 ||tyfuufdp-xbd.top^
 ||tyhjvqeidd.com^
@@ -93683,6 +93856,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||ungiblechan.com^
 ||ungivenriprap.shop^
 ||ungothoritator.com^
+||ungreentowies.shop^
 ||ungrownpeytral.top^
 ||unhatedprotei.com^
 ||unheadedsouptotal.com^
@@ -93792,6 +93966,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||unseamssafes.com^
 ||unseenreport.com^
 ||unseenshingle.com^
+||unselfish-communication.pro^
 ||unsere-news.ru^
 ||unshellbrended.com^
 ||unshopragwork.shop^
@@ -94006,6 +94181,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||uqzoyikxsfhdr.space^
 ||ur.b.inhaabit.com^
 ||urafur.clubeo.com^
+||uranianfulgora.shop^
 ||urauvipsidu.com^
 ||urbanairship.com^
 ||urbanproxy.eu^
@@ -94024,6 +94200,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||urgentprotections.com^
 ||urgerrebasis.com^
 ||urgxnorjluhwl.online^
+||urinantriginal.shop^
 ||urinousbiriba.com^
 ||uriokr.bauhaus.es^
 ||urkbgdfhuc.global^
@@ -94911,6 +95088,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||vaqykqyvvazbz.top^
 ||vaqykqyvvazwm.top^
 ||vardsusyseinpo.com^
+||variable-accident.pro^
 ||variablehour.com^
 ||variationsradio.com^
 ||variedpretenceclasped.com^
@@ -95121,6 +95299,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||veoci.actonservice.com^
 ||veojqcjmyfyafo.com^
 ||veoojoomzryym.top^
+||veopoluoxfvtc.online^
 ||veosfi.woonexpress.nl^
 ||veozn3f.com^
 ||veqvek.bnnbloomberg.ca^
@@ -95591,6 +95770,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||vizvaz.com^
 ||vjajkbewrmlby.top^
 ||vjdciu.com^
+||vjembmkzbejaw.top^
 ||vjembmkzbejlm.top^
 ||vjharl.xyz^
 ||vjjgpt.diamond.jp^
@@ -95702,6 +95882,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||vntsm.io^
 ||vnufplcscoctg.online^
 ||vnuuh.icu^
+||vnwqkvykgogvq.top^
 ||vnwu.cn^
 ||vnzedheswjh.com^
 ||vnzwxk.e-bebek.com^
@@ -95724,6 +95905,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||vois.vodafone.com^
 ||vojxriaqujzlg.site^
 ||vokut.com^
+||vokzcxiiwzgvy.online^
 ||vokzqgjp.icu^
 ||volatintptr.com^
 ||volcaearmoric.shop^
@@ -96394,6 +96576,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||wayftertheyhadg.com^
 ||waymarkgentiin.com^
 ||waymentriddel.com^
+||waypostgory.top^
 ||waysstreak.top^
 ||waywortlaten.top^
 ||wayyaj8t094u.www.kodalia.com^
@@ -96955,7 +97138,9 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||wellplottony.live^
 ||welltodo-type.com^
 ||wellworn-lead.com^
+||welsiwersoumtoa.com^
 ||welte.jp^
+||wemexcitor.shop^
 ||wemplemukente.com^
 ||wemqip.misli.com^
 ||wemtagoowhoohiz.net^
@@ -97035,6 +97220,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||wgeaqi.laredoute.gr^
 ||wghaqpnupaxmj.space^
 ||wgiuboquccyxe.site^
+||wglqvwknwzaly.top^
 ||wgmenxpvnxnbs.space^
 ||wgnrrd.culturekings.com^
 ||wgoto.xyz^
@@ -97050,6 +97236,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||whahmy.timberland.es^
 ||whaijoorgoo.com^
 ||whairtoa.com^
+||whakrawecaston.com^
 ||whale.gdebrauwer.dev^
 ||whale3.io^
 ||whaleads.com^
@@ -97332,6 +97519,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||wingohvuktotg.site^
 ||wingtipunfaked.click^
 ||winiestbhara.top^
+||winiestsalinan.shop^
 ||winneradsmedia.com^
 ||winnersolutions.net^
 ||winonexd.b-cdn.net^
@@ -97399,6 +97587,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||wjimtye.top^
 ||wjljwqbzjjvkw.top^
 ||wjljwqbzjjvqj.top^
+||wjpqpglffeyodsa.xyz^
 ||wjssvg.descentekorea.co.kr^
 ||wjtekf.vidaxl.bg^
 ||wjugygvvdouyk.space^
@@ -97681,6 +97870,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||worldwide-cash.net^
 ||worldysnur.top^
 ||worm.communitytrustproject.org^
+||wormednosing.shop^
 ||wormslitty.top^
 ||worralgeylies.shop^
 ||worrisomedifference.com^
@@ -99088,6 +99278,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||wylmzwklkllyk.top^
 ||wylmzwklklyaz.top^
 ||wylmzwklklywm.top^
+||wylvlfeeq.com^
 ||wynather.com^
 ||wyndaogoktt.com^
 ||wynvalur.com^
@@ -100135,6 +100326,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||xn--xhq326aj6yqpw.com^
 ||xnbuapwp.icu^
 ||xnerivlyclrak.site^
+||xnfrjhydr.xyz^
 ||xnoztzcdyawlx.love^
 ||xnqboqc.icu^
 ||xnrhqmdsluqld.tech^
@@ -100153,6 +100345,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||xoojebxoyzves.online^
 ||xoqod.sbs^
 ||xoqsxdpx.xyz^
+||xoszyclagweyv.online^
 ||xovbjzdbfomoo.site^
 ||xovzgcoovh.club^
 ||xoxnetwork.com^
@@ -101000,6 +101193,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||yueqal.glassesusa.com^
 ||yugjwgg.icu^
 ||yugqqqq.icu^
+||yuhchappe.top^
 ||yuhuads.com^
 ||yui06111shga.com^
 ||yui06120shga.com^
@@ -101299,6 +101493,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||zeebestmarketing.com^
 ||zeechoog.net^
 ||zeekaihu.net^
+||zeekaptupaich.net^
 ||zeelooshashey.net^
 ||zeepartners.com^
 ||zeeshith.net^
@@ -101358,6 +101553,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||zgisp.net^
 ||zgqgig.skillbox.ru^
 ||zgsdk.zhugeio.com^
+||zguhvoikcorni.website^
 ||zgukxyhzquesk.love^
 ||zgumwv.stepstone.de^
 ||zgwgoxzayjmqc.store^
@@ -101533,6 +101729,7 @@ mp.weixin.qq.com##div[class^="video_ad_mask"]
 ||zmzwloelraaoz.top^
 ||zmzwloelrajaj.top^
 ||zmzwloelrajoq.top^
+||zmzwloelrarow.top^
 ||zndsssp.dangbei.net^
 ||zng.com^
 ||zniwiarz.topagrar.pl^

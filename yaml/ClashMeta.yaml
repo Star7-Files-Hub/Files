@@ -159,6 +159,19 @@ proxy-groups:
       - 🇨🇳 台湾节点
       - 🇸🇬 狮城节点
 
+  - name: 💻 微软服务
+    type: select
+    proxies:
+      - DIRECT
+      - 🌏 全球加速
+      - ♻️ 自动选择
+      - 🚀 手动切换
+      - 🇭🇰 香港节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - 🇨🇳 台湾节点
+      - 🇸🇬 狮城节点
+
   - name: 📺 哔哩哔哩
     type: select
     proxies: 

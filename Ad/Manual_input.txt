@@ -1,6 +1,7 @@
 ! Title: 7Star's_Ad_Rules_input
 ! Homepage: https://github.com/Star7-Files-Hub/Files/Ad
 ! Description: 适用于AdGuard的网页去广告规则，手动更新我所看见的广告
+
 hdfans.org###outer > div:first-child > a:first-child > img
 blog.csdn.net###sidecolumn-deepseek
 blog.csdn.net###swiper-remuneration-container
@@ -58,3 +59,9 @@ weixin.qq.com##div[class^="ad_ori"]
 mp.weixin.qq.com###js_bottom_ad_area
 mp.weixin.qq.com##div[id^="ad_div_"]
 mp.weixin.qq.com##div[class^="video_ad_mask"]
+cn.bing.com###b_results > li.b_algo:nth-child(3)
+picgo.net###home_after_cta
+||bing.com/fd/ls/
+115cdn.com###js_common_mini-dialog
+115cdn.com###js_common_sharing_banner
+115cdn.com###js_common_act-enter

@@ -1,9 +1,9 @@
 ! Title: 7Star's_Ad_Rules
 ! Homepage: https://github.com/Star7-Files-Hub/Files/tree/main/Ad
 ! Expires: 12 Hours
-! Version: 2025-08-01 20:32:29（北京时间）
+! Version: 2025-08-02 09:15:13（北京时间）
 ! Description: 适用于AdGuard的去广告规则，合并优质上游规则并去重整理排列
-! Total count: 115898
+! Total count: 116035
 
 ! Source: https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/fq2.txt (fq2.txt)
 ||*^$all,app=com.dragon.read,important
@@ -7737,6 +7737,7 @@ picgo.net###home_after_cta
 ||2cvnmbxnc.com^
 ||2d1a16af63.55f4605f6d.com^
 ||2d1f81ac8e.com^
+||2d1x.com^
 ||2d439ab93e.com^
 ||2d5ac65613.com^
 ||2d5ae0d013.d8c04a25e8.com^
@@ -8778,6 +8779,7 @@ picgo.net###home_after_cta
 ||3767411.notify6.com^
 ||3768747.notify6.com^
 ||3768747.notifysrv.com^
+||376vn.com^
 ||3771491.notify6.com^
 ||3773c12737.b395af8742.com^
 ||3775247.notifysrv.com^
@@ -14980,6 +14982,7 @@ picgo.net###home_after_cta
 ||abastur.ubmmexico.com^
 ||abatersurat.digital^
 ||abb030d6a7.com^
+||abbasemi.life^
 ||abbassphagia.cfd^
 ||abberantbeefy.com^
 ||abberantdisheartenbandage.com^
@@ -18748,6 +18751,7 @@ picgo.net###home_after_cta
 ||aikraungoph.net^
 ||aikrir.lcwaikiki.com^
 ||ailcloister.com^
+||aileenodist.cfd^
 ||ailieculebra.qpon^
 ||ailla.abphotos.link^
 ||aillaeuyn.com^
@@ -18877,6 +18881,7 @@ picgo.net###home_after_cta
 ||ajbeqy.delfi.lt^
 ||ajdivotdelbloab24.jio.com^
 ||ajdshedhgnvapg.com^
+||ajetzqkqdvfgd.website^
 ||ajewzcsnmnjex.site^
 ||ajfnee.com^
 ||ajgkdt.eazy.de^
@@ -19427,6 +19432,7 @@ picgo.net###home_after_cta
 ||altopd.com^
 ||altrk.net^
 ||altronopubacc.com^
+||altruisticemergency.com^
 ||altvyogbvycvy.fun^
 ||alty.fun^
 ||altynamoan.com^
@@ -19679,6 +19685,7 @@ picgo.net###home_after_cta
 ||amucresol.com^
 ||amuletcheek.com^
 ||amuletsourcemadden.com^
+||amulna.click^
 ||amunfezanttor.com^
 ||amusedcirrous.com^
 ||amuseer.com^
@@ -20999,6 +21006,7 @@ picgo.net###home_after_cta
 ||aom.smartbrief.com^
 ||aomarketing.blytheco.com^
 ||aomgyawomjmy.top^
+||aomgyawovbnv.top^
 ||aomxqfcj.global^
 ||aon.insurancemail.ca^
 ||aon.smartbrief.com^
@@ -23541,6 +23549,7 @@ picgo.net###home_after_cta
 ||avvodmjpabin.com^
 ||avvzamazdpa.com^
 ||avwjyvwqyzma.top^
+||avwjyvwqyzor.top^
 ||avwjyvzeyeov.top^
 ||avwjyvzeykor.top^
 ||avwjyvzeymmb.top^
@@ -23670,6 +23679,7 @@ picgo.net###home_after_cta
 ||awsurveys.com^
 ||awsync.yandex.ru^
 ||awtfkaracoc.com^
+||awtguzoxc.com^
 ||awtunmmlmobnq.site^
 ||awuapj.landwatch.com^
 ||awutephoksousou.net^
@@ -23932,6 +23942,7 @@ picgo.net###home_after_cta
 ||azfront.com^
 ||azg1.emalu-store.com^
 ||azgsulgfakux.com^
+||azhaethane.rest^
 ||azimechgirosol.top^
 ||azjmp.com^
 ||azjuilzwebhss.com^
@@ -24994,6 +25005,7 @@ picgo.net###home_after_cta
 ||bebatsirens.qpon^
 ||bebautvdrradc.world^
 ||bebb6fb79c.f34aabcc0e.com^
+||bebemovies.com^
 ||bebloommulvel.com^
 ||bebopstanzine.qpon^
 ||bebotchdatives.shop^
@@ -25219,6 +25231,7 @@ picgo.net###home_after_cta
 ||besaieltense.com^
 ||besandileer.com^
 ||besandileom.com^
+||besantpeckier.cyou^
 ||besc.baidustatic.com^
 ||beseechpill.com^
 ||besetglaucin.shop^
@@ -25301,6 +25314,7 @@ picgo.net###home_after_cta
 ||betabelive.digital^
 ||betads.xyz^
 ||betahit.click^
+||betaxedreduces.digital^
 ||betemolgar.com^
 ||beterrakionan.com^
 ||bethabet.com^
@@ -25509,6 +25523,7 @@ picgo.net###home_after_cta
 ||biberukalap.com^
 ||bibglj.timberland.fr^
 ||biblecollation.com^
+||biblessuntime.qpon^
 ||bichosdamiana.com^
 ||bicolorvaccine.shop^
 ||bicp-analytics.postscript.io^
@@ -26737,6 +26752,7 @@ picgo.net###home_after_cta
 ||brespark.eccocar.com^
 ||brethelkumys.com^
 ||brevekatogle.top^
+||brevetegrapsus.digital^
 ||brevissnod.com^
 ||brevitychestprocess.com^
 ||brevnet.eccocar.com^
@@ -27194,7 +27210,6 @@ picgo.net###home_after_cta
 ||burstcowerer.digital^
 ||bursterwaratah.top^
 ||burstnet.com^
-||busbargove.shop^
 ||busbarsselter.shop^
 ||busdmpqzrsrtv.com^
 ||busherdebates.com^
@@ -27330,6 +27345,7 @@ picgo.net###home_after_cta
 ||bwstatistics.sapoapps.vn^
 ||bwtcilgll.com^
 ||bwtlrwkskuktr.com^
+||bwttasdajpduj.site^
 ||bwujxl.yoga-lava.com^
 ||bwuotrwahsij.com^
 ||bwurserv.top^
@@ -27441,6 +27457,7 @@ picgo.net###home_after_cta
 ||bzniungh.com^
 ||bznxqj.fiat.it^
 ||bzoodfalqge.online^
+||bzotdvlemnnvg.online^
 ||bzqxze.remixshop.com^
 ||bzrbogvpueuwa.site^
 ||bzrnuixuklcew.space^
@@ -28015,6 +28032,7 @@ picgo.net###home_after_cta
 ||carbonads.net^
 ||carbonateinvention.com^
 ||carboneglint.cyou^
+||carboratassely.cfd^
 ||carburanalyticsspace.carte-gr.total.fr^
 ||carburez-a-l-emotion.carte-gr.total.fr^
 ||carbysae.live^
@@ -29195,6 +29213,7 @@ picgo.net###home_after_cta
 ||cherupbanged.top^
 ||chesshabuka.top^
 ||chesssorrydescend.com^
+||chestedmopeds.qpon^
 ||chestgoingpunch.com^
 ||chestionar.ro^
 ||chethgentman.live^
@@ -30151,6 +30170,7 @@ picgo.net###home_after_cta
 ||clognishiki.rest^
 ||clogvocal.com^
 ||clohzp.hifi.lu^
+||clonesboccale.help^
 ||clorso.icu^
 ||closablemardistiffness.com^
 ||closablereactionskydiver.com^
@@ -30872,6 +30892,7 @@ picgo.net###home_after_cta
 ||complainguyseaweed.com^
 ||complainttattooshy.com^
 ||complete-drink.com^
+||completesuccession.com^
 ||complex-burn.pro^
 ||complex-nasty.pro^
 ||complexionbootydistinction.com^
@@ -32050,6 +32071,7 @@ picgo.net###home_after_cta
 ||creamy-confidence.pro^
 ||creamy-lack.pro^
 ||creaseinprofitst.com^
+||creasulkily.click^
 ||creatablegluesurvival.com^
 ||create.encore-mx.com^
 ||create.encoreglobal.com^
@@ -35405,6 +35427,7 @@ picgo.net###home_after_cta
 ||deapi.sooplive.co.kr^
 ||dear-soil.com^
 ||dearesthydrogen.com^
+||deasilgrumps.world^
 ||deasillituus.com^
 ||debatabletent.com^
 ||debaucky.com^
@@ -36173,6 +36196,7 @@ picgo.net###home_after_cta
 ||dig.ultimedia.com^
 ||digadser.com^
 ||digamycurried.top^
+||digenynutrice.cyou^
 ||digestivebackwards.com^
 ||digestivepresenceclimb.com^
 ||digestsolicitorpolar.com^
@@ -39682,6 +39706,7 @@ picgo.net###home_after_cta
 ||embezzlementthemselves.com^
 ||embi-media.com^
 ||embirashires.top^
+||embitterlorrycar.com^
 ||embknh.perriconemd.com^
 ||emblemexceptionscorer.com^
 ||embloomdiphyes.top^
@@ -40096,6 +40121,7 @@ picgo.net###home_after_cta
 ||entwithoughtsu.com^
 ||enueduringhere.info^
 ||enviesculbut.shop^
+||envious-attention.com^
 ||enviousinevitable.com^
 ||enviousthread.com^
 ||environabear.world^
@@ -40161,6 +40187,7 @@ picgo.net###home_after_cta
 ||epftuowhsylafju.com^
 ||epgadhsvdasyg.website^
 ||eph-adsjutarnji.cdn.sysbee.net^
+||ephatjbwpixrsq.xyz^
 ||ephebeaauronal.help^
 ||ephebedori.life^
 ||ephodkal.click^
@@ -40191,6 +40218,7 @@ picgo.net###home_after_cta
 ||epnredirect.ru^
 ||epnsxocdr.com^
 ||epnt.ebay.com^
+||epoackouxaik.com^
 ||epochalexults.cfd^
 ||epochheelbiography.com^
 ||epointatoncean.com^
@@ -40221,6 +40249,7 @@ picgo.net###home_after_cta
 ||eqpegetkd.com^
 ||eqs.accountants.intuit.com^
 ||eqs.intuit.com^
+||eqskhmryeezzg.store^
 ||eqtrack.americashomeplace.com^
 ||equal-dance.pro^
 ||equaleddunair.click^
@@ -40422,6 +40451,7 @@ picgo.net###home_after_cta
 ||estheteouttell.qpon^
 ||esthstamba.click^
 ||estiques.com^
+||estiveheriots.cfd^
 ||estore.biscoind.com^
 ||estpeopleshouldth.org^
 ||estuousdrier.top^
@@ -41542,6 +41572,7 @@ picgo.net###home_after_cta
 ||fancywhim.com^
 ||fandelcot.com^
 ||fandmo.com^
+||fannonlacmus.qpon^
 ||fanpingbi*.gaokao.com^
 ||fansign.streamray.com^
 ||fantasiazoon.com^
@@ -42097,6 +42128,7 @@ picgo.net###home_after_cta
 ||file.iporngay.com^
 ||filehippo.com/best-recommended-apps^
 ||filemobile.actonservice.com^
+||filemotharrid.life^
 ||filerocket.link^
 ||files.info.posteitaliane.it^
 ||files.urlinsgroup.com^
@@ -42605,6 +42637,7 @@ picgo.net###home_after_cta
 ||flawlesssubstance.com^
 ||flaxierfilmset.com^
 ||flayedfay.top^
+||flbgftljdotudfv.com^
 ||flbhwgoibnoku.space^
 ||flcspboszvfym.space^
 ||flcwuythduzvu.store^
@@ -43132,6 +43165,7 @@ picgo.net###home_after_cta
 ||fpcsbulls.nba.com^
 ||fpctraffic.com^
 ||fpctraffic2.com^
+||fpdtilvopjnvi.space^
 ||fpfhtr.icu^
 ||fpgedsewst.com^
 ||fpghll.rossmann.hu^
@@ -44050,6 +44084,7 @@ picgo.net###home_after_cta
 ||gateway.paradoxgroup.co^
 ||gateway.wearetopple.com^
 ||gather.donga.com^
+||gatherslampong.digital^
 ||gator.com^
 ||gatorifrit.shop^
 ||gaubaisteelaze.net^
@@ -44173,6 +44208,7 @@ picgo.net###home_after_cta
 ||gdeigri.com^
 ||gdfsrd.itslighting.kr^
 ||gdg.gardnerdenver.com^
+||gdkxnwvwdpplwvl.com^
 ||gdkyonlfietbuyb.com^
 ||gdl.i9dhjx.ru^
 ||gdliuymvftdwvm.xyz^
@@ -44199,6 +44235,7 @@ picgo.net###home_after_cta
 ||gea-exchange-03.net.jumia.ug^
 ||gear.echovisuals.com^
 ||geargrope.com^
+||gearobverse.shop^
 ||gearsshoppe.top^
 ||gebmickle.help^
 ||gecdwmkee.com^
@@ -47039,6 +47076,7 @@ picgo.net###home_after_cta
 ||harvester.cms.markiza.sk^
 ||harvester.hbpl.co.uk^
 ||harvester.hnonline.sk^
+||hasalmarvt.com^
 ||hasdjksndjk.com^
 ||hasdrs.com^
 ||hash-hash-tag.com^
@@ -47332,6 +47370,7 @@ picgo.net###home_after_cta
 ||hebenefitssheasht.com^
 ||hebhgyiqqgpkf.com^
 ||hecathedralinth.org^
+||heckleragents.help^
 ||hectiveguards.world^
 ||hectorfeminine.com^
 ||hedgehog.fightforthefuture.org^
@@ -47442,6 +47481,7 @@ picgo.net###home_after_cta
 ||herbgreencolumn.com^
 ||herconsequence.com^
 ||herdmenrations.com^
+||herdpiteousextensive.com^
 ||herehotdate.com^
 ||heremployeesihi.info^
 ||hereofcineols.com^
@@ -47524,6 +47564,7 @@ picgo.net###home_after_cta
 ||hf.forevernetworks.com^
 ||hf5rbejvpwds.com^
 ||hfapkjltlabpe.store^
+||hfcibylpjevbf.website^
 ||hfdfyrqj-ws.club^
 ||hfdjmoedkjf.asia^
 ||hfhppxseee.com^
@@ -47718,6 +47759,8 @@ picgo.net###home_after_cta
 ||himosteg.xyz^
 ||himtothesieg.org^
 ||hinaprecentals.com^
+||hinderelemong.cfd^
+||hindithreep.cyou^
 ||hindsight.significanceapps.com^
 ||hindsightloyalmeter.com^
 ||hindspontiff.digital^
@@ -47840,6 +47883,7 @@ picgo.net###home_after_cta
 ||hiuplq.soccerstand.com^
 ||hiuplq.tennis24.com^
 ||hivaqfofkche.com^
+||hivfbuixqrkr.xyz^
 ||hivingischium.click^
 ||hivorltuk.com^
 ||hiway.actonservice.com^
@@ -48121,6 +48165,7 @@ picgo.net###home_after_cta
 ||hooptaik.net^
 ||hoosgoweuskara.top^
 ||hoothedugre.net^
+||hootpreceding.com^
 ||hootsuite.branch.rocks^
 ||hoowuliz.com^
 ||hop.boutique^
@@ -48693,6 +48738,7 @@ picgo.net###home_after_cta
 ||hycantyoubeliketh.com^
 ||hycywj.akkushop.de^
 ||hydageporcate.top^
+||hydefuage.digital^
 ||hydramedia.com^
 ||hydrangeao.com^
 ||hydraterek.cfd^
@@ -51349,6 +51395,7 @@ picgo.net###home_after_cta
 ||insultingvaultinherited.com^
 ||insultresignation.com^
 ||insuperkokoon.click^
+||insupersh.life^
 ||insurance.alliant.com^
 ||insurance.caainsurancecompany.com^
 ||insurance.leads360.com^
@@ -52539,6 +52586,7 @@ picgo.net###home_after_cta
 ||jgfuxnrloev.com^
 ||jggylqznkyjab.top^
 ||jgjyxf.xyz^
+||jgkbbvqvqlbj.top^
 ||jgkbbvqvqvmz.top^
 ||jgkpsxlnqnknp.site^
 ||jgoabbmlmkgav.top^
@@ -52947,6 +52995,7 @@ picgo.net###home_after_cta
 ||jowserinsult.top^
 ||jowtkv.vertbaudet.de^
 ||jowyylklbvmz.top^
+||jowyylklkeyj.top^
 ||jowyylklklmb.top^
 ||joxaviri.com^
 ||joxmvhwkqhqvb.site^
@@ -53809,6 +53858,7 @@ picgo.net###home_after_cta
 ||kfiopkln.com^
 ||kfjhd.com^
 ||kfjwapsftuxtw.online^
+||kfkuxgyf.com^
 ||kfmmfyrkrgipm.love^
 ||kfmsltodvutodo.xyz^
 ||kfocken.icu^
@@ -53836,6 +53886,7 @@ picgo.net###home_after_cta
 ||kgubus.xyz^
 ||kgutiokknx.com^
 ||kgvqalwbomgm.top^
+||kgvqalwbomvb.top^
 ||kgvvvgxtvi.rocks^
 ||kgvwljvmoaqqm.top^
 ||kgwbngjoviypv.store^
@@ -54368,6 +54419,7 @@ picgo.net###home_after_cta
 ||kra.timbuk.online^
 ||kra18.com^
 ||kraftsregears.top^
+||kraftsunmixed.click^
 ||kragreparel.top^
 ||kraken.rambler.ru^
 ||krankenwagenmotor.com^
@@ -54596,6 +54648,7 @@ picgo.net###home_after_cta
 ||kwwvxn.uniqlo.com^
 ||kwxegvirgslwh.site^
 ||kwyamu.xyz^
+||kwzhpjykelckr.com^
 ||kwznjhbryqpho.website^
 ||kx4.firstsexfilm.com^
 ||kxbqbq.amicafarmacia.com^
@@ -54887,6 +54940,7 @@ picgo.net###home_after_cta
 ||lainaumi.com^
 ||lairauque.com^
 ||lairmancocked.shop^
+||lairscannily.cyou^
 ||laistaizip.net^
 ||laivue.com^
 ||lajeshuru.pro^
@@ -54907,6 +54961,7 @@ picgo.net###home_after_cta
 ||lalapush.com^
 ||lamanosakers.top^
 ||lambercoronel.top^
+||lambiemeck.digital^
 ||lame-home.pro^
 ||lameconnotation.com^
 ||lamentinsecureheadlight.com^
@@ -57547,6 +57602,7 @@ picgo.net###home_after_cta
 ||long.hentaihy.com^
 ||long1x.xyz^
 ||longarctic.com^
+||longestgeoffaversion.com^
 ||longingarsonistexemplify.com^
 ||longinghospitalsurveyed.com^
 ||longlyrurally.com^
@@ -58279,6 +58335,7 @@ picgo.net###home_after_cta
 ||lyvkvqitzktkx.store^
 ||lyvlbjzbozkxy.space^
 ||lywasnothycanty.info^
+||lywglywnloka.top^
 ||lywglywnlovz.top^
 ||lyxfra.shopee.com.my^
 ||lyypsy.unisportstore.se^
@@ -58598,6 +58655,7 @@ picgo.net###home_after_cta
 ||mahkjru.cam^
 ||mahmalbifer.top^
 ||mahoganyproductthat.com^
+||mahuadrawees.click^
 ||maideninfected.com^
 ||maidlyboychik.shop^
 ||maidr.pro^
@@ -61001,6 +61059,7 @@ picgo.net###home_after_cta
 ||media.stiripesurse.ro/assets/img/ads_img^
 ||media.theartisansapproach.com^
 ||media.ubmamevents.com^
+||media.vivaclix.com^
 ||media.wave.qburst.com^
 ||media360ads.midtc.com^
 ||media5.fc2.com^
@@ -63007,6 +63066,7 @@ picgo.net###home_after_cta
 ||midgetmaying.com^
 ||midlineforlet.life^
 ||midlk.online^
+||midnightbashslightly.com^
 ||midpopedge.com^
 ||midyearformism.rest^
 ||mie-solutions.actonservice.com^
@@ -63019,6 +63079,7 @@ picgo.net###home_after_cta
 ||migalewanze.shop^
 ||migcradnebxmy.website^
 ||mignished-sility.com^
+||migranticon.com^
 ||migrantspiteconnecting.com^
 ||mihjpeok.com^
 ||mihoutao1868.github.io^
@@ -63177,6 +63238,7 @@ picgo.net###home_after_cta
 ||misstrends.com^
 ||missyesera.live^
 ||misterbangingfancied.com^
+||mistfulfute.qpon^
 ||mistletoeethicleak.com^
 ||mistletoejobless.com^
 ||mistralwringle.top^
@@ -63324,6 +63386,7 @@ picgo.net###home_after_cta
 ||mktg.xeniumhr.com^
 ||mktp-base.mktplatforms.com^
 ||mkwntx.pinkpanda.de^
+||mkysuerau.com^
 ||mkzpqu.sungboon.com^
 ||mkztpk.invictastores.com^
 ||ml-sys.xyz^
@@ -63980,6 +64043,7 @@ picgo.net###home_after_cta
 ||mpxncvjhw.com^
 ||mpxtvxmvsm.xyz^
 ||mpylymygeearg.site^
+||mpzqirfeaqene.website^
 ||mq54k4yxpt.com^
 ||mqabjtgli.xyz^
 ||mqdownload.com^
@@ -64032,6 +64096,7 @@ picgo.net###home_after_cta
 ||mrksmm.yumegazai.com^
 ||mrktmtrcs.net^
 ||mrlscr.com^
+||mrlulgrtpqbtx.xyz^
 ||mrmnd.com^
 ||mroax.xyz^
 ||mroprospector.aviationweek.com^
@@ -64249,6 +64314,7 @@ picgo.net###home_after_cta
 ||multiupload.com^
 ||multiwall-ads.shop^
 ||multstorage.com^
+||multumakepiro.help^
 ||mum.alibabachengdun.com^
 ||mummershaha.help^
 ||mummersmahaly.top^
@@ -64280,6 +64346,7 @@ picgo.net###home_after_cta
 ||muresdx.top^
 ||muriatehaiti.world^
 ||muricidmartins.com^
+||murinesliming.help^
 ||murkpicrate.world^
 ||murkybrashly.com^
 ||murkycanulae.cyou^
@@ -64304,6 +64371,7 @@ picgo.net###home_after_cta
 ||musiciansaudience.com^
 ||musicid.samsungcloudsolution.com^
 ||musicnote.info^
+||musjidsfeedway.world^
 ||muskatchefdom.com^
 ||muskox.appital.io^
 ||muskratelitist.top^
@@ -64773,6 +64841,7 @@ picgo.net###home_after_cta
 ||nancydefiant.top^
 ||nanesbewail.com^
 ||nangalupeose.com^
+||nanhesitationhireling.com^
 ||nanigans.com^
 ||nannieslamaic.com^
 ||nannyirrationalacquainted.com^
@@ -65052,6 +65121,7 @@ picgo.net###home_after_cta
 ||nessainy.net^
 ||nesterwhf.top^
 ||nestledmph.com^
+||nestledscene.click^
 ||net-filter.com^
 ||net.24-ads.com^
 ||net.brillen.de^
@@ -66097,6 +66167,7 @@ picgo.net###home_after_cta
 ||nuculaschuh.top^
 ||nudapp.com^
 ||nuddlapjwdfu.com^
+||nuddmuckite.qpon^
 ||nude-gals.com/images^
 ||nude-gals.com/striptools^
 ||nudecelebforum.com/8caasdad2.ef2ea21a^
@@ -66167,6 +66238,7 @@ picgo.net###home_after_cta
 ||nuryotzgl.com^
 ||nuschias.top^
 ||nuseek.com^
+||nuseiwbhiriez.online^
 ||nusjemcedhfgr.site^
 ||nuskt.directory^
 ||nut.cc^
@@ -66237,6 +66309,7 @@ picgo.net###home_after_cta
 ||nwr.static.mmcdn.com^
 ||nwryeirpkvato.one^
 ||nws.naltis.com^
+||nwvehmwcgnl.com^
 ||nwvulrmtxesqh.space^
 ||nwvupz.cljoias.com.br^
 ||nwwais.com^
@@ -66410,6 +66483,7 @@ picgo.net###home_after_cta
 ||oajv.cn^
 ||oakbustrp.com^
 ||oakchokerfumes.com^
+||oakesiapedata.qpon^
 ||oakmalewet.live^
 ||oakmn.top^
 ||oal2.destinia.co.uk^
@@ -66656,6 +66730,7 @@ picgo.net###home_after_cta
 ||odjdpy.jobware.de^
 ||odkgyurmdcgkc.space^
 ||odkvrg.pedrodelhierro.com^
+||odldzgdjzbksz.site^
 ||odlhreffucip.com^
 ||odljiphtut.com^
 ||odmblhwqplcpt.com^
@@ -66840,6 +66915,7 @@ picgo.net###home_after_cta
 ||ogicatius.com^
 ||ogle-0740lb.com^
 ||oglesjemima.com^
+||oglesoneiric.cfd^
 ||oglrrokbbxoyw.today^
 ||oglrromv.com^
 ||ogmgjkgqnvbkn.top^
@@ -68284,6 +68360,7 @@ picgo.net###home_after_cta
 ||outgrinapprox.shop^
 ||outhaushauviy.xyz^
 ||outhisskirsch.shop^
+||outhueoutfall.shop^
 ||outhulem.net^
 ||outlandishanalyst.pro^
 ||outlapdawn.live^
@@ -68465,6 +68542,7 @@ picgo.net###home_after_cta
 ||owvhheaq.com^
 ||owvobdogd.com^
 ||owwmbcdlguyke.store^
+||owxxcdgbhhcb.com^
 ||owzmdz.glamira.co.uk^
 ||ox.bncounter.com^
 ||ox.first-law.com^
@@ -68530,6 +68608,7 @@ picgo.net###home_after_cta
 ||oyi9f1kbaj.com^
 ||oyjudvyimkzzu.space^
 ||oylyaz.mrkoll.se^
+||oynveturupdut.site^
 ||oyoakyallvoka.top^
 ||oyoakyallvooz.top^
 ||oyotii.sportokay.com^
@@ -68753,6 +68832,7 @@ picgo.net###home_after_cta
 ||pafvertizing.crazygames.com^
 ||paganicflav.rest^
 ||paganryrusset.top^
+||paganslaves.qpon^
 ||page-events-ustats.udemy.com^
 ||page.asraymond.com^
 ||page.care.salinasvalleyhealth.com^
@@ -69061,6 +69141,7 @@ picgo.net###home_after_cta
 ||particularundoubtedly.com^
 ||partion-ricism.xyz^
 ||partitionshawl.com^
+||partleyshut.cyou^
 ||partner-app.softwareselect.com^
 ||partner-dateconnects.com^
 ||partner-staging.miso.kr^
@@ -69828,6 +69909,7 @@ picgo.net###home_after_cta
 ||phxdrf.icu^
 ||phygfasvnnjrg.life^
 ||phyins.actonservice.com^
+||phyllinwyethia.click^
 ||physicalblueberry.com^
 ||physicaldividedcharter.com^
 ||physicalfront.pro^
@@ -71307,6 +71389,7 @@ picgo.net###home_after_cta
 ||prettyfaintedsaxophone.com^
 ||prettypermission.pro^
 ||prettytube.net^
+||prevailcocoyam.shop^
 ||prevalentclogoversight.com^
 ||preventreversion.com^
 ||preview-collector.scopely.io^
@@ -71893,6 +71976,7 @@ picgo.net###home_after_cta
 ||ptawidoohun.net^
 ||ptbrdg.com^
 ||ptcdn.mbicash.nl^
+||ptcdw.com^
 ||ptcdwm.com^
 ||ptckdrakgycat.store^
 ||ptecrzwnxmksx.space^
@@ -72297,6 +72381,7 @@ picgo.net###home_after_cta
 ||puzzle.spiriteq.com^
 ||puzzlepursued.com^
 ||puzzleresteal.top^
+||puzzlertruffes.cfd^
 ||pv.datacaciques.com^
 ||pv.hd.sohu.com^
 ||pv.kuaizhan.com^
@@ -72524,6 +72609,7 @@ picgo.net###home_after_cta
 ||qanqizywghyna.xyz^
 ||qaqaiyvbmuilh.site^
 ||qaqhmmyex.com^
+||qaquujyeov.xyz^
 ||qaqvec.icu^
 ||qarewien.com^
 ||qaroucprldfi.com^
@@ -72596,6 +72682,7 @@ picgo.net###home_after_cta
 ||qccoccocmedia.vn^
 ||qceyjl.cellularoutfitter.com^
 ||qcgtoz.cwjobs.co.uk^
+||qcgzvywnvubee.online^
 ||qchmlmtkpbswf.buzz^
 ||qcinvdy.top^
 ||qcixkb1.xyz^
@@ -72840,6 +72927,7 @@ picgo.net###home_after_cta
 ||qkhhjm.autoscout24.nl^
 ||qkitery.top^
 ||qkmerhdtlqadp.site^
+||qkmihtfjcgnsw.store^
 ||qkpwlodkao.com^
 ||qkqlqjrwymmw.top^
 ||qksbin.nocturne.com.tr^
@@ -72859,6 +72947,7 @@ picgo.net###home_after_cta
 ||qlfgrypbivmb.com^
 ||qlfqkjluvz.com^
 ||qlghunil.com^
+||qlheptjsvwnrr.space^
 ||qliaxwlyjbktqy.com^
 ||qljgzzflmlp.com^
 ||qljiop.allabout.co.jp^
@@ -72953,6 +73042,7 @@ picgo.net###home_after_cta
 ||qoclick.com^
 ||qoduruwkddheq.site^
 ||qoeytyfgtvfione.com^
+||qogcteumntijn.site^
 ||qogonsuqq.com^
 ||qogrux.com^
 ||qohlsl.drawer.fr^
@@ -73035,6 +73125,7 @@ picgo.net###home_after_cta
 ||qqgspelswxiok.website^
 ||qqhuhu.com^
 ||qqinrm.jagodo.vn^
+||qqjxklfhoosftj.com^
 ||qqkyhkfakl.xyz^
 ||qqlogo.qq.com^
 ||qqmzen.elfadistrelec.no^
@@ -73652,6 +73743,7 @@ picgo.net###home_after_cta
 ||rammerslewing.com^
 ||rammishruinous.com^
 ||ramnesganof.cyou^
+||ramousturco.qpon^
 ||ramp.purch.com^
 ||rampcreeper.com^
 ||rampidads.com^
@@ -74487,6 +74579,7 @@ picgo.net###home_after_cta
 ||rentorshal.com^
 ||renugtqvhsnjb.space^
 ||reobalkeozoa.top^
+||reobalkeyvqy.top^
 ||reoilsroter.rest^
 ||reople.co.kr^
 ||reorganizeache.com^
@@ -74823,6 +74916,7 @@ picgo.net###home_after_cta
 ||retargetcore.com^
 ||retargeter.com^
 ||retargeting.newsmanapp.com^
+||retaxpaiocke.rest^
 ||retaxtownman.shop^
 ||retcode.taobao.com^
 ||retdaz.fun^
@@ -75292,6 +75386,7 @@ picgo.net###home_after_cta
 ||rmtpouusuokbh.space^
 ||rmtxdn.icu^
 ||rmuogjdip.com^
+||rmvcfjenkt.com^
 ||rmvvawqleqaoj.top^
 ||rmvvawqleqrov.top^
 ||rmwzbombkqbjw.top^
@@ -75509,6 +75604,8 @@ picgo.net###home_after_cta
 ||rotularwataps.top^
 ||rotumal.com^
 ||roubergmiteom.com^
+||roubletennu.rest^
+||roucoubogard.shop^
 ||roucoutaivers.com^
 ||roudoduor.com^
 ||roufeeptos.net^
@@ -76300,6 +76397,7 @@ picgo.net###home_after_cta
 ||ruralnobounce.com^
 ||rusedangerous.com^
 ||rusenov.com^
+||rushierduomos.click^
 ||rusnuiyu.com^
 ||russetspaper.com^
 ||russianfelt.com^
@@ -77683,6 +77781,7 @@ picgo.net###home_after_cta
 ||sawfish.loqbooq.app^
 ||sawloginfang.click^
 ||sawnebfriarly.click^
+||sawnienimrod.qpon^
 ||sawp.cloud^
 ||saxysec.com^
 ||say.hello.navan.com^
@@ -79397,6 +79496,7 @@ picgo.net###home_after_cta
 ||shamelessappellation.com^
 ||shamelessnullneutrality.com^
 ||shammedminnow.digital^
+||shamoisconkers.world^
 ||shanaurg.net^
 ||shangwenchao4.cn^
 ||shanorin.com^
@@ -79609,6 +79709,7 @@ picgo.net###home_after_cta
 ||shespokheha.org^
 ||shestieh.com^
 ||shestrozo.com^
+||sheughchunder.rest^
 ||shewaityou.net^
 ||shewninneity.shop^
 ||shfsdvc.com^
@@ -80107,6 +80208,7 @@ picgo.net###home_after_cta
 ||skadnetwork.singular.net^
 ||skadsdk.appsflyer.com^
 ||skaffa.tidyapp.se^
+||skaffmuller.digital^
 ||skaldmishara.top^
 ||skated.co^
 ||skatestooped.com^
@@ -83767,6 +83869,7 @@ picgo.net###home_after_cta
 ||solo.notifysrv.com^
 ||solocpm.com^
 ||solodar.ru^
+||soloistneatly.com^
 ||solosblay.life^
 ||solubleallusion.com^
 ||solucionesreales.americanexpress.es^
@@ -84130,6 +84233,7 @@ picgo.net###home_after_cta
 ||soptimize.southwest.com^
 ||sorbetscarnal.digital^
 ||sorceryfalda.life^
+||sordidsicknessfaded.com^
 ||sordimtaulee.com^
 ||sore-season.com^
 ||sorghosphoma.top^
@@ -84635,6 +84739,7 @@ picgo.net###home_after_cta
 ||spyglass.octanime.net^
 ||spyglass.reklamko.pro^
 ||spyglass.reklon.net^
+||spyismfriskle.qpon^
 ||spylees.com^
 ||spylog.com^
 ||spyluhqarm.com^
@@ -84649,6 +84754,7 @@ picgo.net###home_after_cta
 ||sqdjorykqfqoc.icu^
 ||sqdljj.kijiji.ca^
 ||sqdtdxefkjsgn.space^
+||sqepngrbeel.com^
 ||sqhdnxcz.com^
 ||sqhqtvnvfzfne.store^
 ||sqif.cn^
@@ -87800,6 +87906,7 @@ picgo.net###home_after_cta
 ||suncanny.marvel.com^
 ||suncanny.marvelhq.com^
 ||sundekardu.life^
+||sundekteems.click^
 ||sundhopen.site^
 ||sundoweak.live^
 ||sundrarespite.cfd^
@@ -87927,6 +88034,7 @@ picgo.net###home_after_cta
 ||surveys.executiveboard.com^
 ||survrhostngs.xyz^
 ||susaneeno.top^
+||susciteuintjie.cyou^
 ||susianulidia.com^
 ||susifhfh2d8ldn09.com^
 ||susouchipha.com^
@@ -88249,6 +88357,7 @@ picgo.net###home_after_cta
 ||sx.fakjkwp.cn^
 ||sxarakia.openapp.link^
 ||sxdfhgniwzxzc.space^
+||sxdmitcjdkgiw.space^
 ||sxdsvaicpjnzg.website^
 ||sxeimx.mydays.de^
 ||sxeythdkvmjyl.online^
@@ -89185,6 +89294,7 @@ picgo.net###home_after_cta
 ||takru.com^
 ||takseetsesty.net^
 ||takyrreviver.rest^
+||talcherleafcup.shop^
 ||talckyslodder.top^
 ||talcoidsakis.com^
 ||talcslabbed.shop^
@@ -89793,6 +89903,7 @@ picgo.net###home_after_cta
 ||teamsperilous.com^
 ||teamwoukrkskil.com^
 ||teanlaxzia.cyou^
+||teapotdescended.com^
 ||tearcatjunior.com^
 ||tearerernest.com^
 ||tearoomzebus.top^
@@ -89996,8 +90107,10 @@ picgo.net###home_after_cta
 ||tenthsfrumpy.com^
 ||tentioniaukmlastit.com^
 ||tenuesjiggles.help^
+||tenuisflowing.digital^
 ||tenuousmorulas.shop^
 ||tenwauks.life^
+||teotnajhxmwts.site^
 ||tepatonol.com^
 ||tepid-ability.pro^
 ||tepidhalkahs.world^
@@ -90390,6 +90503,7 @@ picgo.net###home_after_cta
 ||thinksuggest.org^
 ||thinnerlanguish.com^
 ||thinpaltrydistrust.com^
+||thionicoutwood.shop^
 ||thioninkalwar.top^
 ||thiphoatchu.net^
 ||thiraq.com^
@@ -91302,6 +91416,7 @@ picgo.net###home_after_cta
 ||torkeauwu.com^
 ||torngetawaycurious.com^
 ||tornmonitor.pro^
+||toronaoi.help^
 ||toronto-content.cresa.com^
 ||tororango.com^
 ||torpifyckw.life^
@@ -92709,6 +92824,7 @@ picgo.net###home_after_cta
 ||tr6.mperf.com^
 ||tr6.snapchat.com^
 ||traatcamjwra.com^
+||trabunetful.help^
 ||trac.clicplan.co.uk^
 ||trac.clicplan.fr^
 ||trac.clicplan.it^
@@ -94944,6 +95060,7 @@ picgo.net###home_after_cta
 ||ttgmjfgldgv9ed10.com^
 ||ttguipcjxxdja.com^
 ||ttgusdjqnudcp.site^
+||ttikombrmmygx.store^
 ||ttimiyi.top^
 ||ttlhwufpaqwkw.site^
 ||ttmc.actonservice.com^
@@ -95027,6 +95144,7 @@ picgo.net###home_after_cta
 ||tuffoonincaged.com^
 ||tuflivcuhasr.com^
 ||tuftilycalp.life^
+||tuftyceibos.help^
 ||tufzdj.xyz^
 ||tugngs.tui.com^
 ||tugnrqywfwaup.store^
@@ -95455,6 +95573,7 @@ picgo.net###home_after_cta
 ||uaqe.cn^
 ||uarating.com^
 ||uarrdg.landsofamerica.com^
+||uarxokmu.com^
 ||uasmdd.icaniwill.no^
 ||uat-client.belairdirect.com^
 ||uat-client.intact.ca^
@@ -95736,6 +95855,7 @@ picgo.net###home_after_cta
 ||uizjfyakmsawn.site^
 ||ujbhri.pharmamarket.nl^
 ||ujbtlqoifpc.com^
+||ujdsaljmviudi.space^
 ||ujdtnsgiagbxx.click^
 ||ujeaqbkubgfuz.store^
 ||ujimtyt.top^
@@ -95825,6 +95945,7 @@ picgo.net###home_after_cta
 ||ullc.cn^
 ||ulmoyc.com^
 ||ulmqfhgfjrxbj.site^
+||ulnaemusica.help^
 ||ulnariacrewer.shop^
 ||ulnhz.site^
 ||ulog.ksapisrv.com^
@@ -96102,6 +96223,7 @@ picgo.net###home_after_cta
 ||unreshiramor.com^
 ||unresolveddrama.com^
 ||unripewar.com^
+||unrlkrgiftrzw.site^
 ||unroostcurred.click^
 ||unrotomon.com^
 ||unrulymedia.com^
@@ -96209,6 +96331,7 @@ picgo.net###home_after_cta
 ||uoqc.cn^
 ||uoqojdljukx.com^
 ||uoqxdh.tendapro.it^
+||uorksewkwesln.space^
 ||uosnrutxymbvs.store^
 ||uoublit.top^
 ||uoutube.com^
@@ -96430,6 +96553,7 @@ picgo.net###home_after_cta
 ||urs.metacritic.com^
 ||urs.microsoft.com.nsatc.net^
 ||ursdxxhnce.com^
+||ursonecabler.click^
 ||ursorsee.pro^
 ||ursvgeoaweeli.love^
 ||urtirepor.com^
@@ -97527,6 +97651,7 @@ picgo.net###home_after_cta
 ||venture-365-inspired.com^
 ||venturead.com^
 ||venturepeasant.com^
+||venturesymboldefend.com^
 ||venturyremove.com^
 ||venueartisticdisinterested.com^
 ||venueexpanded.com^
@@ -98238,6 +98363,7 @@ picgo.net###home_after_cta
 ||voluumtrk3.com^
 ||volyze.com^
 ||vomerkalpaks.com^
+||vomitosanax.digital^
 ||vomitsuite.com^
 ||vomitybelick.digital^
 ||vonazon.actonservice.com^
@@ -98291,6 +98417,7 @@ picgo.net###home_after_cta
 ||vp.html5.qq.com^
 ||vpbigdsnehwam.today^
 ||vpbpb.com^
+||vpcdgafkvufc.com^
 ||vpcxpowqzvdz.com^
 ||vpdcp.com^
 ||vpdnjl.xyz^
@@ -98404,6 +98531,7 @@ picgo.net###home_after_cta
 ||vs.verisure.fr^
 ||vs3.com^
 ||vsbhurrtv.com^
+||vscospsickqywl.com^
 ||vscvotonpbevv.site^
 ||vscyuhmtfpozh.store^
 ||vsdiz.xyz^
@@ -100084,6 +100212,7 @@ picgo.net###home_after_cta
 ||witanliras.rest^
 ||witasix.com^
 ||witch-counter.de^
+||witelullay.help^
 ||withdraw3452.fun^
 ||withedsubalar.life^
 ||withmefeyaukn.com^
@@ -100370,6 +100499,7 @@ picgo.net###home_after_cta
 ||woncherish.com^
 ||wondenthaitings.org^
 ||wonderful-day.club^
+||wonderingtraverse.com^
 ||wondersgedact.top^
 ||wondoads.de^
 ||wongahmalta.com^
@@ -100782,6 +100912,7 @@ picgo.net###home_after_cta
 ||wwaptyzujb.com^
 ||wwarvlezkjev.top^
 ||wwarvlezklaj.top^
+||wwarvlezkmaz.top^
 ||wwarvlezkmwm.top^
 ||wwbdayuvbvrsr.rocks^
 ||wwbdijjxe.com^
@@ -101931,6 +102062,7 @@ picgo.net###home_after_cta
 ||wyzqiy.pnet.co.za^
 ||wz.allianz.fr^
 ||wz.xyxz.site^
+||wzatmsmnslpvm.store^
 ||wzcnha.lenspure.com^
 ||wzcuinglezyz.one^
 ||wzeofdkmyo.com^
@@ -102196,6 +102328,7 @@ picgo.net###home_after_cta
 ||xgsanpyn.xyz^
 ||xgspzv.troyestore.com^
 ||xgsxkzscxapvj.online^
+||xgszciooysvcj.site^
 ||xgthmgggspluq.site^
 ||xgubwpvoyqgtd.online^
 ||xgvenv.farmatodo.com.co^
@@ -102207,6 +102340,7 @@ picgo.net###home_after_cta
 ||xhcpnhre.com^
 ||xhetkdnupfsa.com^
 ||xhjponypbsegd.online^
+||xhktyryhxspej.online^
 ||xhkzrtolqfcvn.site^
 ||xhlkvx.xyz^
 ||xhm.pub^
@@ -102305,6 +102439,7 @@ picgo.net###home_after_cta
 ||xlapmx.mcsport.ie^
 ||xlbcuhetdk.com^
 ||xlbvvo.luisaviaroma.com^
+||xlbwvitnmbocg.com^
 ||xldnzg.trendhim.de^
 ||xldyxnzo6.com^
 ||xlebyndzkwxkn.space^
@@ -104015,6 +104150,7 @@ picgo.net###home_after_cta
 ||ytzihf.com^
 ||ytzudqodkcufg.com^
 ||yu0123456.com^
+||yu225.com^
 ||yuanzunxs1.com^
 ||yuarra.pluto.ro^
 ||yuayku.xyz^
@@ -104575,6 +104711,7 @@ picgo.net###home_after_cta
 ||zkebwy.copenhagenstudios.com^
 ||zkkkvb.welovebags.de^
 ||zkmhhr1fr79z.dictionary.basabali.org^
+||zknftduydoeju.site^
 ||zknrhv.sebago.com^
 ||zkntjk.hikaku-cardloan.news.mynavi.jp^
 ||zkqhqv.sizeofficial.it^

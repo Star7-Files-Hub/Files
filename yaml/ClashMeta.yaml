@@ -539,6 +539,13 @@ rule-providers:
     path: ./ruleset/PTDirect.yaml
     interval: 86400
 
+  Emby:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/Star7-Files-Hub/Files/refs/heads/main/yaml/Emby.yaml
+    path: ./ruleset/Emby.yaml
+    interval: 86400
+
 rules:
   - RULE-SET,iPv6,📮 IPV6节点
   - RULE-SET,Ad,🆎 AdBlock
@@ -565,3 +572,4 @@ rules:
   - RULE-SET,DIRECT,🛠 直连节点
   - RULE-SET,PTProxy,🌍 站点代理
   - RULE-SET,PTDirect,🇨🇳 站点直连
+  - RULE-SET,Emby,🚀 手动切换

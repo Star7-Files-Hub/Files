@@ -65,3 +65,4 @@ picgo.net###home_after_cta
 115cdn.com###js_common_mini-dialog
 115cdn.com###js_common_sharing_banner
 115cdn.com###js_common_act-enter
+bilibili.com#%#//scriptlet('json-prune', 'data.cm_info.ads')

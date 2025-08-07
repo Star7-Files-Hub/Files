@@ -66,3 +66,8 @@ picgo.net###home_after_cta
 115cdn.com###js_common_sharing_banner
 115cdn.com###js_common_act-enter
 bilibili.com#%#//scriptlet('json-prune', 'data.cm_info.ads')
+bilibili.com##.ad-report
+###slide_ad
+##.ad-icon
+bilibili.com##.ad-report
+bilibili.com##a[href*="cm.bilibili.com"][data-target-url]:not([data-target-url*=".bilibili.com/"])

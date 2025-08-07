@@ -71,3 +71,16 @@ bilibili.com##.ad-report
 ##.ad-icon
 bilibili.com##.ad-report
 bilibili.com##a[href*="cm.bilibili.com"][data-target-url]:not([data-target-url*=".bilibili.com/"])
+
+blog.csdn.net###swiper-remuneration-container
+blog.csdn.net###csdn-toolbar > div.toolbar-inside.exp3 > div.toolbar-container > div.toolbar-container-right:last-child > div.toolbar-btns.onlyUser > div.toolbar-btn.toolbar-btn-vip.csdn-toolbar-fl:nth-child(2)
+sbazegm0azb4.com###root > div > div:last-child > div.grid.bb7cd3946b._307c2c5714.df74f4ac25:first-child > div.m0auto._97b34e1a0c.b3f66f0e0b:nth-child(2) > div > div.dd5a98b4bd._69e3f98498:first-child > div.swiper.swiper-initialized.swiper-horizontal.swiper-backface-hidden > div.swiper-wrapper
+sbazegm0azb4.com###root > div > div:last-child > div.grid.bb7cd3946b._307c2c5714.df74f4ac25:first-child > div.m0auto._97b34e1a0c.b3f66f0e0b:nth-child(2) > div > div:last-child
+sbazegm0azb4.com###root > div > div:last-child > div._1744704862._9e2f33e226._7137c7b94e._69e3bfa862._7abdb02dc5._805065801e.d4cb8c03de._95e731eaa7._221e0dea17.c85e00e2de:last-child
+sbazegm0azb4.com###root > div > div:last-child > div.grid.bb7cd3946b._307c2c5714.df74f4ac25:first-child > div.relative:first-child > div.fl._719a1d07d7.b53e6dae2e.align_center.justify_center._1a74d5d8e5 > div.grid._4d854d2a18._7cf9392896._2e44a49ccd._1c61194032.align_center > div._92a9cd5ae3.d12d94e6a6.c0e60d7a10._0ef0b4f395:last-child > div.fl.align_center.justify_end.gap10.undefined:last-child > div.mt10:first-child
+sbazegm0azb4.com###root > div > div:last-child > div.grid.bb7cd3946b._307c2c5714.df74f4ac25:first-child > div:last-child > div:first-child > div.mw1100 > div:nth-child(3)
+sbazegm0azb4.com###root > div > div:last-child > div.grid.bb7cd3946b._307c2c5714.df74f4ac25:first-child > div.m0auto._97b34e1a0c.b3f66f0e0b:nth-child(2) > div > div.grid._67d0c3105c.eed231034b._72a741ee5d:nth-child(2) > div:last-child > div.relative > div._296ef6f83a
+sbazegm0azb4.com###root > div > div:last-child > div._65c511f54b.f933bbf585:nth-child(2)
+bilibili.com###mirror-vdcon > div.left-container.scroll-sticky:first-child > div.ad-report.strip-ad.left-banner:nth-child(6)
+bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-container-inner.scroll-sticky > div.video-card-ad-small:nth-child(5)
+bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-container-inner.scroll-sticky > div.rcmd-tab:last-child > div.ad-report.ad-floor-exp.right-bottom-banner:last-child

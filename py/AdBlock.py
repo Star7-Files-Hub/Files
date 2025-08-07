@@ -17,6 +17,7 @@ rule_sources = {
     "https://ghfast.top/raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-hosts.txt": "AWAvenue-Ads-Rule-hosts.txt",
     "https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/refs/heads/main/rule.txt": "rules.txt",
     "https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/main/bad_apple.txt": "bad_apple.txt",
+    "https://anti-ad.net/easylist.txt": "anti-ad.txt",
     "https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/refs/heads/main/whitelist.txt": "whitelist.txt"
 }
 

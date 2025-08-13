@@ -1,9 +1,9 @@
 ! Title: 7Star's_Ad_Rules
 ! Homepage: https://github.com/Star7-Files-Hub/Files/tree/main/Ad
 ! Expires: 12 Hours
-! Version: 2025-08-12 20:31:19（北京时间）
+! Version: 2025-08-13 09:13:35（北京时间）
 ! Description: 适用于AdGuard的去广告规则，合并优质上游规则并去重整理排列
-! Total count: 136082
+! Total count: 136206
 
 ! Source: https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/fq2.txt (fq2.txt)
 ||*^$all,app=com.dragon.read,important
@@ -7166,7 +7166,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||1337x.*/ma.js^
 ||1338f95c76.com^
 ||13453765871837679316.googlegroups.com^
-||134af949d5.com^
 ||13518450.xyz^
 ||13554359.xyz^
 ||1364c2e769.26e8264baa.com^
@@ -7176,7 +7175,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||1375f1f27e.5cb79f17b9.com^
 ||137kfj65k.de^
 ||138124e964.eda4dc1ffe.com^
-||1386bd6fb0.52fa059b20.com^
 ||13c29d08a5.e8370630f3.com^
 ||13c4491879.com^
 ||13js1lbtbj3.sparkloop.app^
@@ -7544,7 +7542,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||20382207.xyz^
 ||205.209.138.102^
 ||2052.flash2-http.qq.com^
-||205f21070c.com^
 ||20690754.xyz^
 ||206ads.com^
 ||20729617.xyz^
@@ -7631,7 +7628,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||23907453.xyz^
 ||23a70832cd.2f359a8315.com^
 ||23andme.actonservice.com^
-||23cf9466.xyz^
 ||23e023321c.c12c813990.com^
 ||23hssicm9.de^
 ||23oct2023.site^
@@ -7666,7 +7662,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||2499may2024.com^
 ||24a5c5f3df.a7d709d40c.com^
 ||24affiliates.com^
-||24c4e333.xyz^
 ||24df4bd648.com^
 ||24log.com^
 ||24log.de^
@@ -8004,7 +7999,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||3183803.notifysrv.com^
 ||3184333.notifysrv.com^
 ||3185883.notifysrv.com^
-||31862bf36c.008dd84707.com^
 ||3188151.notifysrv.com^
 ||3188893.notifysrv.com^
 ||3188993.notifysrv.com^
@@ -9305,7 +9299,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||4470554.notify6.com^
 ||4496664.notify6.com^
 ||4497e71924.com^
-||4499557c7c.48c38f61fa.com^
 ||44b6d66394.a2e5b82fea.com^
 ||44cb3d66c1.34c72d94d3.com^
 ||44fc128918.com^
@@ -9384,7 +9377,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||4798638.notify6.com^
 ||4799078.notify6.com^
 ||47cb693fa6.com^
-||47df036031.47b2b18670.com^
 ||47f0db81c9.com^
 ||4801186.notify6.com^
 ||4809426.notify6.com^
@@ -9502,7 +9494,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||4f9fbf3477.com^
 ||4fc2d0c0e2.abb030d6a7.com^
 ||4fd3f02e5e.aed08832da.com^
-||4fdd7f4b.xyz^
 ||4fr.icu^
 ||4fs3r.icu^
 ||4g0b1inr.de^
@@ -9563,7 +9554,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||5029618.notify6.com^
 ||50368ce0a6.com^
 ||503f39274f.cc33b86bbf.com^
-||504pk.com^
 ||5065358.notify6.com^
 ||507340f398.730fcb332f.com^
 ||5077248.notify6.com^
@@ -9671,7 +9661,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||55726zubo56686.com^
 ||55766925.xyz^
 ||558158.xyz^
-||55876234.xyz^
 ||558ao12sqrok.top^
 ||55c0c98b4d.e0bb9b01ec.com^
 ||55f4605f6d.com^
@@ -9888,7 +9877,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||6519114.mktg.almosafer.com^
 ||6519114.mktg.tajawal.com^
 ||656f1ba3.xyz^
-||656fe3805b.b0edf74166.com^
 ||6570131a3f.com^
 ||657376d1f1.65a95a9d2b.com^
 ||65894140.xyz^
@@ -10385,11 +10373,8 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||8992bfef5b.3575e2d4e6.com^
 ||89sa.com^
 ||8a45f0e0a6.579eede9ca.com^
-||8a461fdb.xyz^
 ||8a53b29c07.com^
-||8a7d8912cb.0ef2473ad8.com^
 ||8a97caf2b2.b5f1d2bb4d.com^
-||8a9d20ab14.0b9b5eada8.com^
 ||8ab16250fe.com^
 ||8aea82753b.2ab91613ab.com^
 ||8ail6.icu^
@@ -10473,7 +10458,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||9.www.ko9t6qv2kt8psullo7pputs.xyz^
 ||9.www.o-3vq0t1kqukk9pns.xyz^
 ||9.www.omomku7r4n3vo55rp5k.xyz^
-||9013e61823.com^
 ||9023cab03a.addf375bbe.com^
 ||903e9c75f6.com^
 ||905.notify.optimizesrv.com^
@@ -10490,7 +10474,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||913.notify.optimizesrv.com^
 ||91301246.xyz^
 ||9130ec9212.com^
-||9135fec6cb.f026a8e109.com^
 ||915c63962f.com^
 ||918000.xyz^
 ||9189.pandasuite.io^
@@ -10646,7 +10629,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||9dmnv9z0gtoh.com^
 ||9e11c3902a.fd1f580172.com^
 ||9e11ec3a56.com^
-||9e14a85177.8433f52821.com^
 ||9e3810a418.com^
 ||9eebf015a5.com^
 ||9f0a9a8621.effe2f62ae.com^
@@ -11074,7 +11056,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||a.ucoz.net^
 ||a.ucoz.ru^
 ||a.ulisxyz.store^
-||a.vanvok.ru^
 ||a.vidone.net^
 ||a.viralnewsbd.xyz^
 ||a.visme.co^
@@ -15034,7 +15015,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ab8c7b1863.com^
 ||ab93t2kc.de^
 ||ab9a9bd665.ae83a82a8d.com^
-||aba7348092.com^
 ||aba9e4d25f.com^
 ||abacho.net^
 ||abackdamstubborn.com^
@@ -17597,6 +17577,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ads.zalo.me^
 ||ads.zaloapp.com^
 ||ads.zunia.vn^
+||ads01.pages.dev^
 ||ads1-adnow.com^
 ||ads1-adqva.com^
 ||ads1.canoe.ca^
@@ -18550,6 +18531,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||aflowerosmosis.shop^
 ||afm01.com^
 ||afmvms.dealdash.com^
+||afnerinymidvi.com^
 ||afnhc.com^
 ||afnkhlcpleyog.space^
 ||afnlriwmya.com^
@@ -18886,7 +18868,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ailla.abphotos.link^
 ||aillaeuyn.com^
 ||ailpyvmztfusn.one^
-||ailtodsookr.com^
 ||aim4media.com^
 ||aimakarkie.com^
 ||aimatch.com^
@@ -19705,6 +19686,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ambiliarcarwin.com^
 ||ambitalfeds.top^
 ||ambitious-organization.pro^
+||ambitiousdemand.com^
 ||ambolicrighto.com^
 ||ambuizeler.com^
 ||amburyinsteam.digital^
@@ -19808,6 +19790,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||amon1.net^
 ||amongassessment.com^
 ||amongdirt.world^
+||amongfurfooz.cfd^
 ||amongremember.com^
 ||amongstbestrew.top^
 ||amoochaw.com^
@@ -20972,6 +20955,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||anisoinmetrize.top^
 ||anjanstarved.com^
 ||anjbfonzoz.com^
+||anjmaoaoazmab.top^
 ||anjmaoaoazmow.top^
 ||anjmfijuiuxgul.com^
 ||ankdoier.com^
@@ -21124,6 +21108,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||antiquityundeniable.com^
 ||antiredcessant.com^
 ||antirustexistingtaking.com^
+||antisagrucks.cyou^
 ||antitracking.owncast.online^
 ||antiunbearable.com^
 ||antivi.xyz^
@@ -22605,7 +22590,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||aptlytree.com^
 ||aptoshoath.net^
 ||aptoticwrecked.shop^
-||aptouste.net^
 ||aptpurerun.live^
 ||apture.com^
 ||apu.hentaibox.xyz^
@@ -22665,6 +22649,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||aquabibuncoy.top^
 ||aquaticrangey.shop^
 ||aquentlytujim.com^
+||aquosinnen.qpon^
 ||aqusrpypahg.com^
 ||aqwvwn.cultfurniture.com^
 ||aqxme-eorex.site^
@@ -22825,6 +22810,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||arlessoldened.shop^
 ||arlftplsdxmhw.online^
 ||arlingchronal.world^
+||arlingjinker.world^
 ||armadillo.axeneo7.qc.ca^
 ||armadillo.oceandecadenortheastpacific.org^
 ||armadillo.superpeak.dk^
@@ -23075,6 +23061,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ashhgo.com^
 ||ashiverbulkier.click^
 ||ashlarinaugur.com^
+||ashlingpaybox.cfd^
 ||ashlynnbrookevideos.com^
 ||ashmbgbktnp.com^
 ||ashobzshava.com^
@@ -23345,6 +23332,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||atarget.csu.edu.au^
 ||atarget.firstrepublic.com^
 ||atarget.harley-davidson.com^
+||atarrean.com^
 ||atax.teamxbox.com^
 ||ataxyredleg.qpon^
 ||atb-stats-api.imolive.tv^
@@ -23742,6 +23730,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||avantidestinations.actonservice.com^
 ||avantifinance.actonservice.com^
 ||avanyurictus.shop^
+||avarhookeys.cyou^
 ||avaricious-nerve.pro^
 ||avasgtest.branch.rocks^
 ||avatarthree.lol^
@@ -24337,7 +24326,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||b.frida.vse42.ru^
 ||b.fxnetworks.com^
 ||b.getmaintainx.com^
-||b.getoutfrom.com^
 ||b.gett.com^
 ||b.grabo.bg^
 ||b.harehop.com^
@@ -24633,6 +24621,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||baggy-physics.pro^
 ||bagirmihipper.shop^
 ||baglanbize.net^
+||bagmeninmost.click^
 ||bagmenunhaunt.top^
 ||bagniosslocken.shop^
 ||bagpipemonogamypercent.com^
@@ -24993,6 +24982,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||basicallyspacecraft.com^
 ||basicflownetowork.co.in^
 ||basicwhenpear.com^
+||basilaratterr.cfd^
 ||basilisk.community-arts.net^
 ||basilisk.laosima.com^
 ||basilmaniere.shop^
@@ -25372,6 +25362,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||beavertron.com^
 ||beaverydalasi.shop^
 ||beaxewr.com^
+||bebanghaidee.digital^
 ||bebatsirens.qpon^
 ||bebautvdrradc.world^
 ||bebb6fb79c.f34aabcc0e.com^
@@ -26091,6 +26082,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||bird.recruitkit.com.au^
 ||bird.webitizevoice.com^
 ||birddomkoda.digital^
+||birddomlaz.com^
 ||birderbuds.qpon^
 ||birianizymome.top^
 ||birkylaced.life^
@@ -26252,6 +26244,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||blackbook.coniferhealth.com^
 ||blackdagger.openapp.link^
 ||blackdjarumcofo.xyz^
+||blackedsubjected.com^
 ||blackenheartbreakrehearsal.com^
 ||blackenoz.com^
 ||blackenterprise.black.news^
@@ -26405,6 +26398,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||blow.week1time.com^
 ||blowiermalati.rest^
 ||blowingparkish.click^
+||blowyameen.qpon^
 ||blowzycavorts.cyou^
 ||bloxplay.com^
 ||blqsrexczsqht.site^
@@ -27671,6 +27665,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||bumboataurum.shop^
 ||bumfbisks.cfd^
 ||bumfeghijinks.top^
+||bumfxnyfnepjh.online^
 ||bumhuetony.live^
 ||bumidpuaraodp.today^
 ||bummackhulster.click^
@@ -28288,6 +28283,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||cache2.delvenetworks.com^
 ||cachegorilla.com^
 ||cachinadodoes.cfd^
+||cachinglassock.rest^
 ||cachuadirked.top^
 ||cachusrw.com^
 ||cackedfenchyl.cfd^
@@ -28518,6 +28514,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||can-get-some.in^
 ||can-get-some.net^
 ||canadamarketing.travelsavers.com^
+||cancansenfiled.cfd^
 ||cancelsstrepor.qpon^
 ||canceltrustingunderuse.com^
 ||cancriberths.com^
@@ -29450,6 +29447,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ceechuwaukah.com^
 ||ceegrevoaphail.com^
 ||ceeilcvgjq.xyz^
+||ceerosario.qpon^
 ||ceezepegleze.xyz^
 ||cef7cb85aa.com^
 ||ceggfe.msc-kreuzfahrten.de^
@@ -29557,6 +29555,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||cestibegster.com^
 ||cestondjellab.cfd^
 ||cestorshefo.org^
+||cesuraeflaked.help^
 ||cetlwsf.top^
 ||cetoworkwither.com^
 ||cetrk.com^
@@ -29777,6 +29776,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||chavoads.com^
 ||chawerfatsia.shop^
 ||chawermilk.digital^
+||chaymalices.rest^
 ||chaymaween.top^
 ||chbwe.space^
 ||chdhvckqav.com^
@@ -29849,6 +29849,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||chengaib.net^
 ||cheqzone.com^
 ||cherdignain.net^
+||chereawoken.rest^
 ||chererykes.help^
 ||cherry.le.com^
 ||cherrya04.top^
@@ -30130,6 +30131,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ciceklioglu.com^
 ||cicutareffelt.cyou^
 ||cicutayields.rest^
+||cidersbursula.rest^
 ||cidersnaval.rest^
 ||cidhmxxb.icu^
 ||cidqzahi.com^
@@ -30862,6 +30864,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||clochespaginae.shop^
 ||clockinaugurateounce.com^
 ||clockwiseleaderfilament.com^
+||cloddermowburn.qpon^
 ||clodderpickmaw.com^
 ||clodsplit.com^
 ||clog.go.com^
@@ -31087,6 +31090,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||cnebis.chocola.com^
 ||cnebis.eisai.jp^
 ||cnebis.i-no-science.com^
+||cnesnnavxumlh.online^
 ||cnfxflakkwavih.xyz^
 ||cngbpl.directliquidation.com^
 ||cnkupkiuvkcq.xyz^
@@ -31117,7 +31121,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||cnt.rambler.ru^
 ||cnt.ramlife.ru^
 ||cnt.rate.ru^
-||cnt.spbland.ru^
 ||cnt.trvdp.com^
 ||cnt.viptube.com^
 ||cnt.vivatube.com^
@@ -31273,6 +31276,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||coldsandwich.pro^
 ||colentkeruing.top^
 ||coletor.terra.com^
+||colfoxmurrhas.click^
 ||colgui.vidaxl.pt^
 ||coliassfeurytheme.com^
 ||colkarneh.com^
@@ -31620,7 +31624,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||compatriotelephant.com^
 ||compelbruises.com^
 ||compellingtremblegenial.com^
-||compensation423.fun^
 ||compensationpropulsion.com^
 ||compiledonatevanity.com^
 ||compitte.com^
@@ -31635,7 +31638,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||compliance.govdocs.com^
 ||complianceupdates.aem.org^
 ||complicated-scale.pro^
-||complication423.fun^
 ||complyjudgementessay.com^
 ||compositefarming.com^
 ||compositeoverdo.com^
@@ -32531,6 +32533,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||coursestiffenjealous.com^
 ||coursewimplongitude.com^
 ||courthousezoological.com^
+||courtroomestablishedtrauma.com^
 ||courtshipanditla.com^
 ||coutaizoace.net^
 ||coutelzymogen.cyou^
@@ -32730,6 +32733,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||cqkzgchjtlllo.store^
 ||cqlonl.spartoo.cz^
 ||cqmgoxqbhsmgg.site^
+||cqnyouhxqpimkjj.com^
 ||cqomjiajwczzf.online^
 ||cqpmvc.caminteresse.fr^
 ||cqpmvc.capital.fr^
@@ -33300,6 +33304,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||cuckoo.cult.supply^
 ||cuckoo.jerandky.com^
 ||cuckoo.peoplefirstjobs.com^
+||cuckooamaine.cfd^
 ||cuckooretire.com^
 ||cuckoosad.com^
 ||cucnmtf.top^
@@ -33333,6 +33338,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||cuifspyvuril.com^
 ||cuinageaquilid.com^
 ||cuisineenvoyadvertise.com^
+||cuitledsofties.click^
 ||cuitynxxhml.com^
 ||cujruloq.com^
 ||cujscaawbaz.com^
@@ -33877,7 +33883,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||d14pdm1b7fi5kh.cloudfront.net^
 ||d14x46ho6sn9yf.cloudfront.net^
 ||d14zhsq5aop7ap.cloudfront.net^
-||d1523a346a.com^
 ||d154nw1c88j0q6.cloudfront.net^
 ||d157c90939.1b384556ae.com^
 ||d15a035f27.com^
@@ -33932,7 +33937,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||d196fri2z18sm.cloudfront.net^
 ||d199kwgcer5a6q.cloudfront.net^
 ||d19a04d0igndnt.cloudfront.net^
-||d19a122b.xyz^
 ||d19bpqj0yivlb3.cloudfront.net^
 ||d19diizb3qce6y.cloudfront.net^
 ||d19gkl2iaav80x.cloudfront.net^
@@ -35963,6 +35967,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||dawetywjzsinl.online^
 ||dawingfawnier.world^
 ||dawnfilthscribble.com^
+||dawningfutchel.rest^
 ||dawplm.com^
 ||dawtielegwork.life^
 ||dawtingaright.click^
@@ -36007,6 +36012,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||dbba861ffd.cf0b47742b.com^
 ||dbbest.actonservice.com^
 ||dbbsrv.com^
+||dbbzorowkbg.com^
 ||dbc16ca4a8.1c0451188d.com^
 ||dbcdqp72lzmvj.cloudfront.net^
 ||dbclix.com^
@@ -36023,6 +36029,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||dbkuarzeaepqo.global^
 ||dbl.cadriamarketing.com^
 ||dblhqefpt.com^
+||dbloader.leboncoin.info^
 ||dblowthrou.com^
 ||dbmbfe.pegipegi.com^
 ||dbmgikwoijnhu.online^
@@ -36428,6 +36435,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||defeature.xyz^
 ||defectiveaskewsite.com^
 ||defectsratine.cfd^
+||defeitisaiah.cyou^
 ||defenseless-design.pro^
 ||defensive-living.com^
 ||defensiveassist.pro^
@@ -37308,6 +37316,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||dikasomywnqww.website^
 ||dikcmpgwemomx.space^
 ||dikeaxillas.com^
+||dikedbizonal.cfd^
 ||diken.xyz^
 ||dikeprotectorencyclopaedia.com^
 ||dikhsb.vividseats.com^
@@ -37763,6 +37772,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||dlfvgndsdfsn.com^
 ||dlh1.hilton.com^
 ||dlh8c15zw7vfn.cloudfront.net^
+||dlhdcawqeawfb.space^
 ||dlhwyaetguynl.space^
 ||dlied6.qq.com^
 ||dlig.cn^
@@ -38099,6 +38109,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||domino.flycl.ps^
 ||dominoskivies.click^
 ||domipush.com^
+||domitedryas.click^
 ||domnlk.com^
 ||domorewithless.adp.ca^
 ||dompeterapp.com^
@@ -38151,6 +38162,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||dootigeeteethoa.net^
 ||doovejoath.com^
 ||dopansearor.com^
+||dopeyunguard.rest^
 ||dophirtoozeego.net^
 ||dopklb.xyz^
 ||dopljl.noleggiosemplice.it^
@@ -38567,6 +38579,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||druoctualyuomdg.com^
 ||drupcgjldowsb.website^
 ||druqodrly.com^
+||druruelap.xyz^
 ||drustren.com^
 ||druzja.canmart.co.kr^
 ||drvdb9rcebidk.cloudfront.net^
@@ -38678,6 +38691,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||dsxadwwna.com^
 ||dsxgwwrkecsxd.online^
 ||dsxmn0.com^
+||dsxrvvqolphwm.website^
 ||dt-tracker.mamikos.com^
 ||dt.beyla.site^
 ||dt.vnecdn.com^
@@ -38887,6 +38901,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||duuddots.com^
 ||duujwfceivrra.site^
 ||duumvirkeach.top^
+||duumvirkokopu.help^
 ||duy1ol4n1csnp.cloudfront.net^
 ||duyhlct.icu^
 ||duz64ud8y8urc.cloudfront.net^
@@ -39005,6 +39020,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||dxrlkh.icanvas.com^
 ||dxtv1.com^
 ||dxuvxrdqeyzwj.online^
+||dxvewbdywd.com^
 ||dxvfdv.icu^
 ||dxwksqa.icu^
 ||dxwtokotnvmsz.store^
@@ -39216,7 +39232,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||e5f1418a7a.com^
 ||e5obq1v261.www.lurkit.com^
 ||e63c2b7c52.995be54914.com^
-||e652a487.xyz^
 ||e664.theoaklandpress.com^
 ||e6644fec96.7b98c550d1.com^
 ||e67repidwnfu7gcha.com^
@@ -39726,7 +39741,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ed1.newtekone.com^
 ||ed2.fun^
 ||ed4online.actonservice.com^
-||ed956f23ae.23cc6cc4e9.com^
 ||edaciousedacioushandkerchiefcol.com^
 ||edaciousedaciousozgiggle.com^
 ||edadmy.xyz^
@@ -40220,7 +40234,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||elemsuccah.shop^
 ||elentmatch.com^
 ||elephant.superdense.com^
-||elephoch.com^
 ||eletys.icu^
 ||elfishtutman.click^
 ||elfnuhdfebphr.life^
@@ -40774,6 +40787,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||embracetrace.com^
 ||embroiderynaturalistsfighter.com^
 ||embryo1266.fun^
+||embryondowning.shop^
 ||embtrk.com^
 ||embwmpt.com^
 ||emc.dr-stick.shop^
@@ -41480,6 +41494,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||esa-reg-eup.myoppo.com^
 ||esaidees.com^
 ||esaidndamafraid.com^
+||esbayjosser.click^
 ||esblddalwqvfj.space^
 ||esca-test.mno.link^
 ||esca.mno.link^
@@ -42054,6 +42069,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||eversource.actonservice.com^
 ||evertsmiggles.com^
 ||every-abuse.com^
+||every-broad.com^
 ||every-day.net^
 ||everydowered.com^
 ||everyview.info^
@@ -42161,6 +42177,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||exbujk.glamood.com^
 ||excavatenearbywand.com^
 ||exceedinglytells.com^
+||exceedunited.com^
 ||excellenceads.com^
 ||excellingvista.com^
 ||excellojapanel.org^
@@ -43789,6 +43806,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||fkmzox.teinei.co.jp^
 ||fkojwcmyymgjt.online^
 ||fkrkkmxsqeb5bj9r.s3.amazonaws.com^
+||fkrwxzvxljbyh.website^
 ||fksngj.bonnyread.com.tw^
 ||fksnk.com^
 ||fktaxk.top^
@@ -46051,6 +46069,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||gh.fanatical.com^
 ||gh.vsee.me^
 ||ghairqin.com^
+||ghaistsnakier.cyou^
 ||ghaityastajib.store^
 ||ghalvahalfa.digital^
 ||ghaytebanc.store^
@@ -46277,6 +46296,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||gkrtmc.com^
 ||gksqdt.reitmans.com^
 ||gkuhvzkyc.com^
+||gkulhaupuxf.com^
 ||gkvrdf.com^
 ||gkxqt.cn^
 ||gkyju.space^
@@ -47551,6 +47571,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||gquwuefddojikxo.xyz^
 ||gqwwshbdd1.fun^
 ||gqxwfhe7o.com^
+||gqzfbvfyd.com^
 ||gr-business.vodafone.com^
 ||gr-go.experian.com^
 ||gr.a23.in^
@@ -48236,6 +48257,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||gxqzz.7766.org^
 ||gxrpbnhskxrtj.vip^
 ||gxtdglwnd.com^
+||gxulicnb.xyz^
 ||gxusko.pinkpanda.hu^
 ||gxyaxf.pixartprinting.be^
 ||gxyojn.underarmour.fr^
@@ -48527,6 +48549,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||hardtofind-hell.pro^
 ||hare.felix-schmid.de^
 ||hare.startupbootcamp.com.au^
+||hareliphowlets.world^
 ||haremarianne.com^
 ||haresmodus.com^
 ||harfl.com^
@@ -48985,6 +49008,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||heraudrepoint.world^
 ||herbalaffiliateprogram.com^
 ||herbgreencolumn.com^
+||herbmuzzier.help^
 ||herbousabutted.cfd^
 ||herconsequence.com^
 ||herdmenrations.com^
@@ -49131,6 +49155,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||hgoxvtdgfcdlg.website^
 ||hgprha.mizalle.com^
 ||hgreils.com^
+||hgtasizbgvjdn.website^
 ||hgub2polye.com^
 ||hgvhpgpln.com^
 ||hgvvafgrwgkqau.com^
@@ -49262,6 +49287,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||hikingburge.rest^
 ||hikinghourcataract.com^
 ||hikingsunspecialty.com^
+||hikiwajmr.com^
 ||hikmxb.botovo.cz^
 ||hiknhe.tanabesports.com^
 ||hikulinudity.rest^
@@ -50408,6 +50434,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||hzdoctor.com^
 ||hzdwoimhibxoh.website^
 ||hzeetn.natalie.mu^
+||hzejwxfpexoxw.website^
 ||hzgf8j12.xyz^
 ||hzhyhm.com^
 ||hzlcmoheihapn.click^
@@ -50914,6 +50941,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ihtnxu.tannergoods.com^
 ||ihuzryhojljka.site^
 ||ihvxxaktefvyx.store^
+||ihykcymyocpvw.site^
 ||ihzvszmtdmver.website^
 ||ii1.chajiaotong.com^
 ||ii3.icu^
@@ -53047,6 +53075,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||instanthq.com^
 ||instantmadness.com^
 ||instaruptilt.com^
+||insteamarchont.help^
 ||instinctiveads.com^
 ||institutehopelessbeck.com^
 ||instraffic.com^
@@ -53327,6 +53356,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ioxqdp.leatherology.com^
 ||ioyfmfjrtkpvt.online^
 ||ioykmxa.icu^
+||ioynumodqydgd.site^
 ||ip.chipestimate.com^
 ||ip.cliphunter.com^
 ||ip.goguardian.com^
@@ -53382,6 +53412,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ipsaigloumishi.net^
 ||ipsowrite.com^
 ||ipssss.com^
+||iptaumoati.net^
 ||iptautup.com^
 ||iptmgi.akan.co.kr^
 ||iptmih.hifi-regler.de^
@@ -53923,6 +53954,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||jagsbenzein.rest^
 ||jahvehbitnet.rest^
 ||jaifoptafoog.com^
+||jaigoaphamu.net^
 ||jaijeestaipsee.net^
 ||jaimirozadair.net^
 ||jaiphaugaw.net^
@@ -54335,6 +54367,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||jgzmqlkqnkqvk.top^
 ||jhakuzzvcilbv.website^
 ||jhbjkqqykibyt.buzz^
+||jhbrggmoyarhwri.xyz^
 ||jhcccvxqnkdit.website^
 ||jhebhefcekqpi.site^
 ||jhf4eib1zb.com^
@@ -54569,6 +54602,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||jnkqnf.cifraclub.com^
 ||jnkqnf.palcomp3.com.br^
 ||jnlzxpnxynucc.com^
+||jnokwkokqkakk.top^
 ||jnokwkokqkaya.top^
 ||jnrtavp2x66u.com^
 ||jntmtqkfbvsflp.com^
@@ -55424,6 +55458,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||kampanjer.yxvisa.no^
 ||kamsinhokerly.click^
 ||kanaskying.cyou^
+||kanatbour.help^
 ||kangaroo.kraenk.de^
 ||kangaroo.triplightfantastic.com^
 ||kangaroohiccups.com^
@@ -56172,6 +56207,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||kok.eroterest.net^
 ||kokcmnqvr.com^
 ||kokflrflwarlx.today^
+||kokilavandal.digital^
 ||kokotrokot.com^
 ||kolapoompup.net^
 ||kolerevprivatedqu.com^
@@ -56309,7 +56345,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||kraitbauld.cyou^
 ||kraken.rambler.ru^
 ||krankenwagenmotor.com^
-||krantzreal.life^
 ||kratosdefense.actonservice.com^
 ||krbulhb.com^
 ||kreanlmiba.com^
@@ -56453,6 +56488,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||kunqvoaigkae.com^
 ||kunvertads.com^
 ||kunwplqhsgodx.space^
+||kupefoarsadseer.com^
 ||kupujemprodajem.com/bShow.php^
 ||kupvtoacgowp.com^
 ||kupwafqigd.com^
@@ -56517,6 +56553,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||kw3y5otoeuniv7e9rsi.com^
 ||kwalnc.vans.co.kr^
 ||kwanvibist.com^
+||kwaqgkjkwmgza.top^
 ||kwaqgkjkwmwqq.top^
 ||kwaterd.top^
 ||kwbpge.jra-van.jp^
@@ -56576,6 +56613,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||kxrwoqtr.com^
 ||kxsdaomazbyxe.site^
 ||kxshyo.com^
+||kxtmscroasqo.com^
 ||kxtqgp.mistermenuiserie.com^
 ||kxxdxikksc.space^
 ||kxygsjv.icu^
@@ -56801,6 +56839,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||labourjavgg124.fun^
 ||labqjxrhyjufl.world^
 ||labretabut.qpon^
+||labrumscourses.rest^
 ||labs.verticurl.com^
 ||laceratecoast.com^
 ||lacertrotter.com^
@@ -56837,6 +56876,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ladsips.com^
 ||ladsipz.com^
 ||ladskiz.com^
+||ladsp.com^
 ||ladxxr.sonovente.com^
 ||ladybug.ficabo.com^
 ||ladybug.paulstovell.com^
@@ -57080,6 +57120,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||lavatorydownybasket.com^
 ||lavatoryhitschoolmaster.com^
 ||lavfttpdcojeh.space^
+||lavingflue.qpon^
 ||lavishgusty.shop^
 ||lavrtsdo.com^
 ||law.bppeloqua.com^
@@ -57134,6 +57175,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||lbfuvlyp.icu^
 ||lbfwxr.icu^
 ||lbgfqn.onward.co.jp^
+||lbgklgbgjmbyv.top^
 ||lbgklgbgjmvzg.top^
 ||lbgrwm.zolta.pl^
 ||lbjekygz.icu^
@@ -57320,6 +57362,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||leaveundo.com^
 ||leavingaileen.com^
 ||leb-app.diasporaid.com^
+||lebbfksrknrex.website^
 ||lebesdelia.digital^
 ||lebtpm.co-medical.com^
 ||lecapush.net^
@@ -57350,6 +57393,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||leecompany.actonservice.com^
 ||leefulsozines.qpon^
 ||leehlwswp.com^
+||leelanerechip.click^
 ||leemeecheetuso.net^
 ||leepigroazo.net^
 ||leerstighter.top^
@@ -59715,6 +59759,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||lorzelofd.com^
 ||losingoldfry.com^
 ||losobo.xyz^
+||lossfulshwebo.qpon^
 ||lost-beyond.pro^
 ||lostinfuture.com^
 ||lostpunch.pro^
@@ -60081,6 +60126,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ltqpej.vidaxl.ie^
 ||ltrac4vyw.com^
 ||ltripg.marti.mx^
+||ltrs8bv54p.com^
 ||ltsveh.wetteronline.at^
 ||ltsveh.wetteronline.ch^
 ||ltsveh.wetteronline.de^
@@ -60132,6 +60178,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||lucubrado.info^
 ||lucvqsbzwrjvc.site^
 ||lucwypvpwkafq.site^
+||lucysaftly.shop^
 ||ludibrynecklet.qpon^
 ||ludicrousfreshencovering.com^
 ||luegnh.sneakercage.gr^
@@ -60184,6 +60231,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||lungfish.datadividendproject.com^
 ||lunggrandfatherhedge.com^
 ||lungicko.net^
+||lunncorrea.shop^
 ||luntedepsom.top^
 ||luoqdtopebadx.store^
 ||lupomaclunch.rest^
@@ -60909,6 +60957,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||malangamensal.click^
 ||malatiswirled.com^
 ||malaxidothea.top^
+||malaxvicus.qpon^
 ||maldini.xyz^
 ||maleenhancement.top^
 ||maleeprn.click^
@@ -62683,6 +62732,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||materialfirearm.com^
 ||math.meistercody.com^
 ||mathads.com^
+||mathatuning.rest^
 ||mathematicsswift.com^
 ||matheranalytics.com^
 ||mathilde-ads.com^
@@ -62934,7 +62984,9 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||mdaiqxaso.com^
 ||mdamcsx.top^
 ||mdckwfdl.com^
+||mddbdmylgchjx.space^
 ||mddsp.info^
+||mdemhpkv.com^
 ||mdevstat.qqlive.qq.com^
 ||mdfcrm.actonservice.com^
 ||mdhv.io^
@@ -63157,6 +63209,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||med.viibrydhcp.com^
 ||med.vraylar.com^
 ||medalbashfulsunstroke.com^
+||medalopenairtedious.com^
 ||medalschapon.top^
 ||medbzvejdlkxe.today^
 ||meddlespeckers.top^
@@ -63355,7 +63408,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||megohmcopout.digital^
 ||megomitvicious.cyou^
 ||megratitchoa.net^
-||megroarsoy.net^
 ||megydyk.icu^
 ||meharigoloch.rest^
 ||mehnthakutyfore.org^
@@ -63493,7 +63545,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||met2.hp.com^
 ||metaadserving.com^
 ||metabatted.com^
-||metaboliteandmisspend.com^
 ||metaconex.io^
 ||metahv.xyz^
 ||metalbow.com^
@@ -65169,6 +65220,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||mhojhjsgzcwmft.com^
 ||mholland.net.anwalt.de^
 ||mhosspawny.shop^
+||mhqcyar.icu^
 ||mhrkxi.thetrybe.com.au^
 ||mhslimakagrzq.space^
 ||mhub.work^
@@ -65504,6 +65556,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||mk.appwebel.com^
 ||mk.convera.com^
 ||mk10ow7zoi.com^
+||mkaragqzeov.com^
 ||mkehcocw.com^
 ||mkejunomqar.com^
 ||mkeqmafk.com^
@@ -66314,7 +66367,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||mrlscr.com^
 ||mrlulgrtpqbtx.xyz^
 ||mrmnd.com^
-||mroax.xyz^
 ||mroprospector.aviationweek.com^
 ||mrpazk.xyz^
 ||mrpdata.net^
@@ -67028,6 +67080,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||nadelle.wantsext.me^
 ||nadese.xyz^
 ||nads.io^
+||naedyudpxzmgs.online^
 ||naehqgcanrh.xyz^
 ||naettarq.com^
 ||naevushavers.life^
@@ -67768,6 +67821,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||nicelocaldates.com^
 ||nicelydesignaterefrigerate.com^
 ||nicerisle.com^
+||nicervultur.cfd^
 ||nichedlinks.com^
 ||nichedreps.life^
 ||nicheevaderesidential.com^
@@ -67813,6 +67867,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||nijopvohmbiz.com^
 ||nikitas.openapp.link^
 ||nikkiexxxads.com^
+||nilgauvirgate.rest^
 ||nilipuyn.com^
 ||niltelreekrofik.net^
 ||nimbicanduc.help^
@@ -67835,6 +67890,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||nipcrater.com^
 ||nipechala.com^
 ||nipmuckgizzard.digital^
+||nippingchac.qpon^
 ||nippona7n2theum.com^
 ||nippydeposit.pro^
 ||nirdjz.revolveclothing.com.au^
@@ -67846,6 +67902,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||nismscoldnesfspu.com^
 ||nissoochou.com^
 ||nitafu.click^
+||nitpicksutlers.cyou^
 ||nitridslah.com^
 ||nitroclicks.com^
 ||nitrogenindustrynobleman.com^
@@ -67953,6 +68010,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||nlvivttoarwqp.online^
 ||nlvnht.miror.jp^
 ||nlwehltkw.com^
+||nlxqmdklnddacxd.com^
 ||nlyhovtjoknoo.site^
 ||nlytcs.idfnet.net^
 ||nlyvcmyicrhkv.online^
@@ -68539,6 +68597,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||nuibfyoox.com^
 ||nuiknnf.icu^
 ||nukeluck.net^
+||nukepassage.digital^
 ||nukktn.dorko.hu^
 ||nuleedsa.net^
 ||nulez.xyz^
@@ -68569,6 +68628,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||nupsonmfr.shop^
 ||nuqabjsurhix.com^
 ||nuqgovoiojw.com^
+||nuqozsvweq.com^
 ||nuquds.citizenwatch.com^
 ||nuqutunqnun.com^
 ||nuqwe.com^
@@ -68591,6 +68651,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||nuskt.directory^
 ||nut.cc^
 ||nutatedtriol.com^
+||nutateshazanim.com^
 ||nutchaungong.com^
 ||nutiipwkk.com^
 ||nutmegshow.com^
@@ -68643,6 +68704,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||nwarktriynwek.store^
 ||nwbmvq.jockey.com^
 ||nwchhcafat.com^
+||nwcqpowysqivqdv.com^
 ||nwcsofuuicvxdx.com^
 ||nweligduicngw.site^
 ||nwemnd.com^
@@ -68902,6 +68964,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||oauqyw.xyz^
 ||oavbmdnayxhnq.store^
 ||oavisailaimt.com^
+||oaviupucnkb.com^
 ||oavowuftili.com^
 ||oavurognaurd.net^
 ||oawcqaqaykn.com^
@@ -69126,6 +69189,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||odqxukovk.com^
 ||odvazhfsnswns.online^
 ||odxh.cn^
+||odxupm909y.com^
 ||odyjsxwapjvac.online^
 ||odyncmusq.xyz^
 ||odz12g5ag.com^
@@ -70088,6 +70152,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ooawsxkdrm.club^
 ||oobaiphughignop.net^
 ||oobbwbbmnqgkz.top^
+||oobitimbesel.digital^
 ||oocecmauhe.net^
 ||oocrzh.byojet.com^
 ||oodrampi.com^
@@ -70330,6 +70395,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||opus.sexyxxx.biz^
 ||opvanillishan.com^
 ||opwc.cn^
+||opwgvbakasvqe.online^
 ||opwqkq.icu^
 ||opwunlfgreyqhrm.com^
 ||opx.webtool.net^
@@ -70611,6 +70677,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||ostilllookinga.cc^
 ||ostkioxwld.com^
 ||ostlon.com^
+||ostmenduelist.click^
 ||ostoasheth.net^
 ||ostrich.getschools.org^
 ||ostrich.hegic-tokenizer.co^
@@ -70710,6 +70777,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||otter.preferredequineonline.com^
 ||ottermislays.shop^
 ||otto-images.developershed.com^
+||ottomanneath.digital^
 ||otunmakpjbtga.website^
 ||oturvy.sanitairwinkel.nl^
 ||otuumq.manyavar.com^
@@ -70916,6 +70984,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||overdenanounou.cfd^
 ||overdidamens.life^
 ||overdrowzeeon.com^
+||overfitroughie.world^
 ||overfixhater.top^
 ||overfxdyqgwvr.space^
 ||overgotsnecker.com^
@@ -71742,6 +71811,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||passirdrowns.com^
 ||passtechusa.com^
 ||passuplums.com^
+||passusdizzier.click^
 ||passwordslayoutvest.com^
 ||passwordssaturatepebble.com^
 ||past-concern.pro^
@@ -71972,6 +72042,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||pdsgaj.piquadro.com^
 ||pdsssl.gmarket.co.kr^
 ||pdsvcldomosqork.com^
+||pdtxeefqnanql.store^
 ||pduwvp.chanti.dk^
 ||pduyiwkjonxlr.com^
 ||pdvacde.com^
@@ -71994,6 +72065,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||peakilygluten.com^
 ||peakschapman.shop^
 ||pealikeshive.shop^
+||peanutposting.shop^
 ||peanutrefusesplit.com^
 ||pear.ca-eko-globetrotter.fr^
 ||peards.zevvle.com^
@@ -72019,6 +72091,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||pedangaishons.com^
 ||pedantehuitre.shop^
 ||pedesesboronia.world^
+||pedetesgoes.click^
 ||pedeticinnet.com^
 ||pedialanorchi.click^
 ||pedxbegjosaew.space^
@@ -72037,6 +72110,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||peerskhar.top^
 ||peethobo.com^
 ||peevingthwite.world^
+||peevoopheve.net^
 ||peeweewaveson.rest^
 ||peewhouheeku.net^
 ||pefufv.xyz^
@@ -72722,6 +72796,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||pitshopsat.com^
 ||pittaking.openapp.link^
 ||pittitepicarii.top^
+||pitwoodprosify.cyou^
 ||pitywareman.world^
 ||piueymmtetc.com^
 ||piuyt.com^
@@ -73019,6 +73094,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||platformsolutions.shutterstock.com^
 ||platformsrat.com^
 ||platinumsnatchable.com^
+||platooncombinedborrowed.com^
 ||platsbhima.shop^
 ||platterlokshen.shop^
 ||platypus.cmp.is^
@@ -73314,6 +73390,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||plxibyjobzgfn.site^
 ||plxrafpdsvxyu.website^
 ||plxserve.com^
+||plyerglebes.click^
 ||plyfoni.ru^
 ||plygainroundup.com^
 ||plyizb.latour-lith.nl^
@@ -74590,6 +74667,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||psmhpuuotdeby.store^
 ||psoabojaksou.net^
 ||psoaftob.xyz^
+||psoaglaihuphais.net^
 ||psoagnimsar.net^
 ||psoagreechubsak.com^
 ||psoanegodage.com^
@@ -74645,6 +74723,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||pta.wcm.pl^
 ||ptaiceckir.net^
 ||ptaicoul.xyz^
+||ptaifatairie.net^
 ||ptaimsauksu.net^
 ||ptaiptistie.com^
 ||ptaitossaukang.net^
@@ -75108,6 +75187,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||puzzlerchincof.com^
 ||puzzleresteal.top^
 ||puzzlertruffes.cfd^
+||puzzlingcurrent.com^
 ||pv.datacaciques.com^
 ||pv.hd.sohu.com^
 ||pv.kuaizhan.com^
@@ -75568,6 +75648,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||qgmikp.fleurdumal.com^
 ||qgmoslspensxh.buzz^
 ||qgmwby.com^
+||qgmwyffvrtflx.space^
 ||qgoxfsyuxhbbe.com^
 ||qgpiphehhrcvl.space^
 ||qgskdncyrtmnkht.com^
@@ -76367,7 +76448,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||r.cricbet.co^
 ||r.cvglobal.co^
 ||r.erohabu.com^
-||r.eroticos.tv^
 ||r.flatlong.shop^
 ||r.getcopper-dev.com^
 ||r.getcopper.com^
@@ -76691,7 +76771,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||raven.adeptmind.ai^
 ||raven.konquadrat.de^
 ||raven.omamao.ch^
-||raven.vethelpdirect.com^
 ||ravenperspective.com^
 ||ravinsnodly.shop^
 ||ravioliaft.world^
@@ -76711,6 +76790,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||rayahcrissa.life^
 ||rayalecythi.qpon^
 ||raylnk.com^
+||rayoncarvist.cfd^
 ||rayonsfurled.top^
 ||razzedwhimsic.website^
 ||rb-ya.ru^
@@ -77005,6 +77085,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||reclame.lequipement.fr^
 ||reclameinshoot.top^
 ||reclinenumbermen.com^
+||reclineonseteducational.com^
 ||reclod.com^
 ||reclusereis.world^
 ||recmd.html5.qq.com^
@@ -77121,6 +77202,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||redwolfmoon.com^
 ||reebr.com^
 ||reeditshuaco.help^
+||reeditsmuchly.life^
 ||reedsbullyingpastel.com^
 ||reedsdues.world^
 ||reedsinterfering.com^
@@ -77293,6 +77375,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||reindeer.cablemod.com^
 ||reindeer.iainbroome.com^
 ||reindeer.pablomaceda.com^
+||reinersomers.click^
 ||reinforceburger.com^
 ||reiningswells.shop^
 ||reissue2871.xyz^
@@ -77866,6 +77949,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||revenuecpmnetwork.com^
 ||revenuedirect.com^
 ||revenuehits.com^
+||revenuehoneyed.shop^
 ||revenuemakerdata.com^
 ||revenuemantra.com^
 ||revenuenetwork.com^
@@ -77945,12 +78029,14 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||rffbxktvxmcje.space^
 ||rffsds.fsastore.com^
 ||rfgsdgg.top^
+||rfhaalawjdmk.xyz^
 ||rfhdiykjbiyba.space^
 ||rfidpytri.com^
 ||rfifavwhiomx.com^
 ||rfihub.com^
 ||rfihub.net^
 ||rfity.com^
+||rfjqkgnnuouma.space^
 ||rfjrih.skinceuticals.com^
 ||rfk.biglots.com^
 ||rfmfrg.yamap.com^
@@ -78023,6 +78109,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||rhllmitjfxcvg.website^
 ||rhndvagz.icu^
 ||rhoawnzfiaz.com^
+||rhodespryler.digital^
 ||rhoditegrunter.shop^
 ||rhoecusfitful.rest^
 ||rhoecusisseis.rest^
@@ -78211,6 +78298,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||rizuvnddwycjm.space^
 ||rizzomdaledh.top^
 ||rjbfslmffohss.site^
+||rjbvlgsb.com^
 ||rjdmhl.icu^
 ||rjg2.destinia.ly^
 ||rjgsjm.gigameubel.nl^
@@ -78278,6 +78366,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||rlrsfxkewwgww.site^
 ||rlrt.ru^
 ||rlrxuaxclxeshd.com^
+||rlsnntgffqnli.online^
 ||rltjqqrufde.com^
 ||rluginhufbunhg.com^
 ||rlvjbsvvlauty.store^
@@ -78328,6 +78417,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||rmybleryqoemk.top^
 ||rmybleryqoeov.top^
 ||rmybleryqojqq.top^
+||rmybycfedxhns.store^
 ||rmygfurfa.com^
 ||rmzevvivrsbtk.site^
 ||rmzkqkvvrqmww.top^
@@ -78532,6 +78622,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||roshibellis.top^
 ||rosinesnibs.top^
 ||rossoad.com^
+||rostrumwifish.shop^
 ||rosysolvingscallion.com^
 ||rot.rusoul.ru^
 ||rotaban.ru^
@@ -80414,6 +80505,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||samanidebts.rest^
 ||samarketing.sedgwick.com^
 ||samba.notifysrv.com^
+||sambukshanked.shop^
 ||samburuascians.life^
 ||samc.frankly.ch^
 ||samc.swisscanto.com^
@@ -80768,6 +80860,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||saudoafeefabauk.net^
 ||sauhonaik.com^
 ||saukndaspiratio.com^
+||saulaupady.com^
 ||saumoncrup.qpon^
 ||saumoupsaug.com^
 ||saunaleap.com^
@@ -82014,6 +82107,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||semeionfleet.cyou^
 ||semeionrethrow.digital^
 ||semenaonline.sk^
+||semeseamidol.cyou^
 ||semi-cod.nnmclub.ch^
 ||semitaehecte.digital^
 ||semplesapolune.com^
@@ -82424,6 +82518,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||sf6-be-pack.pglstatp-toutiao.com^
 ||sf6-fe-pack.pglstatp-toutiao.com^
 ||sfajfu.boulanger.com^
+||sfartenphurtyu.com^
 ||sfavfyct.com^
 ||sfawmaobnna.com^
 ||sfbpok.theluxurycloset.com^
@@ -82785,6 +82880,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||shengfleming.com^
 ||shenouth.com^
 ||shenwhentheautu.com^
+||shenxianmaomao.com^
 ||sheoguedogrib.top^
 ||sheotpon.com^
 ||shepeekr.net^
@@ -83045,6 +83141,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||sidezaeta.live^
 ||siegesgrovel.life^
 ||siemensvenula.cyou^
+||sienadrachma.shop^
 ||sierradissolved.com^
 ||sievabaobab.click^
 ||sievepalmful.com^
@@ -83565,6 +83662,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||sluicecoing.top^
 ||sluicedevastating.com^
 ||sluicehamate.com^
+||sluicehatress.click^
 ||sluptie.top^
 ||slurpedsurfs.top^
 ||slurredligure.cyou^
@@ -87413,8 +87511,8 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||sopqvhe.cn^
 ||sopr-api.cian.ru^
 ||soptimize.southwest.com^
+||sorageeffront.life^
 ||sorbetscarnal.digital^
-||sorceryfalda.life^
 ||sordidsicknessfaded.com^
 ||sordimtaulee.com^
 ||sore-season.com^
@@ -89348,6 +89446,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||static.hotmaracas.fun^
 ||static.houseofpubs.com^
 ||static.hueadsxml.com^
+||static.hvgrt.hu^
 ||static.hyprmx.com^
 ||static.i-bidder.com^
 ||static.ichehome.com^
@@ -89527,6 +89626,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||static.zeusadx.com^
 ||static1.andbeyond.media^
 ||staticads.btopenworld.com^
+||staticgalaksion.com^
 ||staticsmaimer.top^
 ||staticz.hotpornfile.org^
 ||station54k.brandnewapp.pro^
@@ -90517,6 +90617,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||staurtakroa.net^
 ||stautsoarsoaw.net^
 ||stawhoph.com^
+||stawisthmia.digital^
 ||stawnamytal.digital^
 ||staxisclivias.com^
 ||stay.lottehotel.com^
@@ -91286,6 +91387,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||surechieflyrepulse.com^
 ||suresdb.top^
 ||surestisis.com^
+||surfaceunvest.help^
 ||surfcountor.com^
 ||surfeitpopeyes.cfd^
 ||surfeurdor.free.fr^
@@ -91502,6 +91604,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||swaggisaulge.cyou^
 ||swagtraffcom.com^
 ||swailsdhotee.rest^
+||swainphilos.shop^
 ||swalessidi.com^
 ||swalfmfqdheqsw.com^
 ||swaljol72dgv.controlconceptsusa.com^
@@ -93132,6 +93235,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||tcppu.com^
 ||tcreativeideasa.com^
 ||tcrmahdpqjktbh.com^
+||tcrtidleivyai.space^
 ||tcseehnbrn.com^
 ||tcss.qq.com^
 ||tctholkpymoyd.online^
@@ -93472,6 +93576,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||tenuousmorulas.shop^
 ||tenutospayout.digital^
 ||tenwauks.life^
+||tenzondace.cyou^
 ||teotnajhxmwts.site^
 ||tepatonol.com^
 ||tepid-ability.pro^
@@ -93499,6 +93604,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||terfumescom.com^
 ||terhousouokop.com^
 ||termcolonialhedwig.com^
+||termerdodgy.com^
 ||terminatefaltergrunt.com^
 ||termite.queerburners.org^
 ||termswilgers.top^
@@ -93624,6 +93730,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||testtubeabilityinvited.com^
 ||testybeautiful.com^
 ||tesupervis.hair^
+||tethsmackled.life^
 ||tetlwsi.top^
 ||tetmskxymffs.com^
 ||tetrylscullion.com^
@@ -93858,6 +93965,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||theweeklydonut.org^
 ||thewhizproducts.com^
 ||thewymulto.life^
+||theyineye.digital^
 ||theyredecd.cfd^
 ||thhesw.tre.it^
 ||thialfi.net.anwalt.de^
@@ -94085,6 +94193,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||tiglon.beyondco.de^
 ||tiglon.davidroessli.com^
 ||tihafhlhamsmo.space^
+||tihzzgtucmnqp.online^
 ||tiklvzlclrxhf.store^
 ||tiktakz.xyz^
 ||tiktok-ads.hara.vn^
@@ -96156,6 +96265,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||tr.souscription.floa.fr^
 ||tr.spain.plimsoll.es^
 ||tr.sportswear.np6.com^
+||tr.ssp.bance.jp^
 ||tr.staff-start.com^
 ||tr.standardadmin.org^
 ||tr.strategie.gouv.fr^
@@ -99499,6 +99609,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||umazvs.raybiotech.com^
 ||umbel.com^
 ||umbeldemonic.world^
+||umbelssonhood.help^
 ||umbrasglumose.digital^
 ||umbrellaepisode.com^
 ||umbriankubanka.top^
@@ -101098,6 +101209,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||vbc08110op.com^
 ||vbc08111op.com^
 ||vbc08120op.com^
+||vbc08121op.com^
 ||vbdmzqnrwrfug.online^
 ||vbe.voyage-prive.be^
 ||vbeeeleyevmqm.top^
@@ -101194,6 +101306,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||vdmwntw1of9t8xgd.edge41.testandtarget.omniture.com^
 ||vdocifgpcjirs.online^
 ||vdopia.com^
+||vdpteyxtcwtw.com^
 ||vdpwuxmo.icu^
 ||vdrebz.kathmandu.com.au^
 ||vdrfga.deagoshop.ru^
@@ -101343,6 +101456,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||versetstersion.cfd^
 ||versionsprobabilitydeposit.com^
 ||verspicary.top^
+||versteether.cfd^
 ||versus.filegram.to^
 ||versusspair.life^
 ||vertexcs.actonservice.com^
@@ -102000,6 +102114,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||vodumkilting.shop^
 ||voeux2020.wearemip.com^
 ||vofjcrkq.com^
+||voglgmlelzhlzo.com^
 ||voguelift.biz^
 ||vogulprecast.com^
 ||vohaukrass.net^
@@ -102057,6 +102172,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||voopaibauth.net^
 ||vootopeeloopeew.net^
 ||voovoacivoa.net^
+||voowhaimoagoono.com^
 ||vopzhl.icu^
 ||voqysr.afr-web.co.jp^
 ||voredi.com^
@@ -102360,6 +102476,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||vvjmlbazqnvnv.top^
 ||vvkholowfoeku.website^
 ||vvktyh.yotsuyagakuin.com^
+||vvliookawgs.com^
 ||vvllrb.top^
 ||vvlqbmzlmmkqj.top^
 ||vvlqbmzlmmmol.top^
@@ -102723,6 +102840,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||waragistend.world^
 ||warbler.resumebuilder.dev^
 ||warbler.todoscout.com^
+||wardroplet.world^
 ||warehouseassistedsprung.com^
 ||warekreese.rest^
 ||wareneingang.edeka.de^
@@ -103447,6 +103565,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||wejackplenum.top^
 ||wejpuy.factor75.com^
 ||wekaunoteman.top^
+||wekykvtzxjbds.site^
 ||wel-wel-fie.com^
 ||welbljlvmmjej.top^
 ||welbljlvmmjzm.top^
@@ -103909,7 +104028,6 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||wildebeest.soft-spoken.dev^
 ||wildedbarley.com^
 ||wildestfumer.click^
-||wildfowl.getmoneyoff.com^
 ||wildhookups.com^
 ||wildlypatting.top^
 ||wildmatch.com^
@@ -106102,6 +106220,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||xddofaytuemne.site^
 ||xdea.cn^
 ||xdeiaf.elleshop.jp^
+||xdhjbmysilynq.site^
 ||xdifjhbyqxdbg.website^
 ||xdijwcvqvqebj.site^
 ||xdirectx.com^
@@ -106178,6 +106297,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||xgajwwmd.com^
 ||xgbetzbmmdqbv.space^
 ||xgdata.xoyo.games^
+||xgdnjxlmi.com^
 ||xgefvi.iteshop.com^
 ||xgeinlumhjauw.website^
 ||xgezbc.tripmasters.com^
@@ -106205,6 +106325,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||xhcpnhre.com^
 ||xhetkdnupfsa.com^
 ||xhjponypbsegd.online^
+||xhjydhvbxfljb.space^
 ||xhktyryhxspej.online^
 ||xhkzrtolqfcvn.site^
 ||xhlkvx.xyz^
@@ -106298,6 +106419,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||xkgttas.icu^
 ||xkgtxj.edomator.pl^
 ||xkidkt.edenbrothers.com^
+||xkihevzkxjtdq.website^
 ||xklejvczdbknm.space^
 ||xklv.cn^
 ||xknhwv.mobile01.com^
@@ -107043,6 +107165,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||xn--xhq326aj6yqpw.com^
 ||xnbuapwp.icu^
 ||xnerivlyclrak.site^
+||xnesbsgxocwxi.website^
 ||xnfrjhydr.xyz^
 ||xnoztzcdyawlx.love^
 ||xnqboqc.icu^
@@ -107368,6 +107491,7 @@ bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-conta
 ||xziidwlttmbtp.website^
 ||xzjdkkbltgfqe.website^
 ||xzjqlg.marella.com^
+||xzkqduqxaavac.site^
 ||xzphlvnrjgzsw.site^
 ||xzqpz.com^
 ||xzqttyicbzhgs.website^
@@ -112755,6 +112879,7 @@ zznews.cn##.ad:not([style="margin-top:0px;padding-top:0px;"]),.ad1000-60
 ||44hd.cc/js/$script
 ||46pj.com/go.js
 ||46pj.com/nr.js
+||504pk.com^
 ||510599.com^$script
 ||5151ad.com^
 ||5155dd.com/js/jquery.js
@@ -127796,7 +127921,6 @@ some sources: https://github.com/jdlingyu/ad-wars
 ||cc.labu24.de^
 ||lack4skip.com^
 ||lackadaisicalkite.com^
-||ladsp.com^
 ||laferia.cr^
 ||lafontainedessenterue.cn^
 ||m.laigame7.net^

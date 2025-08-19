@@ -1,0 +1,9 @@
+# NAME: Docker
+# AUTHOR: 7Star
+# REPO: https://github.com/Star7-Files-Hub/Files/yaml
+payload:
+  - 'hub.docker.com'
+  - 'dockerstatic.com'
+  - 'sessions-bugsnag.docker.com'
+  - 'registry-1.docker.io'
+  - 'registry.docker.io'

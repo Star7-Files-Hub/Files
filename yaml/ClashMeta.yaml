@@ -1,10 +1,10 @@
 #==========================================
 # @ConfigName    Clash.Meta 配置文件（基于墨鱼原版修改）
 # @Author            @7Star
-# @UpdateTime        2025/7/7 10:12 UTC/GMT +8
+# @UpdateTime        2025/8/23 14:11 UTC/GMT +8
 # @Function          支持手动选择、自动测速、广告屏蔽、兜底分流、按国家分组节点、多机场订阅等，配置同样适用ClashVerge   
 # @Thanks            @blackmatrix7, @Fndroid, @Anti, @Chill
-# @ConfigVersion     1.0.2
+# @ConfigVersion     1.0.3
 #==========================================
 port: 7890
 socks-port: 7891
@@ -36,9 +36,10 @@ dns:
     - "*.blzstatic.cn"
     - "*.battle.net"
   nameserver:
-    - 223.5.5.5
+    - 180.184.1.1
+    - 180.184.2.2
     - 119.29.29.29
-    - https://223.5.5.5/dns-query
+    - https://doh.pub/dns-query
   fallback:
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query

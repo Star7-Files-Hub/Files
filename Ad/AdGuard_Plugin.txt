@@ -1,0 +1,4 @@
+carpt.net###outer > div:first-child
+xchina.co##div.main-container:nth-child(20) > div.layout-lr.photo > div.right-5:last-child > div.content-box > div.list.photo-items:nth-child(2) > div.item.auto-height
+xchina.co##div.main-container:nth-child(19) > div.layout-lr.photo > div.right-5:last-child > div.content-box > div.list.photo-items:nth-child(2) > div.item.auto-height
+xchina.co##div[id^="modal_"]

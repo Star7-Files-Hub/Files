@@ -47,7 +47,6 @@ picgo.net###home_after_cta
 115cdn.com###js_common_act-enter
 bilibili.com#%#//scriptlet('json-prune', 'data.cm_info.ads')
 bilibili.com##.ad-report
-bilibili.com##.ad-report
 bilibili.com##a[href*="cm.bilibili.com"][data-target-url]:not([data-target-url*=".bilibili.com/"])
 blog.csdn.net###swiper-remuneration-container
 blog.csdn.net###csdn-toolbar > div.toolbar-inside.exp3 > div.toolbar-container > div.toolbar-container-right:last-child > div.toolbar-btns.onlyUser > div.toolbar-btn.toolbar-btn-vip.csdn-toolbar-fl:nth-child(2)

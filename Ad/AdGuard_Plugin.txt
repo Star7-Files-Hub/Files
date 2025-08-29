@@ -67,3 +67,111 @@ xchina.co##div.main-container:nth-child(16) > div.layout-lr.photo-list > div.rig
 xchina.co##div.main-container:nth-child(16) > div.layout-lr.photo-list > div.right-5:last-child > div.content-box > div.list.photo-list > div.item
 xchina.co##div.main-container:nth-child(16) > div.layout-lr.photo-list > div.right-5:last-child > div.content-box:last-child
 xchina.co##div.main-container:nth-child(16) > div.layout-lr.photo-list > div.left-1:first-child > div.content-box:last-child
+weixin.qq.com##div[class^="ad_ori"]
+mp.weixin.qq.com###js_bottom_ad_area
+mp.weixin.qq.com##div[id^="ad_div_"]
+mp.weixin.qq.com##div[class^="video_ad_mask"]
+ip138.com###iframeu6831541_0
+xchina.co##div.main-container > div.layout-lr.photo-list:last-child > div.right-5:last-child > div.content-box:nth-child(3) > div.list.photo-list:nth-child(2) > div.item:nth-child(6)
+xchina.co##div.main-container > div.layout-lr.photo > div.right-5:last-child > div.item.auto-height
+xchina.co##div.main-container:has(> div.layout-lr.photo-list) > div.right-5:last-child > div.content-box:first-child
+xchina.co##div.main-container:has(> div.layout-lr.photo-list) > div.right-5:last-child > div.content-box:last-child
+xchina.co##div.main-container:has(> div.layout-lr.index) > div.right-5:last-child > div.content-box:nth-child(3)
+xchina.co##div.main-container:has(> div.layout-lr.index) > div.right-5:last-child > div.content-box:nth-child(8)
+xchina.co##footer.mobile > a:nth-child(7)
+xchina.co##footer.mobile > a:nth-child(8)
+xchina.co##footer.mobile > a:last-child
+xchina.co##div.main-container:nth-child(17) > div.layout-lr.fiction-home > div.middle-5:nth-child(2) > div.content-box:first-child
+xchina.co##div.main-container:nth-child(16) > div.layout-lr.index > div.right-5:last-child > div.content-box:nth-child(3)
+xchina.co##div.push-top-container:first-child
+xchina.co##div.push-bottom-container:nth-child(4)
+xchina.co##div.push-slider:nth-child(3)
+xchina.co##div.push-slider:nth-child(2)
+xchina.co##div.main-container:nth-child(20) > div.layout-lr.photo > div.right-5:last-child > div.content-box:first-child
+xchina.co##div.main-container:nth-child(16) > div.layout-lr.index > div.right-5:last-child > div.content-box:nth-child(8)
+xchina.co##div.main-container:nth-child(20) > div.layout-lr.photo > div.right-5:last-child > div.content-box:last-child
+xchina.co##div.main-container:nth-child(20) > div.layout-lr.video:last-child > div.right-5:last-child > div.content-box:first-child
+xchina.co##div.main-container:nth-child(20) > div.layout-lr.video:last-child > div.right-5:last-child > div.content-box:last-child
+litu100.xyz##div.main-container:nth-child(12) > div.layout-lr.layout-litu100:last-child > div.right-5:last-child > div.content-box:first-child
+litu100.xyz##div.push-slider:nth-child(3)
+litu100.xyz##div.push-slider:nth-child(2)
+litu100.xyz##div.push-bottom-container:nth-child(4)
+litu100.xyz##div.push-top-container:first-child
+litu100.xyz##footer.mobile:nth-child(13) > a:nth-child(2)
+litu100.xyz##footer.mobile:nth-child(13) > a:nth-child(3)
+litu100.xyz##footer.mobile:nth-child(13) > a:last-child > div.menu-item
+litu100.xyz##footer.mobile:nth-child(13) > a:last-child
+litu100.xyz##div.main-container:nth-child(12) > div.layout-lr.layout-litu100 > div.middle-4:nth-child(2) > div.content-box:first-child
+litu100.xyz##div.main-container:nth-child(12) > div.layout-lr.layout-litu100:last-child > div.right-5:last-child > div.content-box:nth-child(7)
+litu100.xyz##div.main-container:nth-child(12) > div.layout-lr.layout-litu100:last-child > div.right-5:last-child > div.banner-sexgps:last-child
+litu100.xyz##div.main-container:nth-child(12) > div.layout-lr.layout-litu100 > div.right-5:last-child > div.content-box:nth-child(4)
+xchina.fit##div.push-top-container:first-child
+xchina.fit##div.push-slider:nth-child(2)
+xchina.fit##div.push-slider:nth-child(3)
+xchina.fit##div.main-container:nth-child(16) > div.layout-lr.video-home > div.middle-5:nth-child(2) > div.content-box:first-child
+xchina.fit##footer.mobile:nth-child(17) > a:nth-child(7)
+xchina.fit##footer.mobile:nth-child(17) > a:nth-child(8)
+xchina.fit##footer.mobile:nth-child(17) > a:last-child
+xchina.fit##div.main-container:nth-child(16) > div.layout-lr.video-home > div.middle-5:nth-child(2) > div.content-box:last-child
+xchina.fit##div.main-container:nth-child(15) > div.layout-lr.video-home > div.middle-5:nth-child(2) > div.content-box:last-child
+xchina.fit##footer.mobile:nth-child(16) > a:nth-child(7)
+xchina.fit##footer.mobile:nth-child(16) > a:nth-child(8)
+xchina.fit##footer.mobile:nth-child(16) > a:last-child
+xchina.fit##div.main-container:nth-child(15) > div.layout-lr.video-home > div.middle-5:nth-child(2) > div.content-box:first-child
+xchina.fit##div.main-container:nth-child(18) > div.layout-lr.video:last-child > div.right-5:last-child > div.content-box:first-child
+xchina.fit##footer.mobile:nth-child(19) > a:nth-child(7)
+xchina.fit##footer.mobile:nth-child(19) > a:nth-child(8)
+xchina.fit##footer.mobile:nth-child(19) > a:last-child
+xchina.fit##div.main-container:nth-child(18) > div.layout-lr.video:last-child > div.right-5:last-child > div.content-box:last-child
+xchina.fit##div.main-container:nth-child(15) > div.layout-lr.video-list > div.right-5:last-child > div.content-box:first-child
+xchina.fit##div.main-container:nth-child(15) > div.layout-lr.video-list > div.right-5:last-child > div.content-box:nth-child(5) > div.list.video-list:nth-child(2) > div.item:nth-child(8)
+xchina.fit##div.main-container:nth-child(15) > div.layout-lr.video-list > div.right-5:last-child > div.content-box:last-child
+xchina.fit##div.main-container:nth-child(16) > div.layout-lr.video-list > div.right-5:last-child > div.content-box:first-child
+xchina.fit##div.main-container:nth-child(16) > div.layout-lr.video-list > div.right-5:last-child > div.content-box:nth-child(5) > div.list.video-list:nth-child(2) > div.item:nth-child(8)
+xchina.fit##div.main-container:nth-child(16) > div.layout-lr.video-list > div.right-5:last-child > div.content-box:last-child
+xchina.fit###modal_1756491815330_nqi1gtrni
+xchina.fit##div.main-container:nth-child(19) > div.layout-lr.video:last-child > div.right-5:last-child > div.content-box:first-child
+xchina.fit##footer.mobile:nth-child(20) > a:nth-child(7)
+xchina.fit##footer.mobile:nth-child(20) > a:nth-child(8)
+xchina.fit##footer.mobile:nth-child(20) > a:last-child
+xchina.fit##div.main-container:nth-child(19) > div.layout-lr.video:last-child > div.right-5:last-child > div.content-box:last-child
+xchina.fit###modal_1756491918580_xk8r0o9q8
+xchina.fit##div.main-container:nth-child(16) > div.layout-lr.site-search:last-child > div.right-5 > div.content-box:first-child
+xchina.fit##div.main-container:nth-child(16) > div.layout-lr.site-search:last-child > div.right-5 > div.content-box:last-child
+##div[id^="modal_"]
+xchina.fit##div.main-container:nth-child(19) > div.layout-lr.photo:last-child > div.right-5:last-child > div.content-box:first-child
+xchina.fit##div.main-container:nth-child(19) > div.layout-lr.photo:last-child > div.right-5:last-child > div.content-box:nth-child(4) > div.list.photo-items:nth-child(2) > div.item.auto-height:nth-child(5)
+xchina.fit##div.main-container:nth-child(19) > div.layout-lr.photo:last-child > div.right-5:last-child > div.content-box:nth-child(4) > div.list.photo-items:nth-child(2) > div.item.auto-height:nth-child(8)
+##div.main-container:nth-child(19) > div.layout-lr.photo > div.right-5:last-child > div.content-box > div.list.photo-items:nth-child(2) > div.item.auto-height
+##div.main-container:nth-child(20) > div.layout-lr.photo > div.right-5:last-child > div.content-box > div.list.photo-items:nth-child(2) > div.item.auto-height
+xchina.fit##div.main-container:nth-child(19) > div.layout-lr.photo:last-child > div.right-5:last-child > div.content-box:last-child
+maomiav.com##div.mask:nth-child(2) > div.container.hover-container > div.logo:first-child
+3atjwr20sl6l.com###root > div > div:last-child > div.d898b4322d.e35a57a1e1.e5bfb5cd71._63bdd5fe6a._651ab15dae._12db24cc03.cffd4e4182._5b21825c6a._5ad4cfefb9.c0ddff7a12:last-child
+3atjwr20sl6l.com###root > div > div:last-child > div.grid.c115573c67.c6e2b1cdfc._26f8b3900f:first-child > div.m0auto.af63547327.fb42ab2fc1:nth-child(2) > div > div._3ff8561ecb._61cd357da1:first-child
+3atjwr20sl6l.com###root > div > div:last-child > div.grid.c115573c67.c6e2b1cdfc._26f8b3900f:first-child > div.m0auto.af63547327.fb42ab2fc1:nth-child(2) > div > div:nth-child(3)
+3atjwr20sl6l.com###root > div > div:last-child > div.d898b4322d.e35a57a1e1.e5bfb5cd71._63bdd5fe6a._651ab15dae._12db24cc03.cffd4e4182._5b21825c6a._5ad4cfefb9.c0ddff7a12:nth-child(3)
+3atjwr20sl6l.com###root > div > div:last-child > div.a4b3eae539.bb1df23860:last-child
+3atjwr20sl6l.com###root > div > div:last-child > div.grid.c115573c67.c6e2b1cdfc._26f8b3900f:first-child > div:last-child > div.grid.gap10 > div.mw1100.m0auto:nth-child(5) > div.grid.gap5 > div.grid.gap20.pad10:nth-child(2)
+pic.3atjwr20sl6l.com###root > div > div:nth-child(2) > div.max-w-screen-xl.mx-auto > div.xs\:px-4 > div.xs\:flex.xs\:flex-col.gap-4.grid.grid-cols-2.max-w-screen-xl.mx-auto.m-8:nth-child(3)
+pic.3atjwr20sl6l.com###root > div > div:nth-child(2) > div > div.block:nth-child(4)
+3atjwr20sl6l.com###root > div > div:last-child > div.grid.c115573c67.c6e2b1cdfc._26f8b3900f:first-child > div:last-child > div.grid.gap10 > div.mw1100.mt20:first-child > div:nth-child(2)
+litu100.xyz##div.main-container:nth-child(12) > div.layout-lr.layout-litu100 > div.right-5:last-child > div.content-box:nth-child(3) > div.list.comic-list:nth-child(2) > div.item.exoclick_300x500:nth-child(7)
+1909.me##div.main-container:nth-child(12) > div.layout-lr.layout-1909 > div.right-5:last-child > div.content-box:first-child
+1909.me##div.push-slider:nth-child(2)
+1909.me##div.push-slider:nth-child(3)
+1909.me##div.push-bottom-container:nth-child(4)
+1909.me##div.push-top-container:first-child
+1909.me##footer.mobile:nth-child(13) > a:nth-child(4)
+1909.me##footer.mobile:nth-child(13) > a:nth-child(5)
+1909.me##footer.mobile:nth-child(13) > a:last-child
+1909.me##div.main-container:nth-child(12) > div.layout-lr.layout-1909 > div.right-5:last-child > div.content-box:last-child
+8se.me##div.main-container:nth-child(12) > div.layout-lr.photo-home > div.middle-5:nth-child(2) > div.content-box:first-child
+8se.me##div.push-slider:nth-child(3)
+8se.me##div.push-slider:nth-child(2)
+8se.me##div.push-top-container:first-child
+8se.me##div.push-bottom-container:nth-child(4)
+8se.me##footer.mobile:nth-child(13) > a:nth-child(7)
+8se.me##footer.mobile:nth-child(13) > a:last-child
+8se.me##div.main-container:nth-child(12) > div.layout-lr.photo-home > div.middle-5:nth-child(2) > div.content-box:nth-child(7)
+8se.me##div.main-container:nth-child(12) > div.layout-lr.photo-home > div.middle-5:nth-child(2) > div.banner-sexgps:last-child
+8se.me##div.main-container:nth-child(15) > div.layout-lr.photo:last-child > div.right-5:last-child > div.content-box:first-child

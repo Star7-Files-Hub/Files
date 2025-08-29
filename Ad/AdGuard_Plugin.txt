@@ -60,3 +60,10 @@ sbazegm0azb4.com###root > div > div:last-child > div._65c511f54b.f933bbf585:nth-
 bilibili.com###mirror-vdcon > div.left-container.scroll-sticky:first-child > div.ad-report.strip-ad.left-banner:nth-child(6)
 bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-container-inner.scroll-sticky > div.video-card-ad-small:nth-child(5)
 bilibili.com###mirror-vdcon > div.right-container:nth-child(2) > div.right-container-inner.scroll-sticky > div.rcmd-tab:last-child > div.ad-report.ad-floor-exp.right-bottom-banner:last-child
+xchina.co##div.push-top-container
+xchina.co##div.push-bottom-container
+xchina.co##div.push-slider
+xchina.co##div.main-container:nth-child(16) > div.layout-lr.photo-list > div.right-5:last-child > div.content-box > div.static-container-4
+xchina.co##div.main-container:nth-child(16) > div.layout-lr.photo-list > div.right-5:last-child > div.content-box > div.list.photo-list > div.item
+xchina.co##div.main-container:nth-child(16) > div.layout-lr.photo-list > div.right-5:last-child > div.content-box:last-child
+xchina.co##div.main-container:nth-child(16) > div.layout-lr.photo-list > div.left-1:first-child > div.content-box:last-child

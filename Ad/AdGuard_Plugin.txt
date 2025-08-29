@@ -175,3 +175,42 @@ litu100.xyz##div.main-container:nth-child(12) > div.layout-lr.layout-litu100 > d
 8se.me##div.main-container:nth-child(12) > div.layout-lr.photo-home > div.middle-5:nth-child(2) > div.content-box:nth-child(7)
 8se.me##div.main-container:nth-child(12) > div.layout-lr.photo-home > div.middle-5:nth-child(2) > div.banner-sexgps:last-child
 8se.me##div.main-container:nth-child(15) > div.layout-lr.photo:last-child > div.right-5:last-child > div.content-box:first-child
+||cupfox.app##div#__next > div > div:nth-child(3) > div > div:nth-child(5) > div > div:nth-child(2)
+||cupfox.app##div#__next > div > div:nth-child(3) > div > div:nth-child(5) > div > div:nth-child(4)
+||cupfox.app##div#__next > div > div:nth-child(3) > div > div:nth-child(5) > div > div:nth-child(8)
+||[m.baidu.com/s##div#page-copyright](http://m.baidu.com/s##div#page-copyright)
+||[m.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#page-copyright](http://m.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#page-copyright)
+||[www.baidu.com/ssid=8b7agbf5701000000/from=844b/s##div#page-copyright](http://www.baidu.com/ssid=8b7agbf5701000000/from=844b/s##div#page-copyright)
+||[www.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#page-copyright](http://www.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#page-copyright)
+||[www.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#page-relative](http://www.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#page-relative) > div > div:nth-child(2) > div:nth-child(9)
+||[www.baidu.com/ssid=8b7agbf5701000000/from=844b/s##div#page-relative](http://www.baidu.com/ssid=8b7agbf5701000000/from=844b/s##div#page-relative) > div > div:nth-child(2) > div:nth-child(9)
+||[www.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#page-relative](http://www.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#page-relative) > div > div:nth-child(2) > div:nth-child(9)
+||[m.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#page-relative](http://m.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#page-relative) > div > div:nth-child(2) > div:nth-child(9)
+||[m.baidu.com/from=844b/ssid=8b7agbf5701000000/pu=sz%401320_2001/s##div#page-relative](http://m.baidu.com/from=844b/ssid=8b7agbf5701000000/pu=sz%401320_2001/s##div#page-relative) > div > div:nth-child(2) > div:nth-child(9)
+||[www.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#results](http://www.baidu.com/from=844b/ssid=8b7agbf5701000000/s##div#results) > div.c-result.result > div.c-result-content > article.c-container._zpTVW.card-container__AkDZY > section._dCman > div.c-line-clamp1.c-invoke-willshow-class.baidu-d20__2cqj5
+||[www.baidu.com/ssid=8b7agbf5701000000/from=844b/s##div#results](http://www.baidu.com/ssid=8b7agbf5701000000/from=844b/s##div#results) > div.c-result.result > div.c-result-content > article.c-container._zpTVW.card-container__AkDZY > section._dCman > div.c-line-clamp1.c-invoke-willshow-class.baidu-d20__2cqj5
+||www.baidu.com##div#center-content-1 > div
+||www.baidu.com##div#personal-center > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(3) > div:nth-child(2)
+||www.baidu.com##div#foot > div
+||m.baidu.com/usrprofile##body > div.page-square.hairlines > div.results > div.result > div.square-hot-container
+||m.baidu.com/usrprofile##body > div.page-square.hairlines > div.results > div.result > div.banners.banners-2
+||m.baidu.com/usrprofile##body > div.page-square.hairlines > div.results > div.result > div.banners.banners-4.banners-bottom
+||[juejin.cn/post/*##div#juejin](http://juejin.cn/post/*##div#juejin) > div:nth-child(1) > main > div > div:nth-child(1) > div:nth-child(3)
+||[juejin.cn/post/*##div#juejin](http://juejin.cn/post/*##div#juejin) > div.view-container > main.container.main-container > div.view.column-view > div.main-area.article-area > div.wechat-banner.wechat-banner > img.wechat-img
+||[juejin.cn##.open-button.app-open-button](http://juejin.cn##.open-button.app-open-button)
+||[tieba.baidu.com##.nav-bar-bottom](http://tieba.baidu.com##.nav-bar-bottom)
+||[tieba.baidu.com##.tb-forum-user__join-btn](http://tieba.baidu.com##.tb-forum-user__join-btn)
+||[tieba.baidu.com##.more-btn-desc](http://tieba.baidu.com##.more-btn-desc)
+||[tieba.baidu.com##.forum-btn-box](http://tieba.baidu.com##.forum-btn-box)
+||[tieba.baidu.com##.recommend-title-open-app](http://tieba.baidu.com##.recommend-title-open-app)
+||[tieba.baidu.com##.only-lz](http://tieba.baidu.com##.only-lz)
+||[tieba.baidu.com##.more-image-desc](http://tieba.baidu.com##.more-image-desc)
+||[tieba.baidu.com##.open-app](http://tieba.baidu.com##.open-app)
+||[tieba.baidu.com##body](http://tieba.baidu.com##body) > div.main-page-wrap > div.app-view.transition-fade.pb-page-wrapper.mask-hidden > div:nth-child(4)
+||[tieba.baidu.com##body](http://tieba.baidu.com##body) > div.main-page-wrap > div.app-view.transition-fade.pb-page-wrapper.mask-hidden > div.banner-wrapper-defensive
+||www.zhihu.com##.Button.Button--primary.Button--blue.css-121zbv8
+||www.zhihu.com##.Button.css-183aq3r.Button--blue
+||www.zhihu.com##.MBannerAd
+||www.zhihu.com##.css-rgo48u
+||www.zhihu.com##.MHotFeedAd
+||www.zhihu.com##.Card.RelatedReadings

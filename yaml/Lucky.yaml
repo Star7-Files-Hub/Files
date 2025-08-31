@@ -2,9 +2,9 @@
 # AUTHOR: 7Star
 # REPO: https://github.com/Star7-Files-Hub/Files/yaml
 payload:
-  - 'myip.ipip.net'
-  - 'ipv4.ddnspod.com'
-  - 'v4.666666.host'
-  - 'v4.66666.host'
-  - '4.ipw.cn'
-  - 'ip.3322.net'
+  - DOMAIN,myip.ipip.net
+  - DOMAIN,ipv4.ddnspod.com
+  - DOMAIN,v4.666666.host
+  - DOMAIN,v4.66666.host
+  - DOMAIN,4.ipw.cn
+  - DOMAIN,ip.3322.net

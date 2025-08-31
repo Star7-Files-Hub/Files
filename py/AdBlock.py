@@ -6,6 +6,7 @@ import os
 rule_sources = {
     "https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/fq2.txt": "fq2.txt",
     "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt": "adguard_filter_1.txt",
+    "https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt": "adguard_filter_2.txt",
     "https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/fqnovel-fxxk_ads": "fqnovel-fxxk_ads.txt",
     "https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/qimao-ads": "qimao-ads.txt",
     "https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/b_ads": "b_ads.txt",

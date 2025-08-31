@@ -30,11 +30,24 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          # 暂存所有修改，处理可能的未跟踪文件
+          git add .
+          
+          # 如有修改则创建临时提交
+          git diff --cached --quiet || git commit -m "📦 临时保存工作区修改"
+          
+          # 拉取远程更新并变基
           git pull --rebase origin main
           
+          # 重新添加目标文件
           git add Ad/AdBlock.txt
+          
+          # 如有变化则提交
           git diff --cached --quiet || git commit -m "🤖 自动合并规则文件"
+          
+          # 推送更改
           git push
+          
       - name: Send WeChat Notification (Markdown)
         if: success()
         env:
@@ -58,3 +71,26 @@ jobs:
           curl -s -X POST "$WECHAT_WEBHOOK" \
             -H 'Content-Type: application/json' \
             -d "$JSON"
+            
+      - name: Send Failure Notification
+        if: failure()
+        env:
+            WECHAT_WEBHOOK: ${{ secrets.WECHAT_WEBHOOK }}
+        run: |
+          TIMESTAMP=$(TZ="Asia/Shanghai" date +"%Y-%m-%d %H:%M CST")
+          JSON=$(cat <<EOF
+          {
+              "msgtype": "markdown",
+              "markdown": {
+              "content": "**❌ AdGuard 规则合并失败！**
+          > 📅 时间：${TIMESTAMP}
+          > ⚠️ 请检查工作流日志排查问题"
+            }
+          }
+          EOF
+          )
+          
+          curl -s -X POST "$WECHAT_WEBHOOK" \
+            -H 'Content-Type: application/json' \
+            -d "$JSON"
+    

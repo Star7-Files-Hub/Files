@@ -2,8 +2,8 @@ name: Merge Rules and Push
 
 on:
   schedule:
-    - cron: '0 */12 * * *'        # 每12个触发一次
-  workflow_dispatch:           # 也支持手动触发
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
 
 jobs:
   build:

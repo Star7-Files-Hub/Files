@@ -30,6 +30,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          git pull --rebase origin main
+          
           git add Ad/AdBlock.txt
           git diff --cached --quiet || git commit -m "🤖 自动合并规则文件"
           git push

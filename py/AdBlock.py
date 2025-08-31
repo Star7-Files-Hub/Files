@@ -13,14 +13,13 @@ rule_sources = {
     "https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/aiqiyi": "aiqiyi.txt",
     "https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/genery_rules": "genery_rules.txt",
     "https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/xmlyjsb": "xmlyjsb.txt",
-    "https://ghfast.top/raw.githubusercontent.com/Star7-Files-Hub/Files/refs/heads/main/Ad/Manual_input.txt": "Manual_input.txt",
-    "https://ghfast.top/raw.githubusercontent.com/8680/GOODBYEADS/master/data/rules/dns.txt": "dns.txt",
-    "https://ghfast.top/raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt": "ADgk.txt",
-    "https://ghfast.top/raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-hosts.txt": "AWAvenue-Ads-Rule-hosts.txt",
-    "https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/refs/heads/main/rule.txt": "rules.txt",
-    "https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/main/bad_apple.txt": "bad_apple.txt",
+    "https://raw.githubusercontent.com/8680/GOODBYEADS/master/data/rules/dns.txt": "dns.txt",
+    "https://raw.githubusercontent.com/banbendalao/ADgk/master/ADgk.txt": "ADgk.txt",
+    "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-hosts.txt": "AWAvenue-Ads-Rule-hosts.txt",
+    "https://raw.githubusercontent.com/miaoermua/AdguardFilter/refs/heads/main/rule.txt": "rules.txt",
+    "https://raw.githubusercontent.com/miaoermua/AdguardFilter/main/bad_apple.txt": "bad_apple.txt",
     "https://anti-ad.net/easylist.txt": "anti-ad.txt",
-    "https://ghfast.top/raw.githubusercontent.com/miaoermua/AdguardFilter/refs/heads/main/whitelist.txt": "whitelist.txt"
+    "https://raw.githubusercontent.com/miaoermua/AdguardFilter/refs/heads/main/whitelist.txt": "whitelist.txt"
 }
 
 # 创建输出目录

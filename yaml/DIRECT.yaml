@@ -2,8 +2,9 @@
 # AUTHOR: 7Star
 # REPO: https://github.com/Star7-Files-Hub/Files/yaml
 payload:
-  - 'edgeone.ai'
-  - '843003.xyz'
-  - 'cn.bing.com'
-  - 'www.doubao.com'
-  - '930407.xyz'
+  - DOMAIN,edgeone.ai
+  - DOMAIN,843003.xyz
+  - DOMAIN,cn.bing.com
+  - DOMAIN,www.doubao.com
+  - DOMAIN,930407.xyz
+  - IP-CIDR,144.34.230.131/32

@@ -217,3 +217,4 @@ litu100.xyz##div.main-container:nth-child(12) > div.layout-lr.layout-litu100 > d
 itdog.cn##.gg_link
 bilibili.com###slide_ad
 itdog.cn##.lantern, .lantern_left, .gg_link
+bing.com##li.b_algo:has(a.sb_adTA_title_link_cn[h*=",Ads"])

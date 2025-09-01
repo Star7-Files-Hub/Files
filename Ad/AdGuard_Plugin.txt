@@ -218,3 +218,6 @@ itdog.cn##.gg_link
 bilibili.com###slide_ad
 itdog.cn##.lantern, .lantern_left, .gg_link
 bing.com##li.b_algo:has(a.sb_adTA_title_link_cn[h*=",Ads"])
+api.lxtu.cn##footer:nth-child(5) > footer:last-child > div.footer-content:first-child > section.footer-card:last-child
+api.lxtu.cn##footer:nth-child(5) > footer:last-child > div.footer-content:first-child > section.footer-card:nth-child(2)
+api.lxtu.cn##div.ad-container

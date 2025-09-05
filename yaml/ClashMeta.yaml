@@ -36,10 +36,10 @@ dns:
     - "*.blzstatic.cn"
     - "*.battle.net"
   nameserver:
+    - https://doh.pub/dns-query
     - 180.184.1.1
     - 180.184.2.2
     - 119.29.29.29
-    - https://doh.pub/dns-query
   fallback:
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query

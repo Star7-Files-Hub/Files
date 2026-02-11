@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub 智能加速下载插件（带实时面板）
 // @namespace    https://github.com/Star7-Files-Hub/
-// @version      1.1
+// @version      1.2
 // @description  自动测速多个GitHub加速域名，实时展示最快域名，点击下载时使用最快地址
 // @author       7Star
 // @match        *://github.com/*

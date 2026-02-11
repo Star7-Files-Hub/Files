@@ -8,6 +8,8 @@
 // @grant        GM_xmlhttpRequest
 // @connect      *
 // @run-at       document-end
+// @updateURL    https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/js/github-accelerate.user.js
+// @downloadURL  https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/js/github-accelerate.user.js
 // @supportURL   https://github.com/Star7-Files-Hub/Files/issues
 // ==/UserScript==
 

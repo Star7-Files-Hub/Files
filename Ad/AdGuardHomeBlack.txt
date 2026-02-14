@@ -1,0 +1,14 @@
+! 适用于AdGuardHome的DNS过滤规则
+||splash.taobao.com^
+||splash.jd.com^
+||splash.douyin.com^
+||splash.xiaohongshu.com^
+||splash.baidu.com^
+||splash.qq.com^
+||splash.^
+||open.^
+||launch.^
+||start.^
+||ad.^
+||ads.^
+||advert.^

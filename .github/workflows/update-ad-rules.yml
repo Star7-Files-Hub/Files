@@ -2,8 +2,8 @@ name: Update AdGuard Rules
 
 on:
   schedule:
-    - cron: '0 */12 * * *'  # 每12小时自动运行
-  workflow_dispatch:  # 允许手动触发
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
 
 jobs:
   update-rules:
@@ -20,19 +20,39 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml requests
         
+      # 🔍 【必加】精准验证脚本是否存在（避免路径猜测）
+      - name: 🔍 Verify Script Path
+        run: |
+          SCRIPT="${{ github.workspace }}/Files/py/update_ad_rules.py"
+          echo "🔍 检查脚本路径: $SCRIPT"
+          if [ -f "$SCRIPT" ]; then
+            echo "✅ 脚本存在! 行数: $(wc -l < "$SCRIPT") | 大小: $(wc -c < "$SCRIPT") 字节"
+            echo "📌 脚本前3行预览:"
+            head -3 "$SCRIPT"
+          else
+            echo "❌ 脚本不存在! 仓库结构:"
+            find "${{ github.workspace }}" -type f -name "update_ad_rules.py" 2>/dev/null | head -5 || ls -R "${{ github.workspace }}" | grep -E "(py|Files)" | head -10
+            exit 1
+          fi
+
+      # 🚀 【关键】修正后的脚本调用（无空格、语法正确）
       - name: Update rules file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_OWNER: Star7-Files-Hub
           REPO_NAME: Files
           RULES_PATH: Files/Ad/AdGuardHomeBlack.txt
-        run: |
-          python " $ {{ github.workspace }}/Files/py/update_ad_rules.py"
-          
+        run: python "${{ github.workspace }}/Files/py/update_ad_rules.py"  # 无空格！无多余字符！
+
+      # 💾 优化 Commit 步骤（防空提交+明确路径）
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ${{ env.RULES_PATH }}
-          git commit -m "🔄 自动更新: 更新规则文件 [$(date '+%Y-%m-%d %H:%M:%S')]" || echo "No changes to commit"
+          git add "Files/Ad/AdGuardHomeBlack.txt"
+          if git diff --cached --quiet; then
+            echo "⏭️ 无内容变更，跳过提交"
+            exit 0
+          fi
+          git commit -m "🔄 自动更新规则 | $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
           git push

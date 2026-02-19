@@ -27,7 +27,7 @@ jobs:
           REPO_NAME: Files
           RULES_PATH: Files/Ad/AdGuardHomeBlack.txt
         run: |
-          python "${{ github.workspace }}/Files/py/update_ad_rules.py"
+          python "${{ github.workspace }}/py/update_ad_rules.py"
           
       - name: Commit changes
         run: |

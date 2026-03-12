@@ -1,13 +1,13 @@
 [fq2.txt] 添加规则：16 条，重复规则：0 条
-[adguard_filter_1.txt] 添加规则：160788 条，重复规则：0 条
+[adguard_filter_1.txt] 添加规则：160949 条，重复规则：0 条
 [adguard_filter_2.txt] 添加规则：8562 条，重复规则：0 条
 [fqnovel-fxxk_ads.txt] 添加规则：43 条，重复规则：7 条
 [qimao-ads.txt] 添加规则：17 条，重复规则：0 条
 [b_ads.txt] 添加规则：6 条，重复规则：0 条
 [aiqiyi.txt] 添加规则：17 条，重复规则：0 条
-[genery_rules.txt] 添加规则：6161 条，重复规则：714 条
+[genery_rules.txt] 添加规则：6160 条，重复规则：715 条
 [xmlyjsb.txt] 添加规则：4 条，重复规则：6 条
-[dns.txt] 添加规则：23219 条，重复规则：97178 条
+[dns.txt] 添加规则：23251 条，重复规则：97360 条
 [ADgk.txt] 添加规则：8540 条，重复规则：614 条
 [AWAvenue-Ads-Rule-hosts.txt] 添加规则：1788 条，重复规则：0 条
 [rules.txt] 添加规则：164 条，重复规则：149 条
@@ -15,7 +15,7 @@
 [anti-ad.txt] 添加规则：10615 条，重复规则：88943 条
 [whitelist.txt] 添加规则：468 条，重复规则：25 条
 
-⚠️ 去重规则总数：115985 条
+⚠️ 去重规则总数：116168 条
 
 🧾 被去重的规则（展示前 50 条）：
 .top/gluinfo.php?s=$third-party
@@ -68,4 +68,4 @@ bing.com,cn.bing.net##.pa_sb
 ||0.www.som4okn1qku1r9p0ul.xyz^
 ||000c34b44b.1c3139f0ca.com^
 ||000dn.com^
-...（共 115985 条，已省略）
+...（共 116168 条，已省略）

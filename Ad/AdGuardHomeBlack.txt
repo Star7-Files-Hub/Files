@@ -93,3 +93,19 @@
 ||resolve.umeng.com^
 ||yumao.puata.info^
 ||metrics.icloud.com^
+
+! ===== 2026-09-18 日志分析补充 =====
+! 公开过滤列表已收录（本地未订阅）
+||im-x.jd.com^
+||apd-pcdnwxstat.teg.tencent-cloud.net^
+||apd-pcdnwxlogin.teg.tencent-cloud.net^
+||events.data.microsoft.com^
+! 动态随机子域埋点（字节/心跳式上报）
+||vegslb.com^
+||wmzfylgdsz.com^
+||sjxydc.com^
+! 统计/数据上报
+||wwstat.com^
+||comfylink.com^
+||dsplog.vivo.com.cn^
+||goosetab.com^

@@ -109,3 +109,7 @@
 ||comfylink.com^
 ||dsplog.vivo.com.cn^
 ||goosetab.com^
+! 2026-09-20 腾讯 mdt 移动数据追踪（anti-AD 精确收录 7 个子域）
+||mdt.qq.com^
+! 2026-09-20 一键WiFi 广告 SDK（1Hosts 整域收录；api-sdk/cache/log-sdk 三件套）
+||clickwifi.net^

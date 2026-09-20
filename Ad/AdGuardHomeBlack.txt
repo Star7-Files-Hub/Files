@@ -113,3 +113,5 @@
 ||mdt.qq.com^
 ! 2026-09-20 一键WiFi 广告 SDK（1Hosts 整域收录；api-sdk/cache/log-sdk 三件套）
 ||clickwifi.net^
+! 2026-09-20 红果短剧广告专用 CDN 子域（正片走 -reading-video，广告走 -reading-ad）
+||*-reading-ad.qznovelvod.com^

@@ -121,3 +121,15 @@
 ||settings-win.data.microsoft.com^
 ||stsdk.vivo.com.cn^
 ||*-stsdk.vivo.com.cn^
+! ===== 2026-09-22 实时抓取补充 =====
+! 微信私有 DNS。⚠拦后微信会退回系统 DNS；若有人反馈微信异常，优先怀疑这条
+||dns.weixin.qq.com.cn^
+! 动态随机子域埋点（与 vegslb/bdcgslb 同模式：固定前缀 + 随机后缀）
+||yingt.fun^
+||bdcgslb.com^
+! PC 端广告/推广（2026-09-18 日志分析，零公开列表背书）
+||aihlp.com.cn^
+||xiaotuxp.com^
+||aichat4search.com^
+||ksord.com^
+||starrydyn.com^

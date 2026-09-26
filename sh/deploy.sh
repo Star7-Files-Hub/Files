@@ -33,7 +33,7 @@ set -Eeuo pipefail
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
 
 SCRIPT_NAME="node-deploy"
-SCRIPT_VERSION="1.0.2"
+SCRIPT_VERSION="1.1.0"
 
 # ---------------------------------------------------------------------------
 # 可被环境变量覆盖的路径
@@ -65,6 +65,35 @@ SNELL_PSK=""
 SNELL_OBFS="tls"
 SNELL_VERSION="4.1.1"
 SNELL_IPV6="false"
+SNELL_ENGINE=""
+SNELL_ENGINE_CLI="false"
+
+ANYTLS_PORT=""
+ANYTLS_SNI="www.microsoft.com"
+ANYTLS_DEST_PORT="443"
+ANYTLS_PASSWORD=""
+ANYTLS_USER="node-deploy"
+ANYTLS_SECURITY="tls"
+ANYTLS_PRIVATE_KEY=""
+ANYTLS_PUBLIC_KEY=""
+ANYTLS_SHORT_ID=""
+ANYTLS_DRY_RUN_DUMMY_CERT="false"
+
+NOWHERE_BIN="${NOWHERE_BIN:-/usr/local/bin/nowhere}"
+NOWHERE_PORT=""
+NOWHERE_KEY=""
+NOWHERE_TLS="1"
+NOWHERE_CRT=""
+NOWHERE_TLS_KEY=""
+NOWHERE_MORPH="0"
+NOWHERE_CLIENT="both"
+NOWHERE_VERSION="v2.1.1"
+NOWHERE_LISTEN_HOST=""
+NOWHERE_PUBLIC_HOST=""
+NOWHERE_PORTAL=""
+NOWHERE_RATE="0"
+NOWHERE_ETAR="0"
+NOWHERE_LOG="info"
 
 SINGBOX_VERSION=""
 SINGBOX_VERSION_FALLBACK="1.14.2"
@@ -92,9 +121,18 @@ CONFIG_FILE=""
 XRAY_CONFIG=""
 SINGBOX_CONFIG=""
 SNELL_CONFIG=""
+SNELL_SINGBOX_CONFIG=""
+ANYTLS_CONFIG=""
+ANYTLS_CERT=""
+ANYTLS_KEY=""
+NOWHERE_CONFIG=""
+NOWHERE_SERVICE=""
+NOWHERE_RUNNER=""
 XRAY_SERVICE=""
 SINGBOX_SERVICE=""
 SNELL_SERVICE=""
+SNELL_SINGBOX_SERVICE=""
+ANYTLS_SERVICE=""
 DRY_RUN_DIR=""
 
 # ---------------------------------------------------------------------------
@@ -162,14 +200,26 @@ init_paths() {
     XRAY_CONFIG="${DRY_RUN_DIR}/usr/local/etc/xray/config.json"
     SINGBOX_CONFIG="${DRY_RUN_DIR}/etc/sing-box/config.json"
     SNELL_CONFIG="${DRY_RUN_DIR}/etc/snell/snell-server.conf"
+    SNELL_SINGBOX_CONFIG="${DRY_RUN_DIR}/etc/sing-box/snell.json"
+    ANYTLS_CONFIG="${DRY_RUN_DIR}/etc/sing-box/anytls.json"
+    ANYTLS_CERT="${DRY_RUN_DIR}/etc/sing-box/anytls.crt"
+    ANYTLS_KEY="${DRY_RUN_DIR}/etc/sing-box/anytls.key"
+    NOWHERE_CONFIG="${DRY_RUN_DIR}/etc/nowhere/nowhere.env"
+    NOWHERE_RUNNER="${DRY_RUN_DIR}/etc/nowhere/run.sh"
     if [[ "$INIT_SYSTEM" == "openrc" ]]; then
       XRAY_SERVICE="${DRY_RUN_DIR}/etc/init.d/xray"
       SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/init.d/sing-box"
       SNELL_SERVICE="${DRY_RUN_DIR}/etc/init.d/snell"
+      SNELL_SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/init.d/sing-box-snell"
+      ANYTLS_SERVICE="${DRY_RUN_DIR}/etc/init.d/sing-box-anytls"
+      NOWHERE_SERVICE="${DRY_RUN_DIR}/etc/init.d/nowhere"
     else
       XRAY_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/xray.service"
       SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/sing-box.service"
       SNELL_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/snell.service"
+      SNELL_SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/sing-box-snell.service"
+      ANYTLS_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/sing-box-anytls.service"
+      NOWHERE_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/nowhere.service"
     fi
   else
     CONFIG_DIR="/etc/node-deploy"
@@ -177,14 +227,26 @@ init_paths() {
     XRAY_CONFIG="/usr/local/etc/xray/config.json"
     SINGBOX_CONFIG="/etc/sing-box/config.json"
     SNELL_CONFIG="/etc/snell/snell-server.conf"
+    SNELL_SINGBOX_CONFIG="/etc/sing-box/snell.json"
+    ANYTLS_CONFIG="/etc/sing-box/anytls.json"
+    ANYTLS_CERT="/etc/sing-box/anytls.crt"
+    ANYTLS_KEY="/etc/sing-box/anytls.key"
+    NOWHERE_CONFIG="/etc/nowhere/nowhere.env"
+    NOWHERE_RUNNER="/etc/nowhere/run.sh"
     if [[ "$INIT_SYSTEM" == "openrc" ]]; then
       XRAY_SERVICE="/etc/init.d/xray"
       SINGBOX_SERVICE="/etc/init.d/sing-box"
       SNELL_SERVICE="/etc/init.d/snell"
+      SNELL_SINGBOX_SERVICE="/etc/init.d/sing-box-snell"
+      ANYTLS_SERVICE="/etc/init.d/sing-box-anytls"
+      NOWHERE_SERVICE="/etc/init.d/nowhere"
     else
       XRAY_SERVICE="/etc/systemd/system/xray.service"
       SINGBOX_SERVICE="/etc/systemd/system/sing-box.service"
       SNELL_SERVICE="/etc/systemd/system/snell.service"
+      SNELL_SINGBOX_SERVICE="/etc/systemd/system/sing-box-snell.service"
+      ANYTLS_SERVICE="/etc/systemd/system/sing-box-anytls.service"
+      NOWHERE_SERVICE="/etc/systemd/system/nowhere.service"
     fi
   fi
 }
@@ -337,6 +399,62 @@ check_snell_platform() {
   return 0
 }
 
+default_snell_engine() {
+  if [[ -z "$OS_ID" ]]; then detect_os; fi
+  local libc=""
+  if command_exists ldd; then
+    libc="$(ldd --version 2>&1 | head -1 || true)"
+  fi
+  if [[ "$OS_ID" == "alpine" || "$libc" == *musl* ]]; then
+    printf 'singbox\n'
+  else
+    printf 'official\n'
+  fi
+}
+
+resolve_snell_engine() {
+  if [[ -n "$SNELL_ENGINE" ]]; then
+    case "$SNELL_ENGINE" in
+      official|singbox) ;;
+      *) die "--snell-engine 必须是 official 或 singbox，当前：$SNELL_ENGINE" ;;
+    esac
+    return 0
+  fi
+  SNELL_ENGINE="$(default_snell_engine)"
+}
+
+validate_anytls_security() {
+  case "$ANYTLS_SECURITY" in
+    tls|reality) ;;
+    *) die "--anytls-security 必须是 tls 或 reality，当前：$ANYTLS_SECURITY" ;;
+  esac
+}
+
+generate_self_signed_cert() {
+  local cert="$1" key="$2" cn="$3"
+  mkdir -p "$(dirname "$cert")"
+  if [[ -s "$cert" && -s "$key" ]]; then
+    log "已存在自签证书：$cert"
+    return 0
+  fi
+  if command_exists openssl; then
+    log "生成自签证书（CN=${cn}）..."
+    openssl req -x509 -newkey rsa:2048 -nodes \
+      -keyout "$key" -out "$cert" -days 3650 \
+      -subj "/CN=${cn}" >/dev/null 2>&1 || die "生成自签证书失败"
+    chmod 600 "$key" 2>/dev/null || true
+    return 0
+  fi
+  if [[ "$DRY_RUN" == "true" ]]; then
+    warn "DRY-RUN: 未找到 openssl，写入占位证书（跳过 AnyTLS 配置校验）"
+    printf 'dry-run cert\n' > "$cert"
+    printf 'dry-run key\n' > "$key"
+    ANYTLS_DRY_RUN_DUMMY_CERT="true"
+    return 0
+  fi
+  die "需要 openssl 生成 AnyTLS 自签证书"
+}
+
 # ---------------------------------------------------------------------------
 # 下载 / 解压
 # ---------------------------------------------------------------------------
@@ -468,16 +586,24 @@ gen_uuid() {
 gen_psk() {
   if command_exists openssl; then
     openssl rand -base64 32 | tr -d '\n/+=' | cut -c1-32
+  elif command_exists od; then
+    head -c 32 /dev/urandom | od -An -t x1 | tr -d ' \n' | cut -c1-32
+  elif command_exists hexdump; then
+    head -c 32 /dev/urandom | hexdump -v -e '/1 "%02x"' | cut -c1-32
   else
-    head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n' | cut -c1-32
+    die "无法生成 PSK：缺少 openssl/od/hexdump"
   fi
 }
 
 gen_short_id() {
   if command_exists openssl; then
     openssl rand -hex 8
+  elif command_exists od; then
+    head -c 8 /dev/urandom | od -An -t x1 | tr -d ' \n'
+  elif command_exists hexdump; then
+    head -c 8 /dev/urandom | hexdump -v -e '/1 "%02x"'
   else
-    head -c 8 /dev/urandom | od -An -tx1 | tr -d ' \n'
+    die "无法生成 shortId：缺少 openssl/od/hexdump"
   fi
 }
 
@@ -528,6 +654,20 @@ port_in_use() {
   return 1
 }
 
+port_in_use_udp() {
+  local port="$1"
+  if command_exists ss; then
+    ss -lun 2>/dev/null | awk 'NR>1 {print $4}' | grep -qE "[:.]${port}$" && return 0
+  fi
+  if command_exists netstat; then
+    netstat -lun 2>/dev/null | awk 'NR>1 {print $4}' | grep -qE "[:.]${port}$" && return 0
+  fi
+  if command_exists lsof; then
+    lsof -iUDP:"$port" >/dev/null 2>&1 && return 0
+  fi
+  return 1
+}
+
 ensure_port_available() {
   local port="$1"
   local label="$2"
@@ -545,6 +685,29 @@ ensure_port_available() {
       die "${label}端口 $port 已被占用。"
     else
       warn "${label}端口 $port 已被占用。"
+      local ans
+      read -r -p "是否仍要继续？[y/N]: " ans || true
+      [[ "$ans" =~ ^[Yy]$ ]] || die "已取消。"
+    fi
+  fi
+}
+
+ensure_udp_port_available() {
+  local port="$1"
+  local label="$2"
+  validate_port "$port" || die "${label}端口无效：$port"
+
+  if [[ "$DRY_RUN" == "true" ]]; then
+    return 0
+  fi
+
+  if port_in_use_udp "$port"; then
+    if [[ "$FORCE" == "true" ]]; then
+      warn "${label} UDP 端口 $port 已被占用，但 --force 已指定，继续。"
+    elif [[ "$NON_INTERACTIVE" == "true" ]]; then
+      die "${label} UDP 端口 $port 已被占用。"
+    else
+      warn "${label} UDP 端口 $port 已被占用。"
       local ans
       read -r -p "是否仍要继续？[y/N]: " ans || true
       [[ "$ans" =~ ^[Yy]$ ]] || die "已取消。"
@@ -687,6 +850,30 @@ save_config() {
     printf 'SNELL_OBFS=%q\n' "$SNELL_OBFS"
     printf 'SNELL_VERSION=%q\n' "$SNELL_VERSION"
     printf 'SNELL_IPV6=%q\n' "$SNELL_IPV6"
+    printf 'SNELL_ENGINE=%q\n' "$SNELL_ENGINE"
+    printf 'ANYTLS_PORT=%q\n' "$ANYTLS_PORT"
+    printf 'ANYTLS_SNI=%q\n' "$ANYTLS_SNI"
+    printf 'ANYTLS_DEST_PORT=%q\n' "$ANYTLS_DEST_PORT"
+    printf 'ANYTLS_PASSWORD=%q\n' "$ANYTLS_PASSWORD"
+    printf 'ANYTLS_USER=%q\n' "$ANYTLS_USER"
+    printf 'ANYTLS_SECURITY=%q\n' "$ANYTLS_SECURITY"
+    printf 'ANYTLS_PRIVATE_KEY=%q\n' "$ANYTLS_PRIVATE_KEY"
+    printf 'ANYTLS_PUBLIC_KEY=%q\n' "$ANYTLS_PUBLIC_KEY"
+    printf 'ANYTLS_SHORT_ID=%q\n' "$ANYTLS_SHORT_ID"
+    printf 'NOWHERE_PORT=%q\n' "$NOWHERE_PORT"
+    printf 'NOWHERE_KEY=%q\n' "$NOWHERE_KEY"
+    printf 'NOWHERE_TLS=%q\n' "$NOWHERE_TLS"
+    printf 'NOWHERE_CRT=%q\n' "$NOWHERE_CRT"
+    printf 'NOWHERE_TLS_KEY=%q\n' "$NOWHERE_TLS_KEY"
+    printf 'NOWHERE_MORPH=%q\n' "$NOWHERE_MORPH"
+    printf 'NOWHERE_CLIENT=%q\n' "$NOWHERE_CLIENT"
+    printf 'NOWHERE_VERSION=%q\n' "$NOWHERE_VERSION"
+    printf 'NOWHERE_LISTEN_HOST=%q\n' "$NOWHERE_LISTEN_HOST"
+    printf 'NOWHERE_PUBLIC_HOST=%q\n' "$NOWHERE_PUBLIC_HOST"
+    printf 'NOWHERE_PORTAL=%q\n' "$NOWHERE_PORTAL"
+    printf 'NOWHERE_RATE=%q\n' "$NOWHERE_RATE"
+    printf 'NOWHERE_ETAR=%q\n' "$NOWHERE_ETAR"
+    printf 'NOWHERE_LOG=%q\n' "$NOWHERE_LOG"
   } > "$CONFIG_FILE"
   chmod 600 "$CONFIG_FILE" 2>/dev/null || true
 }
@@ -1003,6 +1190,62 @@ WantedBy=multi-user.target
 EOF
 }
 
+# 通用的 sing-box 辅助服务（Snell / AnyTLS 各跑一个独立进程）
+write_singbox_aux_service() {
+  local svc_name="$1"
+  local svc_config="$2"
+  local svc_file="$3"
+  local pidfile="/run/${svc_name}.pid"
+  local out_log="/var/log/${svc_name}.log"
+  local err_log="/var/log/${svc_name}.err"
+
+  if [[ "$INIT_SYSTEM" == "openrc" ]]; then
+    write_file "$svc_file" <<EOF
+#!/sbin/openrc-run
+name="${svc_name}"
+description="${svc_name} service"
+command="${SINGBOX_BIN}"
+command_args="run -c ${svc_config}"
+pidfile="${pidfile}"
+command_background="yes"
+output_log="${out_log}"
+error_log="${err_log}"
+supervisor=supervise-daemon
+supervise_daemon_args="--respawn-max 0 --respawn-delay 5"
+
+depend() {
+    need net
+    after firewall
+}
+
+start_pre() {
+    checkpath --directory --mode 0755 /var/log
+    checkpath --directory --mode 0755 /run
+}
+EOF
+    chmod +x "$svc_file" 2>/dev/null || true
+    return 0
+  fi
+
+  write_file "$svc_file" <<EOF
+[Unit]
+Description=${svc_name} service
+Documentation=https://sing-box.sagernet.org
+After=network.target nss-lookup.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=${SINGBOX_BIN} run -c ${svc_config}
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
+EOF
+}
+
 # ---------------------------------------------------------------------------
 # Snell
 # ---------------------------------------------------------------------------
@@ -1117,6 +1360,295 @@ ExecStart=${SNELL_BIN} -c ${SNELL_CONFIG}
 Restart=always
 RestartSec=3
 LimitNOFILE=32768
+
+[Install]
+WantedBy=multi-user.target
+EOF
+}
+
+# ---------------------------------------------------------------------------
+# sing-box Snell / AnyTLS
+# ---------------------------------------------------------------------------
+configure_snell_singbox() {
+  log "生成 sing-box Snell 配置..."
+  local listen_host="0.0.0.0"
+  [[ "$SNELL_IPV6" == "true" ]] && listen_host="::"
+
+  local version_line mode_line
+  if [[ "$SNELL_VERSION" == 6* ]]; then
+    version_line='"version": 6'
+    mode_line='"mode": "default"'
+  else
+    version_line='"version": 5'
+    case "$SNELL_OBFS" in
+      http) mode_line='"obfs_mode": "http"' ;;
+      none) mode_line='"obfs_mode": "none"' ;;
+      *) die "sing-box Snell 不支持 obfs=${SNELL_OBFS}，请使用 http/none" ;;
+    esac
+  fi
+
+  write_file "$SNELL_SINGBOX_CONFIG" <<EOF
+{
+  "log": {
+    "level": "warn",
+    "timestamp": true
+  },
+  "inbounds": [
+    {
+      "type": "snell",
+      "tag": "snell-in",
+      "listen": "${listen_host}",
+      "listen_port": ${SNELL_PORT},
+      ${version_line},
+      "psk": "${SNELL_PSK}",
+      ${mode_line}
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "direct"
+    }
+  ]
+}
+EOF
+
+  if [[ -x "$SINGBOX_BIN" ]]; then
+    if ! "$SINGBOX_BIN" check -c "$SNELL_SINGBOX_CONFIG" >/dev/null 2>&1; then
+      "$SINGBOX_BIN" check -c "$SNELL_SINGBOX_CONFIG" || die "sing-box Snell 配置校验失败"
+    fi
+    log "sing-box Snell 配置校验通过"
+  else
+    warn "未找到 sing-box 可执行文件，跳过配置校验"
+  fi
+}
+
+write_snell_singbox_service() {
+  write_singbox_aux_service "sing-box-snell" "$SNELL_SINGBOX_CONFIG" "$SNELL_SINGBOX_SERVICE"
+}
+
+configure_anytls() {
+  log "生成 AnyTLS 配置..."
+  validate_anytls_security
+
+  local tls_json
+  if [[ "$ANYTLS_SECURITY" == "reality" ]]; then
+    tls_json=$(cat <<EOF
+      "tls": {
+        "enabled": true,
+        "server_name": "${ANYTLS_SNI}",
+        "reality": {
+          "enabled": true,
+          "handshake": {
+            "server": "${ANYTLS_SNI}",
+            "server_port": ${ANYTLS_DEST_PORT}
+          },
+          "private_key": "${ANYTLS_PRIVATE_KEY}",
+          "short_id": [
+            "${ANYTLS_SHORT_ID}"
+          ]
+        }
+      }
+EOF
+)
+  else
+    generate_self_signed_cert "$ANYTLS_CERT" "$ANYTLS_KEY" "$ANYTLS_SNI"
+    tls_json=$(cat <<EOF
+      "tls": {
+        "enabled": true,
+        "server_name": "${ANYTLS_SNI}",
+        "certificate_path": "${ANYTLS_CERT}",
+        "key_path": "${ANYTLS_KEY}"
+      }
+EOF
+)
+  fi
+
+  write_file "$ANYTLS_CONFIG" <<EOF
+{
+  "log": {
+    "level": "warn",
+    "timestamp": true
+  },
+  "inbounds": [
+    {
+      "type": "anytls",
+      "tag": "anytls-in",
+      "listen": "0.0.0.0",
+      "listen_port": ${ANYTLS_PORT},
+      "users": [
+        {
+          "name": "${ANYTLS_USER}",
+          "password": "${ANYTLS_PASSWORD}"
+        }
+      ],
+      "padding_scheme": [],
+${tls_json}
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "direct"
+    }
+  ]
+}
+EOF
+
+  if [[ -x "$SINGBOX_BIN" && "$ANYTLS_DRY_RUN_DUMMY_CERT" != "true" ]]; then
+    if ! "$SINGBOX_BIN" check -c "$ANYTLS_CONFIG" >/dev/null 2>&1; then
+      "$SINGBOX_BIN" check -c "$ANYTLS_CONFIG" || die "sing-box AnyTLS 配置校验失败"
+    fi
+    log "sing-box AnyTLS 配置校验通过"
+  elif [[ "$ANYTLS_DRY_RUN_DUMMY_CERT" == "true" ]]; then
+    warn "DRY-RUN: 跳过 AnyTLS 配置校验（使用占位证书）"
+  else
+    warn "未找到 sing-box 可执行文件，跳过配置校验"
+  fi
+}
+
+write_anytls_service() {
+  write_singbox_aux_service "sing-box-anytls" "$ANYTLS_CONFIG" "$ANYTLS_SERVICE"
+}
+
+# ---------------------------------------------------------------------------
+# Nowhere
+# ---------------------------------------------------------------------------
+detect_nowhere_arch() {
+  case "$ARCH_RAW" in
+    x86_64|amd64) printf 'x86_64\n' ;;
+    aarch64|arm64) printf 'aarch64\n' ;;
+    *) die "Nowhere 仅支持 x86_64 / aarch64，当前：$ARCH_RAW" ;;
+  esac
+}
+
+detect_nowhere_libc() {
+  if [[ "$OS_ID" == "alpine" ]]; then
+    printf 'musl\n'
+    return 0
+  fi
+  if command_exists ldd && ldd --version 2>&1 | grep -qi musl; then
+    printf 'musl\n'
+  else
+    printf 'gnu\n'
+  fi
+}
+
+install_nowhere() {
+  if [[ -x "$NOWHERE_BIN" ]]; then
+    log "已存在 Nowhere：$NOWHERE_BIN"
+    return 0
+  fi
+  if [[ "$DRY_RUN" == "true" ]]; then
+    log "DRY-RUN: 跳过下载 Nowhere"
+    return 0
+  fi
+
+  log "安装 Nowhere..."
+  local asset url tmp version
+  version="${NOWHERE_VERSION:-v2.1.1}"
+  version="v${version#v}"
+  asset="nowhere-$(detect_nowhere_arch)-unknown-linux-$(detect_nowhere_libc).tar.gz"
+  url="https://github.com/NodePassProject/Nowhere/releases/download/${version}/${asset}"
+  tmp="$(mktemp -d)"
+  download "$url" "${tmp}/${asset}"
+  tar -xzf "${tmp}/${asset}" -C "$tmp"
+  local bin
+  bin="$(find "$tmp" -type f -name nowhere -perm -u+x -print -quit)"
+  [[ -n "$bin" ]] || bin="$(find "$tmp" -type f -name nowhere -print -quit)"
+  [[ -n "$bin" ]] || die "Nowhere 解压失败"
+  install -m 0755 "$bin" "$NOWHERE_BIN"
+  rm -rf "$tmp"
+  log "Nowhere 版本：$("$NOWHERE_BIN" --version 2>/dev/null | head -1 || true)"
+}
+
+build_nowhere_portal() {
+  local key host endpoint query
+  key="$(url_encode "$NOWHERE_KEY")"
+  host="$NOWHERE_LISTEN_HOST"
+  [[ -n "$host" ]] || host="*"
+  host="$(format_host_for_url "$host")"
+  endpoint="${host}:${NOWHERE_PORT}"
+  query="tls=${NOWHERE_TLS}&morph=${NOWHERE_MORPH}"
+  if [[ "$NOWHERE_TLS" == "2" ]]; then
+    query="${query}&crt=$(url_encode "$NOWHERE_CRT")&key=$(url_encode "$NOWHERE_TLS_KEY")"
+  fi
+  [[ "$NOWHERE_RATE" == "0" ]] || query="${query}&rate=${NOWHERE_RATE}"
+  [[ "$NOWHERE_ETAR" == "0" ]] || query="${query}&etar=${NOWHERE_ETAR}"
+  [[ "$NOWHERE_LOG" == "info" ]] || query="${query}&log=${NOWHERE_LOG}"
+  NOWHERE_PORTAL="portal://${key}@${endpoint}?${query}"
+}
+
+configure_nowhere() {
+  build_nowhere_portal
+  write_file "$NOWHERE_CONFIG" <<EOF
+# Nowhere configuration
+NOWHERE_PORTAL=$(printf '%q' "$NOWHERE_PORTAL")
+NOWHERE_VERSION=$(printf '%q' "$NOWHERE_VERSION")
+NOWHERE_KEY=$(printf '%q' "$NOWHERE_KEY")
+NOWHERE_PORT=$(printf '%q' "$NOWHERE_PORT")
+NOWHERE_TLS=$(printf '%q' "$NOWHERE_TLS")
+NOWHERE_CRT=$(printf '%q' "$NOWHERE_CRT")
+NOWHERE_TLS_KEY=$(printf '%q' "$NOWHERE_TLS_KEY")
+NOWHERE_MORPH=$(printf '%q' "$NOWHERE_MORPH")
+NOWHERE_CLIENT=$(printf '%q' "$NOWHERE_CLIENT")
+NOWHERE_PUBLIC_HOST=$(printf '%q' "$NOWHERE_PUBLIC_HOST")
+NOWHERE_LISTEN_HOST=$(printf '%q' "$NOWHERE_LISTEN_HOST")
+NOWHERE_RATE=$(printf '%q' "$NOWHERE_RATE")
+NOWHERE_ETAR=$(printf '%q' "$NOWHERE_ETAR")
+NOWHERE_LOG=$(printf '%q' "$NOWHERE_LOG")
+EOF
+  chmod 600 "$NOWHERE_CONFIG" 2>/dev/null || true
+}
+
+write_nowhere_service() {
+  write_file "$NOWHERE_RUNNER" <<EOF
+#!/bin/sh
+exec "${NOWHERE_BIN}" "${NOWHERE_PORTAL}"
+EOF
+  chmod +x "$NOWHERE_RUNNER" 2>/dev/null || true
+
+  if [[ "$INIT_SYSTEM" == "openrc" ]]; then
+    write_file "$NOWHERE_SERVICE" <<EOF
+#!/sbin/openrc-run
+name="nowhere"
+description="Nowhere Portal"
+command="${NOWHERE_RUNNER}"
+pidfile="/run/nowhere.pid"
+command_background="yes"
+output_log="/var/log/nowhere.log"
+error_log="/var/log/nowhere.err"
+supervisor=supervise-daemon
+supervise_daemon_args="--respawn-max 0 --respawn-delay 5"
+
+depend() {
+    need net
+    after firewall
+}
+
+start_pre() {
+    checkpath --directory --mode 0755 /var/log
+    checkpath --directory --mode 0755 /run
+}
+EOF
+    chmod +x "$NOWHERE_SERVICE" 2>/dev/null || true
+    return 0
+  fi
+
+  write_file "$NOWHERE_SERVICE" <<EOF
+[Unit]
+Description=Nowhere Portal
+Documentation=https://github.com/NodePassProject/Nowhere
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=${NOWHERE_RUNNER}
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=1048576
 
 [Install]
 WantedBy=multi-user.target
@@ -1243,25 +1775,154 @@ prompt_snell() {
     warn "未能自动检测公网 IP，当前使用 127.0.0.1；建议用 --address 指定域名或公网 IP"
   fi
 
-  SNELL_PORT="$(prompt_port "Snell 监听端口" "${SNELL_PORT:-8443}")"
-  SNELL_OBFS="$(prompt_value "Snell 混淆 (tls/http/none)" "${SNELL_OBFS:-tls}")"
-  case "$SNELL_OBFS" in
-    tls|http|none) ;;
-    *) die "Snell 混淆必须是 tls/http/none，当前：$SNELL_OBFS" ;;
-  esac
-  if [[ "$SNELL_OBFS" != "none" ]]; then
-    SNELL_DOMAIN="$(prompt_host "Snell 伪装域名/obfs-host" "${SNELL_DOMAIN:-www.bing.com}")"
-  else
-    SNELL_DOMAIN=""
+  # 选择 Snell 服务端：official（官方 snell-server，仅 glibc）或 singbox（sing-box 入站）
+  if [[ -z "$SNELL_ENGINE" && "$NON_INTERACTIVE" != "true" ]]; then
+    local engine_default
+    engine_default="$(default_snell_engine)"
+    SNELL_ENGINE="$(prompt_value "Snell 服务端 (official/singbox)" "$engine_default")"
   fi
+  resolve_snell_engine
+
+  if [[ "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
+    if [[ "$NON_INTERACTIVE" == "true" ]]; then
+      die "当前系统无法运行官方 Snell，请改用 --snell-engine singbox 或 --mode vless。"
+    fi
+    warn "当前系统无法运行官方 Snell，已自动改用 sing-box Snell"
+    SNELL_ENGINE="singbox"
+  fi
+
+  SNELL_PORT="$(prompt_port "Snell 监听端口" "${SNELL_PORT:-8443}")"
+
+  if [[ "$SNELL_ENGINE" == "singbox" ]]; then
+    # sing-box Snell 仅支持 v5/v6；v5 仅 http/none，v6 使用 mode 无需 obfs
+    if [[ -z "$SNELL_VERSION" || "$SNELL_VERSION" == 4* ]]; then
+      SNELL_VERSION="5.0.1"
+    fi
+    SNELL_VERSION="$(prompt_value "Snell 服务端版本 (5/6)" "${SNELL_VERSION:-5.0.1}")"
+    SNELL_VERSION="${SNELL_VERSION#v}"
+    case "$SNELL_VERSION" in
+      5*|6*) ;;
+      *) die "sing-box Snell 版本只支持 5 或 6，当前：$SNELL_VERSION" ;;
+    esac
+
+    if [[ "$SNELL_VERSION" == 6* ]]; then
+      SNELL_OBFS="none"
+      SNELL_DOMAIN=""
+    else
+      if [[ "$SNELL_OBFS" == "tls" ]]; then
+        if [[ "$NON_INTERACTIVE" == "true" ]]; then
+          die "sing-box Snell 不支持 obfs=tls，请使用 --snell-obfs http 或 none，或改用 --snell-engine official（仅 glibc 系统）。"
+        fi
+        warn "sing-box Snell 不支持 obfs=tls，已自动改为 http"
+        SNELL_OBFS="http"
+      fi
+      SNELL_OBFS="$(prompt_value "Snell 混淆 (http/none)" "${SNELL_OBFS:-http}")"
+      case "$SNELL_OBFS" in
+        http|none) ;;
+        *) die "sing-box Snell 混淆只支持 http/none，当前：$SNELL_OBFS" ;;
+      esac
+      if [[ "$SNELL_OBFS" == "http" ]]; then
+        SNELL_DOMAIN="$(prompt_host "Snell 伪装域名/obfs-host" "${SNELL_DOMAIN:-www.bing.com}")"
+      else
+        SNELL_DOMAIN=""
+      fi
+    fi
+  else
+    SNELL_OBFS="$(prompt_value "Snell 混淆 (tls/http/none)" "${SNELL_OBFS:-tls}")"
+    case "$SNELL_OBFS" in
+      tls|http|none) ;;
+      *) die "Snell 混淆必须是 tls/http/none，当前：$SNELL_OBFS" ;;
+    esac
+    if [[ "$SNELL_OBFS" != "none" ]]; then
+      SNELL_DOMAIN="$(prompt_host "Snell 伪装域名/obfs-host" "${SNELL_DOMAIN:-www.bing.com}")"
+    else
+      SNELL_DOMAIN=""
+    fi
+    SNELL_VERSION="$(prompt_value "Snell 服务端版本" "${SNELL_VERSION:-4.1.1}")"
+    SNELL_VERSION="${SNELL_VERSION#v}"
+  fi
+
   [[ -n "$SNELL_PSK" ]] || SNELL_PSK="$(gen_psk)"
-  SNELL_VERSION="$(prompt_value "Snell 服务端版本" "${SNELL_VERSION:-4.1.1}")"
-  SNELL_VERSION="${SNELL_VERSION#v}"
   SNELL_IPV6="$(prompt_value "Snell 是否启用 IPv6 (true/false)" "${SNELL_IPV6:-false}")"
   case "$SNELL_IPV6" in
     true|false) ;;
     *) die "Snell IPv6 必须是 true 或 false，当前：$SNELL_IPV6" ;;
   esac
+}
+
+prompt_anytls() {
+  if [[ -z "$NODE_ADDRESS" ]]; then
+    local detected
+    detected="$(detect_public_ip)"
+    NODE_ADDRESS="$(prompt_host "节点地址（客户端连接用，域名或 IP）" "$detected")"
+  fi
+  validate_host "$NODE_ADDRESS" || die "节点地址无效：$NODE_ADDRESS"
+  if [[ "$NODE_ADDRESS" == "127.0.0.1" ]]; then
+    warn "未能自动检测公网 IP，当前使用 127.0.0.1；建议用 --address 指定域名或公网 IP"
+  fi
+
+  ANYTLS_PORT="$(prompt_port "AnyTLS 监听端口" "${ANYTLS_PORT:-9443}")"
+  ANYTLS_SNI="$(prompt_sni "AnyTLS 伪装域名/SNI" "${ANYTLS_SNI:-www.microsoft.com}")"
+  ANYTLS_SECURITY="$(prompt_value "AnyTLS 安全类型 (tls/reality)" "${ANYTLS_SECURITY:-tls}")"
+  validate_anytls_security
+  if [[ "$ANYTLS_SECURITY" == "reality" ]]; then
+    ANYTLS_DEST_PORT="$(prompt_port "AnyTLS Reality 目标端口（通常 443）" "${ANYTLS_DEST_PORT:-443}")"
+  fi
+  ANYTLS_USER="$(prompt_value "AnyTLS 用户名" "${ANYTLS_USER:-node-deploy}")"
+  [[ -n "$ANYTLS_PASSWORD" ]] || ANYTLS_PASSWORD="$(gen_psk)"
+}
+
+prompt_nowhere() {
+  if [[ -z "$NODE_ADDRESS" ]]; then
+    local detected
+    detected="$(detect_public_ip)"
+    NODE_ADDRESS="$(prompt_host "节点地址（客户端连接用，域名或 IP）" "$detected")"
+  fi
+  validate_host "$NODE_ADDRESS" || die "节点地址无效：$NODE_ADDRESS"
+  if [[ "$NODE_ADDRESS" == "127.0.0.1" ]]; then
+    warn "未能自动检测公网 IP，当前使用 127.0.0.1；建议用 --address 指定域名或公网 IP"
+  fi
+  NOWHERE_PUBLIC_HOST="$NODE_ADDRESS"
+
+  NOWHERE_PORT="$(prompt_port "Nowhere 监听端口（同时监听 TCP+UDP）" "${NOWHERE_PORT:-2077}")"
+  [[ -n "$NOWHERE_KEY" ]] || NOWHERE_KEY="$(gen_psk)"
+  [[ "${#NOWHERE_KEY}" -le 255 ]] || die "Nowhere 共享密钥必须不超过 255 个字符"
+  NOWHERE_TLS="$(prompt_value "Nowhere TLS (1=自签证书, 2=PEM 证书)" "${NOWHERE_TLS:-1}")"
+  case "$NOWHERE_TLS" in
+    1|2) ;;
+    *) die "--nowhere-tls 必须是 1 或 2，当前：$NOWHERE_TLS" ;;
+  esac
+  if [[ "$NOWHERE_TLS" == "2" ]]; then
+    NOWHERE_CRT="$(prompt_value "证书链绝对路径" "${NOWHERE_CRT:-}")"
+    NOWHERE_TLS_KEY="$(prompt_value "私钥绝对路径" "${NOWHERE_TLS_KEY:-}")"
+    [[ -f "$NOWHERE_CRT" && -f "$NOWHERE_TLS_KEY" ]] || die "TLS=2 需要有效的证书和私钥文件"
+  fi
+  NOWHERE_MORPH="$(prompt_value "Nowhere Morph (0=关闭, 1=ChaCha20)" "${NOWHERE_MORPH:-0}")"
+  case "$NOWHERE_MORPH" in
+    0|1) ;;
+    *) die "--nowhere-morph 必须是 0 或 1，当前：$NOWHERE_MORPH" ;;
+  esac
+  NOWHERE_CLIENT="$(prompt_value "Nowhere 客户端 (anywhere/vector/both)" "${NOWHERE_CLIENT:-both}")"
+  case "$NOWHERE_CLIENT" in
+    anywhere|vector|both) ;;
+    *) die "--nowhere-client 必须是 anywhere/vector/both，当前：$NOWHERE_CLIENT" ;;
+  esac
+  NOWHERE_VERSION="$(prompt_value "Nowhere 版本" "${NOWHERE_VERSION:-v2.1.1}")"
+  NOWHERE_VERSION="v${NOWHERE_VERSION#v}"
+  NOWHERE_RATE="$(prompt_value "Nowhere 限速 Mbps（0=不限速）" "${NOWHERE_RATE:-0}")"
+  NOWHERE_ETAR="$(prompt_value "Nowhere Etar Mbps（0=不限速）" "${NOWHERE_ETAR:-0}")"
+  NOWHERE_LOG="$(prompt_value "Nowhere 日志级别" "${NOWHERE_LOG:-info}")"
+  NOWHERE_LISTEN_HOST="$(prompt_value "Nowhere 监听地址（留空=全部）" "${NOWHERE_LISTEN_HOST:-}")"
+
+  [[ "$NOWHERE_RATE" =~ ^[0-9]+$ ]] || die "Nowhere 限速必须是非负整数，当前：$NOWHERE_RATE"
+  [[ "$NOWHERE_ETAR" =~ ^[0-9]+$ ]] || die "Nowhere Etar 必须是非负整数，当前：$NOWHERE_ETAR"
+  case "$NOWHERE_LOG" in
+    none|debug|info|warn|error) ;;
+    *) die "Nowhere 日志级别必须是 none/debug/info/warn/error，当前：$NOWHERE_LOG" ;;
+  esac
+  if [[ -n "$NOWHERE_LISTEN_HOST" ]]; then
+    validate_host "$NOWHERE_LISTEN_HOST" || die "Nowhere 监听地址无效：$NOWHERE_LISTEN_HOST"
+  fi
 }
 
 # ---------------------------------------------------------------------------
@@ -1331,23 +1992,80 @@ deploy_snell() {
   if [[ "$DRY_RUN" != "true" && "$INIT_SYSTEM" == "unknown" ]]; then
     die "未检测到 systemd 或 OpenRC，当前脚本仅支持 systemd / OpenRC 系统"
   fi
-  if ! check_snell_platform; then
-    die "请使用 --mode vless 只部署 VLESS-Reality，或改用 Debian/Ubuntu 部署 Snell。"
-  fi
   ensure_env
   prompt_snell
   ensure_port_available "$SNELL_PORT" "Snell"
 
-  install_snell
-  configure_snell
-  write_snell_service
-  service_enable_start snell
-
-  open_firewall_port "$SNELL_PORT" tcp
-  # Snell v5 会额外监听 QUIC（UDP）
-  if [[ "$SNELL_VERSION" == 5* ]]; then
-    open_firewall_port "$SNELL_PORT" udp
+  if [[ "$SNELL_ENGINE" == "official" ]]; then
+    if ! check_snell_platform; then
+      die "当前系统无法运行官方 Snell，请改用 --snell-engine singbox。"
+    fi
+    install_snell
+    configure_snell
+    write_snell_service
+    service_enable_start snell
+    open_firewall_port "$SNELL_PORT" tcp
+    # 官方 Snell v5 会额外监听 QUIC（UDP）
+    if [[ "$SNELL_VERSION" == 5* ]]; then
+      open_firewall_port "$SNELL_PORT" udp
+    fi
+  else
+    install_singbox
+    configure_snell_singbox
+    write_snell_singbox_service
+    service_enable_start sing-box-snell
+    open_firewall_port "$SNELL_PORT" tcp
   fi
+}
+
+deploy_anytls() {
+  if [[ "$DRY_RUN" != "true" && "$INIT_SYSTEM" == "unknown" ]]; then
+    die "未检测到 systemd 或 OpenRC，当前脚本仅支持 systemd / OpenRC 系统"
+  fi
+  ensure_env
+  install_singbox
+  prompt_anytls
+  ensure_port_available "$ANYTLS_PORT" "AnyTLS"
+  validate_anytls_security
+
+  if [[ "$ANYTLS_SECURITY" == "reality" ]]; then
+    if [[ -n "$ANYTLS_PRIVATE_KEY" && -n "$ANYTLS_PUBLIC_KEY" ]]; then
+      log "使用已有 AnyTLS Reality 密钥"
+    elif [[ -n "$ANYTLS_PRIVATE_KEY" || -n "$ANYTLS_PUBLIC_KEY" ]]; then
+      die "请同时提供 --anytls-private-key 和 --anytls-public-key，或都不提供"
+    elif [[ "$DRY_RUN" == "true" && ! -x "$SINGBOX_BIN" ]]; then
+      ANYTLS_PRIVATE_KEY="dummy_private_key"
+      ANYTLS_PUBLIC_KEY="dummy_public_key"
+      warn "DRY-RUN: 未找到 sing-box，使用占位 AnyTLS Reality 密钥"
+    else
+      local kp
+      kp="$(gen_singbox_keypair)"
+      ANYTLS_PRIVATE_KEY="${kp%%|*}"
+      ANYTLS_PUBLIC_KEY="${kp##*|}"
+    fi
+    [[ -n "$ANYTLS_SHORT_ID" ]] || ANYTLS_SHORT_ID="$(gen_short_id)"
+  fi
+
+  configure_anytls
+  write_anytls_service
+  service_enable_start sing-box-anytls
+  open_firewall_port "$ANYTLS_PORT" tcp
+}
+
+deploy_nowhere() {
+  if [[ "$DRY_RUN" != "true" && "$INIT_SYSTEM" == "unknown" ]]; then
+    die "未检测到 systemd 或 OpenRC，当前脚本仅支持 systemd / OpenRC 系统"
+  fi
+  ensure_env
+  prompt_nowhere
+  ensure_port_available "$NOWHERE_PORT" "Nowhere"
+  ensure_udp_port_available "$NOWHERE_PORT" "Nowhere"
+  install_nowhere
+  configure_nowhere
+  write_nowhere_service
+  service_enable_start nowhere
+  open_firewall_port "$NOWHERE_PORT" tcp
+  open_firewall_port "$NOWHERE_PORT" udp
 }
 
 # ---------------------------------------------------------------------------
@@ -1370,26 +2088,32 @@ generate_vless_link() {
     "$encoded_name"
 }
 
+snell_surge_version() {
+  if [[ "$SNELL_VERSION" == 6* ]]; then
+    printf '6\n'
+  elif [[ "$SNELL_VERSION" == 5* ]]; then
+    printf '5\n'
+  else
+    printf '4\n'
+  fi
+}
+
 generate_snell_surge() {
-  local host
+  local host version
   host="$(format_host_for_url "$NODE_ADDRESS")"
-  local line="Snell = snell, ${host}, ${SNELL_PORT}, psk=${SNELL_PSK}"
+  version="$(snell_surge_version)"
+  local line="Snell = snell, ${host}, ${SNELL_PORT}, psk=${SNELL_PSK}, version=${version}"
   case "$SNELL_OBFS" in
     tls) line+=", obfs=tls"; [[ -n "$SNELL_DOMAIN" ]] && line+=", obfs-host=${SNELL_DOMAIN}" ;;
     http) line+=", obfs=http"; [[ -n "$SNELL_DOMAIN" ]] && line+=", obfs-host=${SNELL_DOMAIN}" ;;
   esac
-  if [[ "$SNELL_VERSION" == 5* ]]; then
-    line+=", version=5"
-  else
-    line+=", version=4"
-  fi
   printf '%s\n' "$line"
 }
 
 generate_snell_clash() {
-  local version=4
-  local server="$NODE_ADDRESS"
-  [[ "$SNELL_VERSION" == 5* ]] && version=5
+  local version server
+  version="$(snell_surge_version)"
+  server="$NODE_ADDRESS"
   if is_ipv6 "$NODE_ADDRESS"; then
     server="\"${NODE_ADDRESS}\""
   fi
@@ -1401,13 +2125,125 @@ generate_snell_clash() {
   psk: ${SNELL_PSK}
   version: ${version}
 EOF
-  if [[ "$SNELL_OBFS" == "tls" || "$SNELL_OBFS" == "http" ]]; then
+  if [[ "$version" != "6" && ( "$SNELL_OBFS" == "tls" || "$SNELL_OBFS" == "http" ) ]]; then
     cat <<EOF
   obfs-opts:
     mode: ${SNELL_OBFS}
     host: ${SNELL_DOMAIN}
 EOF
   fi
+}
+
+generate_snell_singbox() {
+  local version=4
+  local server="$NODE_ADDRESS"
+  local extra=""
+  if [[ "$SNELL_VERSION" == 6* ]]; then
+    version=6
+    extra="\"mode\": \"default\""
+  else
+    local obfs_mode="none"
+    local obfs_host=""
+    case "$SNELL_OBFS" in
+      http) obfs_mode="http"; obfs_host="$SNELL_DOMAIN" ;;
+      none) obfs_mode="none" ;;
+      tls) obfs_mode="none"; warn "sing-box 客户端不支持 Snell obfs=tls，已省略 obfs" ;;
+    esac
+    extra="\"obfs_mode\": \"${obfs_mode}\""
+    [[ -n "$obfs_host" ]] && extra+=", \"obfs_host\": \"${obfs_host}\""
+  fi
+  cat <<EOF
+{
+  "type": "snell",
+  "tag": "snell-out",
+  "server": "${server}",
+  "server_port": ${SNELL_PORT},
+  "version": ${version},
+  "psk": "${SNELL_PSK}",
+  ${extra}
+}
+EOF
+}
+
+generate_anytls_surge() {
+  if [[ "$ANYTLS_SECURITY" != "tls" ]]; then
+    printf '# Surge 不支持 AnyTLS Reality，请使用 sing-box 客户端\n'
+    return 0
+  fi
+  local host
+  host="$(format_host_for_url "$NODE_ADDRESS")"
+  printf 'AnyTLS = anytls, %s, %s, password=%s, sni=%s, skip-cert-verify=true\n' \
+    "$host" "$ANYTLS_PORT" "$ANYTLS_PASSWORD" "$ANYTLS_SNI"
+}
+
+generate_anytls_singbox() {
+  local server="$NODE_ADDRESS"
+  if [[ "$ANYTLS_SECURITY" == "reality" ]]; then
+    cat <<EOF
+{
+  "type": "anytls",
+  "tag": "anytls-out",
+  "server": "${server}",
+  "server_port": ${ANYTLS_PORT},
+  "password": "${ANYTLS_PASSWORD}",
+  "tls": {
+    "enabled": true,
+    "server_name": "${ANYTLS_SNI}",
+    "reality": {
+      "enabled": true,
+      "public_key": "${ANYTLS_PUBLIC_KEY}",
+      "short_id": "${ANYTLS_SHORT_ID}"
+    }
+  }
+}
+EOF
+  else
+    cat <<EOF
+{
+  "type": "anytls",
+  "tag": "anytls-out",
+  "server": "${server}",
+  "server_port": ${ANYTLS_PORT},
+  "password": "${ANYTLS_PASSWORD}",
+  "tls": {
+    "enabled": true,
+    "server_name": "${ANYTLS_SNI}",
+    "insecure": true
+  }
+}
+EOF
+  fi
+}
+
+generate_anytls_uri() {
+  local host encoded_password
+  host="$(format_host_for_url "$NODE_ADDRESS")"
+  encoded_password="$(url_encode "$ANYTLS_PASSWORD")"
+  if [[ "$ANYTLS_SECURITY" == "reality" ]]; then
+    printf 'anytls://%s@%s:%s/?security=reality&sni=%s&fp=chrome&pbk=%s&sid=%s#AnyTLS\n' \
+      "$encoded_password" "$host" "$ANYTLS_PORT" "$ANYTLS_SNI" "$ANYTLS_PUBLIC_KEY" "$ANYTLS_SHORT_ID"
+  else
+    printf 'anytls://%s@%s:%s/?security=tls&sni=%s&allowInsecure=1#AnyTLS\n' \
+      "$encoded_password" "$host" "$ANYTLS_PORT" "$ANYTLS_SNI"
+  fi
+}
+
+generate_nowhere_anywhere() {
+  local host key name
+  host="$(format_host_for_url "$NOWHERE_PUBLIC_HOST")"
+  key="$(url_encode "$NOWHERE_KEY")"
+  name="$(url_encode "Nowhere")"
+  printf 'nowhere://%s@%s:%s?up=tcp&down=tcp&morph=%s&mux=0#%s\n' \
+    "$key" "$host" "$NOWHERE_PORT" "$NOWHERE_MORPH" "$name"
+}
+
+generate_nowhere_vector() {
+  local host key name
+  host="$(format_host_for_url "$NOWHERE_PUBLIC_HOST")"
+  key="$(url_encode "$NOWHERE_KEY")"
+  name="$(url_encode "Nowhere")"
+  printf 'vector://%s@%s:%s?up=tcp&down=tcp&mux=0&sni=none&pin=none&morph=%s&socks=127.0.0.1:1080#%s\n' \
+    "$key" "$host" "$NOWHERE_PORT" "$NOWHERE_MORPH" "$name"
 }
 
 show_qr() {
@@ -1427,7 +2263,7 @@ show_info() {
   echo "部署模式 : ${MODE:-<未配置>}"
   echo "配置文件 : ${CONFIG_FILE}"
 
-  if [[ "${MODE}" == "vless" || "${MODE}" == "both" ]]; then
+  if [[ "${MODE}" == "vless" || "${MODE}" == "both" || "${MODE}" == "all" ]]; then
     echo
     info "--- VLESS-Reality ---"
     echo "核心       : ${CORE}"
@@ -1447,20 +2283,77 @@ show_info() {
     show_qr "$link"
   fi
 
-  if [[ "${MODE}" == "snell" || "${MODE}" == "both" ]]; then
+  if [[ "${MODE}" == "snell" || "${MODE}" == "both" || "${MODE}" == "all" ]]; then
     echo
     info "--- Snell ---"
+    echo "服务端     : ${SNELL_ENGINE}"
     echo "版本       : ${SNELL_VERSION}"
     echo "端口       : ${SNELL_PORT}"
     echo "PSK        : ${SNELL_PSK}"
     echo "Obfs       : ${SNELL_OBFS}"
     echo "Obfs Host  : ${SNELL_DOMAIN}"
+    if [[ "$SNELL_ENGINE" == "singbox" ]]; then
+      echo
+      echo "sing-box 客户端配置："
+      generate_snell_singbox
+    fi
     echo
     echo "Surge / Stash 配置："
     generate_snell_surge
     echo
     echo "Clash.Meta 配置："
     generate_snell_clash
+  fi
+
+  if [[ "${MODE}" == "anytls" || "${MODE}" == "all" ]]; then
+    echo
+    info "--- AnyTLS ---"
+    echo "安全类型   : ${ANYTLS_SECURITY}"
+    echo "端口       : ${ANYTLS_PORT}"
+    echo "用户名     : ${ANYTLS_USER}"
+    echo "密码       : ${ANYTLS_PASSWORD}"
+    echo "SNI        : ${ANYTLS_SNI}"
+    if [[ "$ANYTLS_SECURITY" == "reality" ]]; then
+      echo "PublicKey  : ${ANYTLS_PUBLIC_KEY}"
+      echo "ShortId    : ${ANYTLS_SHORT_ID}"
+    fi
+    echo
+    echo "Surge 配置："
+    generate_anytls_surge
+    echo
+    echo "sing-box 客户端配置："
+    generate_anytls_singbox
+    echo
+    echo "分享链接："
+    generate_anytls_uri
+  fi
+
+  if [[ "${MODE}" == "nowhere" || "${MODE}" == "all" ]]; then
+    if [[ -n "$NOWHERE_KEY" ]]; then
+      build_nowhere_portal
+    fi
+    echo
+    info "--- Nowhere ---"
+    echo "版本       : ${NOWHERE_VERSION}"
+    echo "端口       : ${NOWHERE_PORT} (TCP+UDP)"
+    echo "共享密钥   : ${NOWHERE_KEY}"
+    echo "TLS        : ${NOWHERE_TLS}"
+    echo "Morph      : ${NOWHERE_MORPH}"
+    echo "客户端     : ${NOWHERE_CLIENT}"
+    echo "Portal URL : ${NOWHERE_PORTAL}"
+    echo
+    if [[ "$NOWHERE_CLIENT" == "anywhere" || "$NOWHERE_CLIENT" == "both" ]]; then
+      echo "Anywhere 导入链接："
+      generate_nowhere_anywhere
+      echo
+    fi
+    if [[ "$NOWHERE_CLIENT" == "vector" || "$NOWHERE_CLIENT" == "both" ]]; then
+      echo "Native Vector 链接："
+      generate_nowhere_vector
+      echo
+    fi
+    echo "客户端命令："
+    echo "  nowhere '$(generate_nowhere_anywhere)'"
   fi
   echo "=================================================="
 }
@@ -1500,14 +2393,18 @@ uninstall_all() {
   fi
 
   load_config || true
-  log "停止并卸载 Xray / sing-box / Snell..."
+  log "停止并卸载 Xray / sing-box / Snell / AnyTLS / Nowhere..."
   service_stop_disable xray
   service_stop_disable sing-box
   service_stop_disable snell
+  service_stop_disable sing-box-snell
+  service_stop_disable sing-box-anytls
+  service_stop_disable nowhere
 
   rm -f "$XRAY_SERVICE" "$SINGBOX_SERVICE" "$SNELL_SERVICE"
-  rm -f "$XRAY_BIN" "$SINGBOX_BIN" "$SNELL_BIN"
-  rm -rf /usr/local/etc/xray /etc/sing-box /etc/snell
+  rm -f "$SNELL_SINGBOX_SERVICE" "$ANYTLS_SERVICE" "$NOWHERE_SERVICE"
+  rm -f "$XRAY_BIN" "$SINGBOX_BIN" "$SNELL_BIN" "$NOWHERE_BIN"
+  rm -rf /usr/local/etc/xray /etc/sing-box /etc/snell /etc/nowhere
   rm -rf "$CONFIG_DIR"
   init_reload >/dev/null 2>&1 || true
   log "卸载完成。防火墙规则未自动删除，如有需要请手动清理。"
@@ -1524,14 +2421,17 @@ interactive_menu() {
     echo "=================================================="
     echo " 1. 部署/重装 VLESS-Reality"
     echo " 2. 部署/重装 Snell"
-    echo " 3. 同时部署 VLESS-Reality + Snell"
-    echo " 4. 查看节点信息"
-    echo " 5. 启用 BBR"
-    echo " 6. 卸载所有组件"
+    echo " 3. 部署/重装 AnyTLS"
+    echo " 4. 部署/重装 Nowhere"
+    echo " 5. 同时部署 VLESS-Reality + Snell"
+    echo " 6. 全部部署 VLESS + Snell + AnyTLS + Nowhere"
+    echo " 7. 查看节点信息"
+    echo " 8. 启用 BBR"
+    echo " 9. 卸载所有组件"
     echo " 0. 退出"
     echo "=================================================="
     local choice=""
-    read -r -p "请选择 [0-6]: " choice || true
+    read -r -p "请选择 [0-9]: " choice || true
     case "$choice" in
       1)
         MODE="vless"
@@ -1540,7 +2440,7 @@ interactive_menu() {
         show_info
         ;;
       2)
-        if ! check_snell_platform; then
+        if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
           pause_any_key
           continue
         fi
@@ -1550,7 +2450,19 @@ interactive_menu() {
         show_info
         ;;
       3)
-        if ! check_snell_platform; then
+        MODE="anytls"
+        deploy_anytls
+        save_config
+        show_info
+        ;;
+      4)
+        MODE="nowhere"
+        deploy_nowhere
+        save_config
+        show_info
+        ;;
+      5)
+        if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
           pause_any_key
           continue
         fi
@@ -1560,13 +2472,26 @@ interactive_menu() {
         save_config
         show_info
         ;;
-      4)
+      6)
+        if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
+          pause_any_key
+          continue
+        fi
+        MODE="all"
+        deploy_vless
+        deploy_snell
+        deploy_anytls
+        deploy_nowhere
+        save_config
         show_info
         ;;
-      5)
+      7)
+        show_info
+        ;;
+      8)
         enable_bbr
         ;;
-      6)
+      9)
         local ans=""
         read -r -p "确认卸载所有组件？[y/N]: " ans || true
         if [[ "$ans" =~ ^[Yy]$ ]]; then
@@ -1590,7 +2515,7 @@ interactive_menu() {
 usage() {
   cat <<EOF
 ${SCRIPT_NAME} v${SCRIPT_VERSION}
-一键部署 VLESS-Reality + Snell 节点
+一键部署 VLESS-Reality / Snell / AnyTLS / Nowhere 节点
 
 用法：
   # 一键运行（无需上传）
@@ -1601,8 +2526,10 @@ ${SCRIPT_NAME} v${SCRIPT_VERSION}
   bash deploy.sh [选项]
 
 模式：
-  -m, --mode <vless|snell|both>   部署模式；不指定则进入交互菜单
-  -a, --address <域名|IP>         客户端连接地址；同时部署时两者复用
+  -m, --mode <vless|snell|anytls|nowhere|both|all>
+                                  部署模式；both=VLESS+Snell，all=四种全部部署
+                                  不指定则进入交互菜单
+  -a, --address <域名|IP>         客户端连接地址；同时部署时复用
       --core <xray|sing-box>      VLESS-Reality 核心，默认 sing-box
 
 VLESS-Reality：
@@ -1616,12 +2543,41 @@ VLESS-Reality：
       --vless-public-key <key>    自定义 Reality 公钥
 
 Snell：
+      --snell-engine <official|singbox>
+                                  服务端引擎；默认 glibc 用 official，Alpine/musl 用 singbox
       --snell-port <端口>         监听端口，默认 8443
       --snell-domain <域名>       obfs-host/伪装域名，默认 www.bing.com
       --snell-psk <密钥>          PSK，默认随机生成
-      --snell-obfs <tls|http|none> 混淆方式，默认 tls
-      --snell-version <版本>      服务端版本，默认 4.1.1（可选 5.0.1）
+      --snell-obfs <tls|http|none> 官方默认 tls；sing-box 只支持 http/none
+      --snell-version <版本>      官方默认 4.1.1（可选 5.0.1）；sing-box 支持 5/6
       --snell-ipv6 <true|false>   是否启用 IPv6，默认 false
+
+AnyTLS：
+      --anytls-port <端口>        监听端口，默认 9443
+      --anytls-sni <域名>         伪装域名/SNI，默认 www.microsoft.com
+      --anytls-security <tls|reality>
+                                  tls=自签证书（Surge 可用，默认）；reality=仅 sing-box 客户端
+      --anytls-dest-port <端口>    Reality 目标端口，默认 443
+      --anytls-password <密码>     客户端密码，默认随机生成
+      --anytls-user <用户名>       用户名，默认 node-deploy
+      --anytls-private-key <key>  自定义 Reality 私钥
+      --anytls-public-key <key>   自定义 Reality 公钥
+      --anytls-short-id <hex>     自定义 shortId，默认随机生成
+
+Nowhere：
+      --nowhere-port <端口>       监听端口（同时占用 TCP+UDP），默认 2077
+      --nowhere-key <密钥>        共享密钥，默认随机生成
+      --nowhere-tls <1|2>         1=自签证书（默认），2=使用 PEM 证书
+      --nowhere-crt <路径>        TLS=2 时的证书链路径
+      --nowhere-tls-key <路径>    TLS=2 时的私钥路径
+      --nowhere-morph <0|1>       Morph 变换，默认 0
+      --nowhere-client <anywhere|vector|both>
+                                   生成的客户端链接类型，默认 both
+      --nowhere-version <版本>    Nowhere 版本，默认 v2.1.1
+      --nowhere-listen-host <地址> 监听地址，留空=全部
+      --nowhere-rate <Mbps>       限速，0=不限速
+      --nowhere-etar <Mbps>       Etar 限速，0=不限速
+      --nowhere-log <级别>        日志级别，默认 info
 
 其他：
       --singbox-version <版本>    指定 sing-box 版本；默认自动获取最新
@@ -1639,18 +2595,26 @@ Snell：
   # 交互式
   bash $0
 
-  # 同时部署，复用同一地址，端口独立
+  # 同时部署 VLESS + Snell，复用同一地址，端口独立
   bash $0 --mode both --address node.example.com \\
-    --core xray \\
+    --core sing-box \\
     --vless-port 443 --vless-sni www.microsoft.com \\
-    --snell-port 8443 --snell-domain www.bing.com --snell-obfs tls
+    --snell-port 8443 --snell-domain www.bing.com --snell-obfs http
 
-  # 非交互 + 自动默认值
-  bash $0 --mode both --address 1.2.3.4 -y --force
+  # Alpine 上用 sing-box 跑 Snell v5
+  bash $0 --mode snell --address 1.2.3.4 --snell-engine singbox \\
+    --snell-port 8443 --snell-obfs http
 
-  # 只部署 Snell v5
-  bash $0 --mode snell --address 1.2.3.4 --snell-port 8443 \\
-    --snell-domain www.bing.com --snell-version 5.0.1
+  # 部署 AnyTLS（Surge 兼容的 tls 模式）
+  bash $0 --mode anytls --address 1.2.3.4 --anytls-port 9443 \\
+    --anytls-sni www.microsoft.com --anytls-security tls
+
+  # 部署 Nowhere（TCP+UDP 同端口）
+  bash $0 --mode nowhere --address 1.2.3.4 --nowhere-port 2077 \\
+    --nowhere-client both
+
+  # 全部部署（VLESS + Snell + AnyTLS + Nowhere）
+  bash $0 --mode all --address 1.2.3.4 -y --force
 
   # 查看信息 / 卸载
   bash $0 --info
@@ -1716,6 +2680,72 @@ parse_args() {
       --snell-ipv6)
         need_value "$@"
         SNELL_IPV6="$2"; shift 2 ;;
+      --snell-engine)
+        need_value "$@"
+        SNELL_ENGINE="$2"; SNELL_ENGINE_CLI="true"; shift 2 ;;
+      --anytls-port)
+        need_value "$@"
+        ANYTLS_PORT="$2"; shift 2 ;;
+      --anytls-sni)
+        need_value "$@"
+        ANYTLS_SNI="$2"; shift 2 ;;
+      --anytls-dest-port)
+        need_value "$@"
+        ANYTLS_DEST_PORT="$2"; shift 2 ;;
+      --anytls-password)
+        need_value "$@"
+        ANYTLS_PASSWORD="$2"; shift 2 ;;
+      --anytls-user)
+        need_value "$@"
+        ANYTLS_USER="$2"; shift 2 ;;
+      --anytls-security)
+        need_value "$@"
+        ANYTLS_SECURITY="$2"; shift 2 ;;
+      --anytls-private-key)
+        need_value "$@"
+        ANYTLS_PRIVATE_KEY="$2"; shift 2 ;;
+      --anytls-public-key)
+        need_value "$@"
+        ANYTLS_PUBLIC_KEY="$2"; shift 2 ;;
+      --anytls-short-id)
+        need_value "$@"
+        ANYTLS_SHORT_ID="$2"; shift 2 ;;
+      --nowhere-port)
+        need_value "$@"
+        NOWHERE_PORT="$2"; shift 2 ;;
+      --nowhere-key)
+        need_value "$@"
+        NOWHERE_KEY="$2"; shift 2 ;;
+      --nowhere-tls)
+        need_value "$@"
+        NOWHERE_TLS="$2"; shift 2 ;;
+      --nowhere-crt)
+        need_value "$@"
+        NOWHERE_CRT="$2"; shift 2 ;;
+      --nowhere-tls-key)
+        need_value "$@"
+        NOWHERE_TLS_KEY="$2"; shift 2 ;;
+      --nowhere-morph)
+        need_value "$@"
+        NOWHERE_MORPH="$2"; shift 2 ;;
+      --nowhere-client)
+        need_value "$@"
+        NOWHERE_CLIENT="$2"; shift 2 ;;
+      --nowhere-version)
+        need_value "$@"
+        NOWHERE_VERSION="$2"; shift 2 ;;
+      --nowhere-listen-host)
+        need_value "$@"
+        NOWHERE_LISTEN_HOST="$2"; shift 2 ;;
+      --nowhere-rate)
+        need_value "$@"
+        NOWHERE_RATE="$2"; shift 2 ;;
+      --nowhere-etar)
+        need_value "$@"
+        NOWHERE_ETAR="$2"; shift 2 ;;
+      --nowhere-log)
+        need_value "$@"
+        NOWHERE_LOG="$2"; shift 2 ;;
       --singbox-version)
         need_value "$@"
         SINGBOX_VERSION="$2"; shift 2 ;;
@@ -1746,10 +2776,48 @@ parse_args() {
 
   if [[ -n "$MODE" ]]; then
     case "$MODE" in
-      vless|snell|both) ;;
-      *) die "--mode 必须是 vless、snell 或 both，当前：$MODE" ;;
+      vless|snell|anytls|nowhere|both|all) ;;
+      *) die "--mode 必须是 vless、snell、anytls、nowhere、both 或 all，当前：$MODE" ;;
     esac
   fi
+
+  if [[ -n "$SNELL_ENGINE" ]]; then
+    case "$SNELL_ENGINE" in
+      official|singbox) ;;
+      *) die "--snell-engine 必须是 official 或 singbox，当前：$SNELL_ENGINE" ;;
+    esac
+  fi
+
+  validate_anytls_security
+
+  case "$NOWHERE_TLS" in
+    1|2) ;;
+    *) die "--nowhere-tls 必须是 1 或 2，当前：$NOWHERE_TLS" ;;
+  esac
+  case "$NOWHERE_MORPH" in
+    0|1) ;;
+    *) die "--nowhere-morph 必须是 0 或 1，当前：$NOWHERE_MORPH" ;;
+  esac
+  case "$NOWHERE_CLIENT" in
+    anywhere|vector|both) ;;
+    *) die "--nowhere-client 必须是 anywhere、vector 或 both，当前：$NOWHERE_CLIENT" ;;
+  esac
+  if [[ -n "$NOWHERE_KEY" ]]; then
+    [[ "${#NOWHERE_KEY}" -le 255 ]] || die "--nowhere-key 必须不超过 255 个字符"
+  fi
+  [[ "$NOWHERE_RATE" =~ ^[0-9]+$ ]] || die "--nowhere-rate 必须是非负整数，当前：$NOWHERE_RATE"
+  [[ "$NOWHERE_ETAR" =~ ^[0-9]+$ ]] || die "--nowhere-etar 必须是非负整数，当前：$NOWHERE_ETAR"
+  case "$NOWHERE_LOG" in
+    none|debug|info|warn|error) ;;
+    *) die "--nowhere-log 必须是 none/debug/info/warn/error，当前：$NOWHERE_LOG" ;;
+  esac
+  if [[ -n "$NOWHERE_LISTEN_HOST" ]]; then
+    validate_host "$NOWHERE_LISTEN_HOST" || die "--nowhere-listen-host 无效：$NOWHERE_LISTEN_HOST"
+  fi
+  if [[ "$NOWHERE_TLS" == "2" ]]; then
+    [[ -f "$NOWHERE_CRT" && -f "$NOWHERE_TLS_KEY" ]] || die "--nowhere-tls 2 需要 --nowhere-crt 和 --nowhere-tls-key 指向存在的文件"
+  fi
+  NOWHERE_VERSION="v${NOWHERE_VERSION#v}"
 
   SNELL_VERSION="${SNELL_VERSION#v}"
   SINGBOX_VERSION="${SINGBOX_VERSION#v}"
@@ -1824,12 +2892,27 @@ main() {
     snell)
       deploy_snell
       ;;
+    anytls)
+      deploy_anytls
+      ;;
+    nowhere)
+      deploy_nowhere
+      ;;
     both)
-      if ! check_snell_platform; then
-        die "请使用 --mode vless 只部署 VLESS-Reality，或改用 Debian/Ubuntu 部署 Snell。"
+      if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
+        die "当前系统无法运行官方 Snell，请使用 --snell-engine singbox。"
       fi
       deploy_vless
       deploy_snell
+      ;;
+    all)
+      if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
+        die "当前系统无法运行官方 Snell，请使用 --snell-engine singbox。"
+      fi
+      deploy_vless
+      deploy_snell
+      deploy_anytls
+      deploy_nowhere
       ;;
   esac
 

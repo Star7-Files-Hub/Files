@@ -376,10 +376,11 @@ Native Vector:
 vector://KEY@node.example.com:2077?up=tcp&down=tcp&mux=0&sni=none&pin=none&morph=0&socks=127.0.0.1:1080#Nowhere
 ```
 
-客户端命令：
+- Anywhere：用 Anywhere 客户端导入 `nowhere://` 链接。
+- Native Vector：本地运行 `nowhere` 二进制并传入 vector 链接：
 
 ```bash
-nowhere 'nowhere://KEY@node.example.com:2077?up=tcp&down=tcp&morph=0&mux=0#Nowhere'
+nowhere 'vector://KEY@node.example.com:2077?up=tcp&down=tcp&mux=0&sni=none&pin=none&morph=0&socks=127.0.0.1:1080#Nowhere'
 ```
 
 Surge 目前不支持 Nowhere / Vector。

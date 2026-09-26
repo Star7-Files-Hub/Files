@@ -2351,9 +2351,12 @@ show_info() {
       echo "Native Vector 链接："
       generate_nowhere_vector
       echo
+      echo "客户端命令（Vector 客户端）："
+      echo "  nowhere '$(generate_nowhere_vector)'"
     fi
-    echo "客户端命令："
-    echo "  nowhere '$(generate_nowhere_anywhere)'"
+    if [[ "$NOWHERE_CLIENT" == "anywhere" ]]; then
+      echo "请使用 Anywhere 客户端导入上面的 nowhere:// 链接。"
+    fi
   fi
   echo "=================================================="
 }

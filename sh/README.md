@@ -11,6 +11,41 @@
 
 ---
 
+## 0. 一键命令（推荐，无需上传）
+
+脚本是自包含的，可以直接从 GitHub Raw 拉取运行：
+
+```bash
+# curl + 进程替换，交互菜单可用
+sudo bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
+
+# wget 版本
+sudo bash <(wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
+
+# 先下载再运行
+curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh -o /tmp/node-deploy.sh
+sudo bash /tmp/node-deploy.sh
+
+# wget 先下载再运行
+wget -qO /tmp/node-deploy.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh
+sudo bash /tmp/node-deploy.sh
+```
+
+> 不建议用 `curl ... | sudo bash`：管道会把 stdin 占用，交互菜单的 `read` 会读不到键盘输入。用 `bash <(curl ...)` 或先下载再运行即可正常交互。
+
+带参数的一键部署示例：
+
+```bash
+sudo bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh) \
+  --mode both \
+  --address node.example.com \
+  --core xray \
+  --vless-port 443 --vless-sni www.microsoft.com \
+  --snell-port 8443 --snell-domain www.bing.com --snell-obfs tls
+```
+
+---
+
 ## 1. 选型结论
 
 ### VLESS-Reality：默认 Xray，sing-box 作为可选核心
@@ -60,9 +95,9 @@ Xray 不支持 Snell。sing-box 从 1.14 开始有 Snell 入站，但：
 
 ---
 
-## 3. 快速开始
+## 3. 本地运行（可选）
 
-把脚本上传到 VPS 后：
+如果已经上传、clone 或下载了脚本：
 
 ```bash
 chmod +x deploy.sh

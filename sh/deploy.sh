@@ -1386,6 +1386,11 @@ ${SCRIPT_NAME} v${SCRIPT_VERSION}
 一键部署 VLESS-Reality + Snell 节点
 
 用法：
+  # 一键运行（无需上传）
+  sudo bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
+  sudo bash <(wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
+
+  # 本地运行
   bash $0 [选项]
 
 模式：

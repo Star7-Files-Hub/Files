@@ -3,10 +3,10 @@
 # node-deploy: 一键部署 VLESS-Reality + Snell 节点
 #
 # 特性:
-#   - VLESS-Reality 可选 Xray（默认）或 sing-box 核心
+#   - VLESS-Reality 可选 sing-box（默认）或 Xray 核心
 #   - Snell 使用官方 snell-server（默认 v4.1.1，可选 v5.0.1），兼容 Surge / Stash / Clash.Meta
 #   - 交互式菜单 + 完整 CLI 参数，支持同时部署，复用出口 IP/域名，端口各自独立
-#   - 自动生成 UUID / Reality 密钥 / shortId / PSK，自动写入 systemd 服务并启动
+#   - 自动生成 UUID / Reality 密钥 / shortId / PSK，自动写入 systemd / OpenRC 服务并启动
 #   - 自动放行 ufw / firewalld / iptables 端口（可用 --no-firewall 关闭）
 #   - 支持 --dry-run 生成配置到当前目录 dry-run/，不修改系统
 #
@@ -20,6 +20,13 @@
 #
 # 详细说明见同目录 README.md
 #
+
+# 明确要求 bash；Alpine 等系统请先安装 bash
+if [ -z "${BASH_VERSION:-}" ]; then
+  echo "请使用 bash 运行此脚本：bash $0" >&2
+  exit 1
+fi
+
 set -Eeuo pipefail
 
 SCRIPT_NAME="node-deploy"
@@ -69,6 +76,7 @@ DEPS_INSTALLED="false"
 OS_ID=""
 OS_LIKE=""
 PKG_MGR=""
+INIT_SYSTEM=""
 ARCH=""
 ARCH_RAW=""
 XRAY_ASSET=""
@@ -133,6 +141,7 @@ pre_scan_dry_run() {
 }
 
 init_paths() {
+  detect_init
   if [[ "$DRY_RUN" == "true" ]]; then
     DRY_RUN_DIR="${PWD}/dry-run"
     CONFIG_DIR="${DRY_RUN_DIR}/etc/node-deploy"
@@ -140,18 +149,30 @@ init_paths() {
     XRAY_CONFIG="${DRY_RUN_DIR}/usr/local/etc/xray/config.json"
     SINGBOX_CONFIG="${DRY_RUN_DIR}/etc/sing-box/config.json"
     SNELL_CONFIG="${DRY_RUN_DIR}/etc/snell/snell-server.conf"
-    XRAY_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/xray.service"
-    SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/sing-box.service"
-    SNELL_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/snell.service"
+    if [[ "$INIT_SYSTEM" == "openrc" ]]; then
+      XRAY_SERVICE="${DRY_RUN_DIR}/etc/init.d/xray"
+      SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/init.d/sing-box"
+      SNELL_SERVICE="${DRY_RUN_DIR}/etc/init.d/snell"
+    else
+      XRAY_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/xray.service"
+      SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/sing-box.service"
+      SNELL_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/snell.service"
+    fi
   else
     CONFIG_DIR="/etc/node-deploy"
     CONFIG_FILE="${CONFIG_DIR}/config.env"
     XRAY_CONFIG="/usr/local/etc/xray/config.json"
     SINGBOX_CONFIG="/etc/sing-box/config.json"
     SNELL_CONFIG="/etc/snell/snell-server.conf"
-    XRAY_SERVICE="/etc/systemd/system/xray.service"
-    SINGBOX_SERVICE="/etc/systemd/system/sing-box.service"
-    SNELL_SERVICE="/etc/systemd/system/snell.service"
+    if [[ "$INIT_SYSTEM" == "openrc" ]]; then
+      XRAY_SERVICE="/etc/init.d/xray"
+      SINGBOX_SERVICE="/etc/init.d/sing-box"
+      SNELL_SERVICE="/etc/init.d/snell"
+    else
+      XRAY_SERVICE="/etc/systemd/system/xray.service"
+      SINGBOX_SERVICE="/etc/systemd/system/sing-box.service"
+      SNELL_SERVICE="/etc/systemd/system/snell.service"
+    fi
   fi
 }
 
@@ -194,6 +215,17 @@ detect_os() {
 
   if [[ -z "$PKG_MGR" ]]; then
     die "无法识别的发行版，请手动安装 curl wget unzip tar openssl ca-certificates 后重试"
+  fi
+}
+
+detect_init() {
+  INIT_SYSTEM=""
+  if command_exists systemctl && [[ -d /run/systemd/system ]]; then
+    INIT_SYSTEM="systemd"
+  elif command_exists rc-service && command_exists rc-update; then
+    INIT_SYSTEM="openrc"
+  else
+    INIT_SYSTEM="unknown"
   fi
 }
 
@@ -252,7 +284,7 @@ pkg_install() {
 
 install_deps() {
   log "安装基础依赖..."
-  pkg_install curl wget unzip tar openssl ca-certificates
+  pkg_install bash curl wget unzip tar openssl ca-certificates
   # qrencode 是可选的，失败不影响主流程
   case "$PKG_MGR" in
     apt) DEBIAN_FRONTEND=noninteractive apt-get install -y qrencode >/dev/null 2>&1 || true ;;
@@ -514,7 +546,7 @@ open_firewall_port() {
 }
 
 # ---------------------------------------------------------------------------
-# systemd
+# systemd / OpenRC 服务管理
 # ---------------------------------------------------------------------------
 write_file() {
   local path="$1"
@@ -522,30 +554,61 @@ write_file() {
   cat > "$path"
 }
 
-systemd_reload() {
+init_reload() {
   if [[ "$DRY_RUN" == "true" ]]; then
     return 0
   fi
-  if ! command_exists systemctl; then
-    die "未检测到 systemd，当前脚本仅支持 systemd 系统"
-  fi
-  systemctl daemon-reload
+  case "$INIT_SYSTEM" in
+    systemd)
+      if ! command_exists systemctl; then
+        die "未检测到 systemctl，无法使用 systemd 管理服务"
+      fi
+      systemctl daemon-reload
+      ;;
+    openrc)
+      # OpenRC 不需要 daemon-reload
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
 }
 
 service_enable_start() {
   local svc="$1"
   if [[ "$DRY_RUN" == "true" ]]; then
-    log "DRY-RUN: systemctl enable --now ${svc}"
+    case "$INIT_SYSTEM" in
+      openrc) log "DRY-RUN: rc-update add ${svc} default && rc-service ${svc} restart" ;;
+      *)      log "DRY-RUN: systemctl enable --now ${svc}" ;;
+    esac
     return 0
   fi
-  systemd_reload
-  systemctl enable "$svc" >/dev/null 2>&1 || true
-  systemctl restart "$svc"
-  sleep 1
-  if ! systemctl is-active --quiet "$svc"; then
-    systemctl status "$svc" --no-pager -l || true
-    die "$svc 启动失败"
-  fi
+
+  case "$INIT_SYSTEM" in
+    systemd)
+      init_reload
+      systemctl enable "$svc" >/dev/null 2>&1 || true
+      systemctl restart "$svc"
+      sleep 1
+      if ! systemctl is-active --quiet "$svc"; then
+        systemctl status "$svc" --no-pager -l || true
+        die "$svc 启动失败"
+      fi
+      ;;
+    openrc)
+      rc-update add "$svc" default >/dev/null 2>&1 || true
+      rc-service "$svc" restart
+      sleep 1
+      if ! rc-service "$svc" status >/dev/null 2>&1; then
+        rc-service "$svc" status || true
+        die "$svc 启动失败"
+      fi
+      ;;
+    *)
+      die "未检测到 systemd 或 OpenRC，无法启动 $svc"
+      ;;
+  esac
   log "$svc 已启动"
 }
 
@@ -554,8 +617,16 @@ service_stop_disable() {
   if [[ "$DRY_RUN" == "true" ]]; then
     return 0
   fi
-  systemctl stop "$svc" >/dev/null 2>&1 || true
-  systemctl disable "$svc" >/dev/null 2>&1 || true
+  case "$INIT_SYSTEM" in
+    systemd)
+      systemctl stop "$svc" >/dev/null 2>&1 || true
+      systemctl disable "$svc" >/dev/null 2>&1 || true
+      ;;
+    openrc)
+      rc-service "$svc" stop >/dev/null 2>&1 || true
+      rc-update del "$svc" default >/dev/null 2>&1 || true
+      ;;
+  esac
 }
 
 # ---------------------------------------------------------------------------
@@ -689,6 +760,34 @@ EOF
 }
 
 write_xray_service() {
+  if [[ "$INIT_SYSTEM" == "openrc" ]]; then
+    write_file "$XRAY_SERVICE" <<EOF
+#!/sbin/openrc-run
+name="xray"
+description="Xray Service"
+command="${XRAY_BIN}"
+command_args="run -config ${XRAY_CONFIG}"
+pidfile="/run/xray.pid"
+command_background="yes"
+output_log="/var/log/xray.log"
+error_log="/var/log/xray.err"
+supervisor=supervise-daemon
+supervise_daemon_args="--respawn-max 0 --respawn-delay 5"
+
+depend() {
+    need net
+    after firewall
+}
+
+start_pre() {
+    checkpath --directory --mode 0755 /var/log
+    checkpath --directory --mode 0755 /run
+}
+EOF
+    chmod +x "$XRAY_SERVICE" 2>/dev/null || true
+    return 0
+  fi
+
   write_file "$XRAY_SERVICE" <<EOF
 [Unit]
 Description=Xray Service
@@ -751,7 +850,11 @@ install_singbox() {
   version="${version#v}"
 
   tmp="$(mktemp -d)"
-  url="https://github.com/SagerNet/sing-box/releases/download/v${version}/sing-box-${version}-linux-${SINGBOX_ARCH}.tar.gz"
+  local suffix=""
+  if [[ "$OS_ID" == "alpine" ]]; then
+    suffix="-musl"
+  fi
+  url="https://github.com/SagerNet/sing-box/releases/download/v${version}/sing-box-${version}-linux-${SINGBOX_ARCH}${suffix}.tar.gz"
   download "$url" "${tmp}/sing-box.tar.gz"
   tar -xzf "${tmp}/sing-box.tar.gz" -C "$tmp"
   local bin
@@ -820,6 +923,34 @@ EOF
 }
 
 write_singbox_service() {
+  if [[ "$INIT_SYSTEM" == "openrc" ]]; then
+    write_file "$SINGBOX_SERVICE" <<EOF
+#!/sbin/openrc-run
+name="sing-box"
+description="sing-box service"
+command="${SINGBOX_BIN}"
+command_args="run -c ${SINGBOX_CONFIG}"
+pidfile="/run/sing-box.pid"
+command_background="yes"
+output_log="/var/log/sing-box.log"
+error_log="/var/log/sing-box.err"
+supervisor=supervise-daemon
+supervise_daemon_args="--respawn-max 0 --respawn-delay 5"
+
+depend() {
+    need net
+    after firewall
+}
+
+start_pre() {
+    checkpath --directory --mode 0755 /var/log
+    checkpath --directory --mode 0755 /run
+}
+EOF
+    chmod +x "$SINGBOX_SERVICE" 2>/dev/null || true
+    return 0
+  fi
+
   write_file "$SINGBOX_SERVICE" <<EOF
 [Unit]
 Description=sing-box service
@@ -853,9 +984,6 @@ install_snell() {
   fi
   if [[ -z "$SNELL_ARCH" ]]; then
     die "Snell 官方服务端不支持当前架构：$ARCH_RAW"
-  fi
-  if [[ "$OS_ID" == "alpine" ]]; then
-    warn "Alpine 使用 musl libc，Snell 官方二进制可能无法运行，建议使用 Debian/Ubuntu"
   fi
 
   log "安装 snell-server v${SNELL_VERSION}..."
@@ -916,6 +1044,34 @@ configure_snell() {
 }
 
 write_snell_service() {
+  if [[ "$INIT_SYSTEM" == "openrc" ]]; then
+    write_file "$SNELL_SERVICE" <<EOF
+#!/sbin/openrc-run
+name="snell"
+description="Snell Proxy Service"
+command="${SNELL_BIN}"
+command_args="-c ${SNELL_CONFIG}"
+pidfile="/run/snell.pid"
+command_background="yes"
+output_log="/var/log/snell.log"
+error_log="/var/log/snell.err"
+supervisor=supervise-daemon
+supervise_daemon_args="--respawn-max 0 --respawn-delay 5"
+
+depend() {
+    need net
+    after firewall
+}
+
+start_pre() {
+    checkpath --directory --mode 0755 /var/log
+    checkpath --directory --mode 0755 /run
+}
+EOF
+    chmod +x "$SNELL_SERVICE" 2>/dev/null || true
+    return 0
+  fi
+
   write_file "$SNELL_SERVICE" <<EOF
 [Unit]
 Description=Snell Proxy Service
@@ -1028,7 +1184,7 @@ prompt_vless() {
   fi
 
   if [[ -z "$CORE" ]]; then
-    CORE="$(prompt_value "VLESS-Reality 核心 (xray/sing-box)" "xray")"
+    CORE="$(prompt_value "VLESS-Reality 核心 (xray/sing-box)" "sing-box")"
   fi
   case "$CORE" in
     xray|sing-box) ;;
@@ -1079,6 +1235,9 @@ prompt_snell() {
 # 部署流程
 # ---------------------------------------------------------------------------
 deploy_vless() {
+  if [[ "$DRY_RUN" != "true" && "$INIT_SYSTEM" == "unknown" ]]; then
+    die "未检测到 systemd 或 OpenRC，当前脚本仅支持 systemd / OpenRC 系统"
+  fi
   ensure_env
   prompt_vless
   ensure_port_available "$VLESS_PORT" "VLESS-Reality"
@@ -1136,6 +1295,9 @@ deploy_vless() {
 }
 
 deploy_snell() {
+  if [[ "$DRY_RUN" != "true" && "$INIT_SYSTEM" == "unknown" ]]; then
+    die "未检测到 systemd 或 OpenRC，当前脚本仅支持 systemd / OpenRC 系统"
+  fi
   ensure_env
   prompt_snell
   ensure_port_available "$SNELL_PORT" "Snell"
@@ -1276,11 +1438,12 @@ enable_bbr() {
     return 0
   fi
   log "启用 BBR..."
+  mkdir -p /etc/sysctl.d
   cat > /etc/sysctl.d/99-bbr.conf <<EOF
 net.core.default_qdisc = fq
 net.ipv4.tcp_congestion_control = bbr
 EOF
-  sysctl --system >/dev/null 2>&1 || true
+  sysctl -p /etc/sysctl.d/99-bbr.conf >/dev/null 2>&1 || true
   local cc
   cc="$(sysctl -n net.ipv4.tcp_congestion_control 2>/dev/null || true)"
   if [[ "$cc" == "bbr" ]]; then
@@ -1310,7 +1473,7 @@ uninstall_all() {
   rm -f "$XRAY_BIN" "$SINGBOX_BIN" "$SNELL_BIN"
   rm -rf /usr/local/etc/xray /etc/sing-box /etc/snell
   rm -rf "$CONFIG_DIR"
-  systemctl daemon-reload >/dev/null 2>&1 || true
+  init_reload >/dev/null 2>&1 || true
   log "卸载完成。防火墙规则未自动删除，如有需要请手动清理。"
 }
 
@@ -1396,7 +1559,7 @@ ${SCRIPT_NAME} v${SCRIPT_VERSION}
 模式：
   -m, --mode <vless|snell|both>   部署模式；不指定则进入交互菜单
   -a, --address <域名|IP>         客户端连接地址；同时部署时两者复用
-      --core <xray|sing-box>      VLESS-Reality 核心，默认 xray
+      --core <xray|sing-box>      VLESS-Reality 核心，默认 sing-box
 
 VLESS-Reality：
       --vless-port <端口>         监听端口，默认 443

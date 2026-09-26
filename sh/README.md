@@ -3,7 +3,7 @@
 一个面向 VPS 的一键部署脚本，支持 **VLESS-Reality** 和 **Snell**，可单独部署，也可同时部署。
 
 - 同时部署时复用同一个出口 IP / 域名，**端口分别设置**。
-- VLESS-Reality 默认使用 **Xray**，也可切换 **sing-box**。
+- VLESS-Reality 默认使用 **sing-box**，也可切换 **Xray**。
 - Snell 使用官方 `snell-server`，默认 `v4.1.1`，可选 `v5.0.1`，兼容 Surge / Stash / Clash.Meta。
 - 支持交互式菜单和完整 CLI 参数，适合手动部署和自动化脚本。
 
@@ -38,6 +38,20 @@ sudo bash <(curl -fsSL https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@main/sh
 sudo bash <(wget -qO- https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@main/sh/deploy.sh)
 ```
 
+Alpine（OpenRC）默认没有 bash，请先安装：
+
+```sh
+apk add --no-cache bash curl
+bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
+```
+
+或使用 jsDelivr：
+
+```sh
+apk add --no-cache bash curl
+bash <(curl -fsSL https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@main/sh/deploy.sh)
+```
+
 > 不建议用 `curl ... | sudo bash`：管道会把 stdin 占用，交互菜单的 `read` 会读不到键盘输入。用 `bash <(curl ...)` 或先下载再运行即可正常交互。
 
 带参数的一键部署示例：
@@ -46,7 +60,7 @@ sudo bash <(wget -qO- https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@main/sh/
 sudo bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh) \
   --mode both \
   --address node.example.com \
-  --core xray \
+  --core sing-box \
   --vless-port 443 --vless-sni www.microsoft.com \
   --snell-port 8443 --snell-domain www.bing.com --snell-obfs tls
 ```
@@ -55,14 +69,16 @@ sudo bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/m
 
 ## 1. 选型结论
 
-### VLESS-Reality：默认 Xray，sing-box 作为可选核心
+### VLESS-Reality：默认 sing-box，Xray 作为可选核心
 
 | 核心 | 说明 |
 | --- | --- |
-| **Xray** | REALITY 的原创实现，服务端 / 客户端兼容性最好，233boy 的 Xray 脚本也以它为主。**推荐默认使用**。 |
-| **sing-box** | 也完整支持 VLESS-Reality 服务端。适合已经统一使用 sing-box 的用户。脚本通过 `--core sing-box` 切换。 |
+| **sing-box** | 默认核心。统一配置、协议覆盖广、官方支持 Alpine musl 构建；和参考脚本 `install-singbox.sh` 一致，适合只维护一个核心。 |
+| **Xray** | REALITY 的原创实现，二进制更小（约 36MB vs sing-box 约 81MB），单协议场景更轻量，客户端兼容性最好。脚本通过 `--core xray` 切换。 |
 
-因此脚本**内置两种核心**，默认 Xray，需要时切换到 sing-box。
+因此脚本**内置两种核心**，默认 sing-box，需要更轻量或更强 REALITY 兼容性时切换到 Xray。
+
+> 参考脚本：`https://raw.githubusercontent.com/ceocok/incudal/main/scripts/install-singbox.sh`。它同样使用 sing-box，并适配 Alpine OpenRC / systemd；本脚本已参考它的思路，默认改为 sing-box，并补齐 OpenRC 支持。
 
 ### Snell：使用官方 snell-server
 
@@ -92,13 +108,13 @@ Xray 不支持 Snell。sing-box 从 1.14 开始有 Snell 入站，但：
 | `/etc/node-deploy/config.env` | 部署参数与密钥，权限 600 |
 | `/usr/local/bin/xray` | Xray 可执行文件 |
 | `/usr/local/etc/xray/config.json` | Xray 配置 |
-| `/etc/systemd/system/xray.service` | Xray systemd 服务 |
+| `/etc/systemd/system/xray.service` 或 `/etc/init.d/xray` | Xray 服务（systemd / OpenRC） |
 | `/usr/local/bin/sing-box` | sing-box 可执行文件（使用 sing-box 核心时） |
 | `/etc/sing-box/config.json` | sing-box 配置 |
-| `/etc/systemd/system/sing-box.service` | sing-box systemd 服务 |
+| `/etc/systemd/system/sing-box.service` 或 `/etc/init.d/sing-box` | sing-box 服务（systemd / OpenRC） |
 | `/usr/local/bin/snell-server` | Snell 官方服务端 |
 | `/etc/snell/snell-server.conf` | Snell 配置 |
-| `/etc/systemd/system/snell.service` | Snell systemd 服务 |
+| `/etc/systemd/system/snell.service` 或 `/etc/init.d/snell` | Snell 服务（systemd / OpenRC） |
 
 ---
 
@@ -143,7 +159,7 @@ sudo bash deploy.sh
 sudo bash deploy.sh \
   --mode both \
   --address node.example.com \
-  --core xray \
+  --core sing-box \
   --vless-port 443 \
   --vless-sni www.microsoft.com \
   --snell-port 8443 \
@@ -202,7 +218,7 @@ sudo bash deploy.sh --bbr
 ```text
 -m, --mode <vless|snell|both>   部署模式；不指定则进入交互菜单
 -a, --address <域名|IP>         客户端连接地址；同时部署时两者复用
-    --core <xray|sing-box>      VLESS-Reality 核心，默认 xray
+    --core <xray|sing-box>      VLESS-Reality 核心，默认 sing-box
 
 VLESS-Reality：
     --vless-port <端口>         监听端口，默认 443
@@ -283,7 +299,7 @@ Snell = snell, node.example.com, 8443, psk=YOUR_PSK, obfs=tls, obfs-host=www.bin
 4. **密钥复用**：脚本第二次运行时会复用 `/etc/node-deploy/config.env` 里的 UUID、Reality 密钥、shortId、PSK，不会无故更换。需要重置时删除 `/etc/node-deploy/config.env`，或通过 `--vless-uuid`、`--vless-private-key`/`--vless-public-key`、`--snell-psk` 显式传入新值；`--force` 只影响端口占用和重装询问，不会主动更换密钥。
 5. **Snell 版本**：默认 `4.1.1` 兼容性最好；`5.0.1` 支持 QUIC，但部分旧客户端可能只支持 v4。
 6. **防火墙规则持久化**：iptables 规则可能重启后丢失，建议使用 ufw / firewalld 或自行 `iptables-save`。
-7. **脚本只支持 systemd 系统**，推荐 Debian 12 / Ubuntu 22.04+ / Rocky 9 / Alma 9。
+7. **init 系统**：支持 systemd（Debian 12 / Ubuntu 22.04+ / Rocky 9 / Alma 9 等）和 OpenRC（Alpine）。Alpine 上需要先安装 `bash`，脚本会自动使用 sing-box 的 musl 版本；Xray 和 Snell 官方二进制本身是静态链接，可直接运行。
 8. **安全**：`/etc/node-deploy/config.env` 包含私钥和 PSK，权限为 600，请勿泄露。
 
 ---
@@ -308,4 +324,4 @@ bash deploy.sh --dry-run --mode both --address node.example.com \
   --snell-port 8443 --snell-domain www.bing.com --non-interactive
 ```
 
-可以用它检查生成的 JSON / conf / systemd 文件是否符合预期。
+可以用它检查生成的 JSON / conf / systemd / OpenRC 文件是否符合预期。

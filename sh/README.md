@@ -54,7 +54,7 @@ bash <(curl -fsSL https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@latest/sh/de
 
 > 不建议用 `curl ... | sudo bash`：管道会把 stdin 占用，交互菜单的 `read` 会读不到键盘输入。用 `bash <(curl ...)` 或先下载再运行即可正常交互。
 
-> **Alpine 上的 Snell 限制**：官方 `snell-server` 依赖 glibc 的 `/lib64/ld-linux-x86-64.so.2`，在 Alpine musl 上会报 `Not a valid dynamic program`。脚本真实运行时会提前拦截并提示。Alpine 上请用 `--mode vless` 只部署 VLESS-Reality；如果必须在 Alpine 上用 Snell，可改用 sing-box 的 Snell 入站（仅 v5/v6 + HTTP 混淆），或换 Debian/Ubuntu 部署官方 Snell。
+> **Alpine 上的 Snell 限制**：官方 `snell-server` 依赖 glibc 的 `/lib64/ld-linux-x86-64.so.2`，在 Alpine musl 上会报 `Not a valid dynamic program`。脚本真实运行时会提前拦截并提示。Alpine 上请用 `--mode vless` 只部署 VLESS-Reality；如果必须在 Alpine 上用 Snell，可改用 sing-box 的 Snell 入站（仅 v5/v6 + HTTP 混淆），或换 Debian/Ubuntu 部署官方 Snell。交互菜单里选择 Snell 时会提示错误，按任意键返回菜单，不会直接退出；只有命令行 `--mode snell` / `--mode both` 才会报错退出。
 
 带参数的一键部署示例：
 

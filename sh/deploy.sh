@@ -33,7 +33,7 @@ set -Eeuo pipefail
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
 
 SCRIPT_NAME="node-deploy"
-SCRIPT_VERSION="1.0.1"
+SCRIPT_VERSION="1.0.2"
 
 # ---------------------------------------------------------------------------
 # 可被环境变量覆盖的路径
@@ -116,6 +116,16 @@ warn() { echo -e "${YELLOW}[WARN]${NC} $*" >&2; }
 err()  { echo -e "${RED}[ERROR]${NC} $*" >&2; }
 die()  { err "$*"; exit 1; }
 info() { echo -e "${CYAN}$*${NC}"; }
+
+pause_any_key() {
+  echo
+  echo -n "按任意键返回菜单..."
+  local _dummy=""
+  read -r -s -n 1 _dummy || true
+  # 清掉按 Enter 留下的换行，避免回到菜单后读到空选项
+  read -r -t 0.05 -n 1000 -s _dummy || true
+  echo
+}
 
 trap 'err "命令失败：行 $LINENO，退出码 $?"' ERR
 
@@ -321,8 +331,10 @@ check_snell_platform() {
   fi
 
   if [[ "$OS_ID" == "alpine" || "$libc" == *musl* ]]; then
-    die "当前系统是 musl（Alpine 等），官方 Snell 服务端依赖 glibc 的 /lib64/ld-linux-x86-64.so.2，无法运行。请使用 --mode vless 只部署 VLESS-Reality，或改用 Debian/Ubuntu 部署 Snell。"
+    err "当前系统是 musl（Alpine 等），官方 Snell 服务端依赖 glibc 的 /lib64/ld-linux-x86-64.so.2，无法运行。"
+    return 1
   fi
+  return 0
 }
 
 # ---------------------------------------------------------------------------
@@ -1319,7 +1331,9 @@ deploy_snell() {
   if [[ "$DRY_RUN" != "true" && "$INIT_SYSTEM" == "unknown" ]]; then
     die "未检测到 systemd 或 OpenRC，当前脚本仅支持 systemd / OpenRC 系统"
   fi
-  check_snell_platform
+  if ! check_snell_platform; then
+    die "请使用 --mode vless 只部署 VLESS-Reality，或改用 Debian/Ubuntu 部署 Snell。"
+  fi
   ensure_env
   prompt_snell
   ensure_port_available "$SNELL_PORT" "Snell"
@@ -1526,14 +1540,21 @@ interactive_menu() {
         show_info
         ;;
       2)
+        if ! check_snell_platform; then
+          pause_any_key
+          continue
+        fi
         MODE="snell"
         deploy_snell
         save_config
         show_info
         ;;
       3)
+        if ! check_snell_platform; then
+          pause_any_key
+          continue
+        fi
         MODE="both"
-        check_snell_platform
         deploy_vless
         deploy_snell
         save_config
@@ -1804,7 +1825,9 @@ main() {
       deploy_snell
       ;;
     both)
-      check_snell_platform
+      if ! check_snell_platform; then
+        die "请使用 --mode vless 只部署 VLESS-Reality，或改用 Debian/Ubuntu 部署 Snell。"
+      fi
       deploy_vless
       deploy_snell
       ;;

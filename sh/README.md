@@ -31,6 +31,13 @@ wget -qO /tmp/node-deploy.sh https://raw.githubusercontent.com/Star7-Files-Hub/F
 sudo bash /tmp/node-deploy.sh
 ```
 
+如果 GitHub Raw 访问慢或刚推送后有缓存，可以用 jsDelivr 镜像：
+
+```bash
+sudo bash <(curl -fsSL https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@main/sh/deploy.sh)
+sudo bash <(wget -qO- https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@main/sh/deploy.sh)
+```
+
 > 不建议用 `curl ... | sudo bash`：管道会把 stdin 占用，交互菜单的 `read` 会读不到键盘输入。用 `bash <(curl ...)` 或先下载再运行即可正常交互。
 
 带参数的一键部署示例：

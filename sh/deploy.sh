@@ -1391,7 +1391,7 @@ ${SCRIPT_NAME} v${SCRIPT_VERSION}
   sudo bash <(wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
 
   # 本地运行
-  bash $0 [选项]
+  bash deploy.sh [选项]
 
 模式：
   -m, --mode <vless|snell|both>   部署模式；不指定则进入交互菜单

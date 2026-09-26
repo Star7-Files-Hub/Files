@@ -54,6 +54,8 @@ bash <(curl -fsSL https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@latest/sh/de
 
 > 不建议用 `curl ... | sudo bash`：管道会把 stdin 占用，交互菜单的 `read` 会读不到键盘输入。用 `bash <(curl ...)` 或先下载再运行即可正常交互。
 
+> **Alpine 上的 Snell 限制**：官方 `snell-server` 依赖 glibc 的 `/lib64/ld-linux-x86-64.so.2`，在 Alpine musl 上会报 `Not a valid dynamic program`。脚本真实运行时会提前拦截并提示。Alpine 上请用 `--mode vless` 只部署 VLESS-Reality；如果必须在 Alpine 上用 Snell，可改用 sing-box 的 Snell 入站（仅 v5/v6 + HTTP 混淆），或换 Debian/Ubuntu 部署官方 Snell。
+
 带参数的一键部署示例：
 
 ```bash
@@ -92,7 +94,8 @@ Xray 不支持 Snell。sing-box 从 1.14 开始有 Snell 入站，但：
 
 - 默认 `v4.1.1`，支持 `obfs=tls` / `obfs=http` / 不混淆；
 - 可选 `v5.0.1`，v5 会额外监听 QUIC（UDP），脚本会自动放行 UDP 端口；
-- 客户端使用 Surge / Stash / Clash.Meta 的 Snell 配置。
+- 客户端使用 Surge / Stash / Clash.Meta 的 Snell 配置；
+- **系统限制**：官方 Snell 二进制依赖 glibc 的 `/lib64/ld-linux-x86-64.so.2`，只能运行在 glibc 系统（Debian / Ubuntu / CentOS 等）。Alpine musl 无法运行，脚本会在部署前提前报错，避免出现 `Not a valid dynamic program`。
 
 ---
 
@@ -299,7 +302,7 @@ Snell = snell, node.example.com, 8443, psk=YOUR_PSK, obfs=tls, obfs-host=www.bin
 4. **密钥复用**：脚本第二次运行时会复用 `/etc/node-deploy/config.env` 里的 UUID、Reality 密钥、shortId、PSK，不会无故更换。需要重置时删除 `/etc/node-deploy/config.env`，或通过 `--vless-uuid`、`--vless-private-key`/`--vless-public-key`、`--snell-psk` 显式传入新值；`--force` 只影响端口占用和重装询问，不会主动更换密钥。
 5. **Snell 版本**：默认 `4.1.1` 兼容性最好；`5.0.1` 支持 QUIC，但部分旧客户端可能只支持 v4。
 6. **防火墙规则持久化**：iptables 规则可能重启后丢失，建议使用 ufw / firewalld 或自行 `iptables-save`。
-7. **init 系统**：支持 systemd（Debian 12 / Ubuntu 22.04+ / Rocky 9 / Alma 9 等）和 OpenRC（Alpine）。Alpine 上需要先安装 `bash`，脚本会自动使用 sing-box 的 musl 版本；Xray 和 Snell 官方二进制本身是静态链接，可直接运行。
+7. **init 系统**：支持 systemd（Debian 12 / Ubuntu 22.04+ / Rocky 9 / Alma 9 等）和 OpenRC（Alpine）。Alpine 上需要先安装 `bash`，脚本会自动使用 sing-box 的 musl 版本；Xray 是静态链接可直接运行。**官方 Snell 依赖 glibc，Alpine musl 无法运行**，Alpine 上请用 `--mode vless`，Snell 请换 Debian/Ubuntu 或使用 sing-box 的 Snell 入站。
 8. **安全**：`/etc/node-deploy/config.env` 包含私钥和 PSK，权限为 600，请勿泄露。
 
 ---

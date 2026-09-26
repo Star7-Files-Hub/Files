@@ -29,8 +29,11 @@ fi
 
 set -Eeuo pipefail
 
+# 兼容 Alpine 等系统：确保 /sbin、/usr/sbin 在 PATH 中（rc-service、iptables、sysctl 等）
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
+
 SCRIPT_NAME="node-deploy"
-SCRIPT_VERSION="1.0.0"
+SCRIPT_VERSION="1.0.1"
 
 # ---------------------------------------------------------------------------
 # 可被环境变量覆盖的路径
@@ -301,6 +304,24 @@ ensure_env() {
   if [[ "$DEPS_INSTALLED" != "true" && "$DRY_RUN" != "true" ]]; then
     install_deps
     DEPS_INSTALLED="true"
+  fi
+}
+
+# 官方 Snell 二进制依赖 glibc 的 /lib64/ld-linux-x86-64.so.2，
+# 在 Alpine/musl 上会报 "Not a valid dynamic program"，必须提前拦截。
+check_snell_platform() {
+  if [[ "$DRY_RUN" == "true" ]]; then
+    return 0
+  fi
+  if [[ -z "$OS_ID" ]]; then detect_os; fi
+
+  local libc=""
+  if command_exists ldd; then
+    libc="$(ldd --version 2>&1 | head -1 || true)"
+  fi
+
+  if [[ "$OS_ID" == "alpine" || "$libc" == *musl* ]]; then
+    die "当前系统是 musl（Alpine 等），官方 Snell 服务端依赖 glibc 的 /lib64/ld-linux-x86-64.so.2，无法运行。请使用 --mode vless 只部署 VLESS-Reality，或改用 Debian/Ubuntu 部署 Snell。"
   fi
 }
 
@@ -1298,6 +1319,7 @@ deploy_snell() {
   if [[ "$DRY_RUN" != "true" && "$INIT_SYSTEM" == "unknown" ]]; then
     die "未检测到 systemd 或 OpenRC，当前脚本仅支持 systemd / OpenRC 系统"
   fi
+  check_snell_platform
   ensure_env
   prompt_snell
   ensure_port_available "$SNELL_PORT" "Snell"
@@ -1511,6 +1533,7 @@ interactive_menu() {
         ;;
       3)
         MODE="both"
+        check_snell_platform
         deploy_vless
         deploy_snell
         save_config
@@ -1781,6 +1804,7 @@ main() {
       deploy_snell
       ;;
     both)
+      check_snell_platform
       deploy_vless
       deploy_snell
       ;;

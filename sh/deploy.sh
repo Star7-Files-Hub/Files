@@ -2328,10 +2328,8 @@ show_info() {
     generate_anytls_uri
   fi
 
-  if [[ "${MODE}" == "nowhere" || "${MODE}" == "all" ]]; then
-    if [[ -n "$NOWHERE_KEY" ]]; then
-      build_nowhere_portal
-    fi
+  if [[ ( "${MODE}" == "nowhere" || "${MODE}" == "all" ) && -n "$NOWHERE_KEY" ]]; then
+    build_nowhere_portal
     echo
     info "--- Nowhere ---"
     echo "版本       : ${NOWHERE_VERSION}"

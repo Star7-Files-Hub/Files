@@ -30,6 +30,10 @@ sudo bash <(wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/ma
 # 先下载再运行
 curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh -o /tmp/node-deploy.sh
 sudo bash /tmp/node-deploy.sh
+
+# 先下载再运行（wget 版本）
+wget -qO /tmp/node-deploy.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh
+sudo bash /tmp/node-deploy.sh
 ```
 
 如果 GitHub Raw 访问慢或刚推送后有缓存，可以用 jsDelivr 镜像：

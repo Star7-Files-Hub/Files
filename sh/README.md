@@ -138,10 +138,11 @@ bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/s
 3. 部署/重装 AnyTLS
 4. 部署/重装 Nowhere
 5. 同时部署 VLESS-Reality + Snell
-6. 全部部署 VLESS + Snell + AnyTLS + Nowhere
-7. 查看节点信息
-8. 启用 BBR
-9. 卸载所有组件
+6. 同时部署 VLESS-Reality + AnyTLS
+7. 全部部署 VLESS + Snell + AnyTLS + Nowhere
+8. 查看节点信息
+9. 启用 BBR
+10. 卸载所有组件
 0. 退出
 ```
 
@@ -170,7 +171,25 @@ sudo bash deploy.sh \
 - VLESS 的 `--vless-sni` 是 Reality 伪装目标域名。
 - Snell 的 `--snell-domain` 是 `obfs-host`。
 
-### 4.2 只部署 VLESS-Reality
+### 4.2 同时部署 VLESS + AnyTLS，复用同一个地址，端口独立
+
+```bash
+sudo bash deploy.sh \
+  --mode vless-anytls \
+  --address node.example.com \
+  --core sing-box \
+  --vless-port 443 \
+  --vless-sni www.microsoft.com \
+  --anytls-port 9443 \
+  --anytls-sni www.microsoft.com \
+  --anytls-security tls
+```
+
+- `--mode vless-anytls` 一次装好 VLESS-Reality 和 AnyTLS，两者共用 `--address`，端口各自独立。
+- `--anytls-security tls` 使用自签证书，Surge 可直接用（`skip-cert-verify=true`）；改成 `reality` 则只有 sing-box 等客户端可用。
+- 只想装单个协议时分别用 `--mode vless` / `--mode anytls`。
+
+### 4.3 只部署 VLESS-Reality
 
 ```bash
 sudo bash deploy.sh \
@@ -181,7 +200,7 @@ sudo bash deploy.sh \
   --vless-sni www.cloudflare.com
 ```
 
-### 4.3 只部署 Snell
+### 4.4 只部署 Snell
 
 ```bash
 # glibc：官方 Snell v5
@@ -193,7 +212,7 @@ sudo bash deploy.sh --mode snell --address 1.2.3.4 \
   --snell-engine singbox --snell-port 8443 --snell-obfs http
 ```
 
-### 4.4 只部署 AnyTLS
+### 4.5 只部署 AnyTLS
 
 ```bash
 # Surge 兼容的 TLS 模式
@@ -205,14 +224,14 @@ sudo bash deploy.sh --mode anytls --address 1.2.3.4 \
   --anytls-port 9443 --anytls-sni www.microsoft.com --anytls-security reality
 ```
 
-### 4.5 只部署 Nowhere
+### 4.6 只部署 Nowhere
 
 ```bash
 sudo bash deploy.sh --mode nowhere --address 1.2.3.4 \
   --nowhere-port 2077 --nowhere-client both
 ```
 
-### 4.6 全部部署，使用默认值
+### 4.7 全部部署，使用默认值
 
 ```bash
 sudo bash deploy.sh --mode all --address 1.2.3.4 -y --force
@@ -220,7 +239,7 @@ sudo bash deploy.sh --mode all --address 1.2.3.4 -y --force
 
 未指定的端口 / 域名 / 密钥会使用脚本默认值或自动生成。
 
-### 4.7 查看信息 / 卸载 / 启用 BBR
+### 4.8 查看信息 / 卸载 / 启用 BBR
 
 ```bash
 sudo bash deploy.sh --info
@@ -233,8 +252,9 @@ sudo bash deploy.sh --bbr
 ## 5. 完整参数
 
 ```text
--m, --mode <vless|snell|anytls|nowhere|both|all>
-                                 部署模式；both=VLESS+Snell，all=四种全部部署
+-m, --mode <vless|snell|anytls|nowhere|vless-anytls|both|all>
+                                 部署模式；both=VLESS+Snell，vless-anytls=VLESS+AnyTLS，
+                                 all=四种全部部署
 -a, --address <域名|IP>          客户端连接地址；同时部署时复用
     --core <xray|sing-box>       VLESS-Reality 核心，默认 sing-box
 

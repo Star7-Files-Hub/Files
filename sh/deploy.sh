@@ -15,6 +15,9 @@
 #   bash deploy.sh --mode both --address 1.2.3.4 \
 #        --vless-port 443 --vless-sni www.microsoft.com \
 #        --snell-port 8443 --snell-domain www.bing.com
+#   bash deploy.sh --mode vless-anytls --address 1.2.3.4 \
+#        --vless-port 443 --vless-sni www.microsoft.com \
+#        --anytls-port 9443 --anytls-sni www.microsoft.com
 #   bash deploy.sh --info                   # 查看节点信息
 #   bash deploy.sh --uninstall              # 卸载
 #
@@ -33,7 +36,7 @@ set -Eeuo pipefail
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
 
 SCRIPT_NAME="node-deploy"
-SCRIPT_VERSION="1.1.0"
+SCRIPT_VERSION="1.1.1"
 
 # ---------------------------------------------------------------------------
 # 可被环境变量覆盖的路径
@@ -2263,7 +2266,7 @@ show_info() {
   echo "部署模式 : ${MODE:-<未配置>}"
   echo "配置文件 : ${CONFIG_FILE}"
 
-  if [[ "${MODE}" == "vless" || "${MODE}" == "both" || "${MODE}" == "all" ]]; then
+  if [[ "${MODE}" == "vless" || "${MODE}" == "vless-anytls" || "${MODE}" == "both" || "${MODE}" == "all" ]]; then
     echo
     info "--- VLESS-Reality ---"
     echo "核心       : ${CORE}"
@@ -2305,7 +2308,7 @@ show_info() {
     generate_snell_clash
   fi
 
-  if [[ "${MODE}" == "anytls" || "${MODE}" == "all" ]]; then
+  if [[ "${MODE}" == "anytls" || "${MODE}" == "vless-anytls" || "${MODE}" == "all" ]]; then
     echo
     info "--- AnyTLS ---"
     echo "安全类型   : ${ANYTLS_SECURITY}"
@@ -2425,14 +2428,15 @@ interactive_menu() {
     echo " 3. 部署/重装 AnyTLS"
     echo " 4. 部署/重装 Nowhere"
     echo " 5. 同时部署 VLESS-Reality + Snell"
-    echo " 6. 全部部署 VLESS + Snell + AnyTLS + Nowhere"
-    echo " 7. 查看节点信息"
-    echo " 8. 启用 BBR"
-    echo " 9. 卸载所有组件"
+    echo " 6. 同时部署 VLESS-Reality + AnyTLS"
+    echo " 7. 全部部署 VLESS + Snell + AnyTLS + Nowhere"
+    echo " 8. 查看节点信息"
+    echo " 9. 启用 BBR"
+    echo "10. 卸载所有组件"
     echo " 0. 退出"
     echo "=================================================="
     local choice=""
-    read -r -p "请选择 [0-9]: " choice || true
+    read -r -p "请选择 [0-10]: " choice || true
     case "$choice" in
       1)
         MODE="vless"
@@ -2474,6 +2478,13 @@ interactive_menu() {
         show_info
         ;;
       6)
+        MODE="vless-anytls"
+        deploy_vless
+        deploy_anytls
+        save_config
+        show_info
+        ;;
+      7)
         if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
           pause_any_key
           continue
@@ -2486,13 +2497,13 @@ interactive_menu() {
         save_config
         show_info
         ;;
-      7)
+      8)
         show_info
         ;;
-      8)
+      9)
         enable_bbr
         ;;
-      9)
+      10)
         local ans=""
         read -r -p "确认卸载所有组件？[y/N]: " ans || true
         if [[ "$ans" =~ ^[Yy]$ ]]; then
@@ -2527,9 +2538,9 @@ ${SCRIPT_NAME} v${SCRIPT_VERSION}
   bash deploy.sh [选项]
 
 模式：
-  -m, --mode <vless|snell|anytls|nowhere|both|all>
-                                  部署模式；both=VLESS+Snell，all=四种全部部署
-                                  不指定则进入交互菜单
+  -m, --mode <vless|snell|anytls|nowhere|vless-anytls|both|all>
+                                  部署模式；both=VLESS+Snell，vless-anytls=VLESS+AnyTLS，
+                                  all=四种全部部署；不指定则进入交互菜单
   -a, --address <域名|IP>         客户端连接地址；同时部署时复用
       --core <xray|sing-box>      VLESS-Reality 核心，默认 sing-box
 
@@ -2601,6 +2612,12 @@ Nowhere：
     --core sing-box \\
     --vless-port 443 --vless-sni www.microsoft.com \\
     --snell-port 8443 --snell-domain www.bing.com --snell-obfs http
+
+  # 同时部署 VLESS + AnyTLS，复用同一地址，端口独立
+  bash $0 --mode vless-anytls --address node.example.com \\
+    --core sing-box \\
+    --vless-port 443 --vless-sni www.microsoft.com \\
+    --anytls-port 9443 --anytls-sni www.microsoft.com --anytls-security tls
 
   # Alpine 上用 sing-box 跑 Snell v5
   bash $0 --mode snell --address 1.2.3.4 --snell-engine singbox \\
@@ -2777,8 +2794,8 @@ parse_args() {
 
   if [[ -n "$MODE" ]]; then
     case "$MODE" in
-      vless|snell|anytls|nowhere|both|all) ;;
-      *) die "--mode 必须是 vless、snell、anytls、nowhere、both 或 all，当前：$MODE" ;;
+      vless|snell|anytls|nowhere|vless-anytls|both|all) ;;
+      *) die "--mode 必须是 vless、snell、anytls、nowhere、vless-anytls、both 或 all，当前：$MODE" ;;
     esac
   fi
 
@@ -2898,6 +2915,10 @@ main() {
       ;;
     nowhere)
       deploy_nowhere
+      ;;
+    vless-anytls)
+      deploy_vless
+      deploy_anytls
       ;;
     both)
       if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then

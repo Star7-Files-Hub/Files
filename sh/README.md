@@ -421,6 +421,7 @@ Surge 目前不支持 Nowhere / Vector。
 6. **防火墙规则持久化**：iptables 规则可能重启后丢失，建议使用 ufw / firewalld 或自行 `iptables-save`。
 7. **init 系统**：支持 systemd 和 OpenRC（Alpine）。Alpine 上需要先安装 `bash`；sing-box / Nowhere 会自动选择 musl 构建。
 8. **安全**：`/etc/node-deploy/config.env`、`/etc/sing-box/anytls.key`、`/etc/nowhere/nowhere.env` 包含私钥和密钥，权限为 600，请勿泄露。
+9. **端口占用检测**：部署前会检查端口，并显示占用进程与所属服务，例如 `sing-box(sing-box.service, pid 1234)`。如果占用者正是本次部署要重写并重启的同名服务（重装本脚本，或 incudal 等面板预装的 `sing-box`），脚本会自动接管该端口，不再提示；被其它进程占用时仍会提示，并给出 `systemctl stop <服务>` / `rc-service <服务> stop` 的释放建议，`--force` 可跳过询问。
 
 ---
 

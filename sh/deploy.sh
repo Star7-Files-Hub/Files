@@ -36,7 +36,7 @@ set -Eeuo pipefail
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
 
 SCRIPT_NAME="node-deploy"
-SCRIPT_VERSION="1.1.1"
+SCRIPT_VERSION="1.2.0"
 
 # ---------------------------------------------------------------------------
 # 可被环境变量覆盖的路径
@@ -671,9 +671,136 @@ port_in_use_udp() {
   return 1
 }
 
+# 列出监听指定端口的 PID（每行一个；查不到则无输出）
+port_holder_pids() {
+  local port="$1" proto="${2:-tcp}" out="" pids=""
+
+  if command_exists ss; then
+    if [[ "$proto" == "udp" ]]; then
+      out="$(ss -lunp 2>/dev/null || true)"
+    else
+      out="$(ss -ltnp 2>/dev/null || true)"
+    fi
+    if [[ -n "$out" ]]; then
+      pids="$(printf '%s\n' "$out" \
+        | awk -v port="$port" 'NR>1 && $4 ~ ("[:.]" port "$") {print}' \
+        | grep -oE 'pid=[0-9]+' | cut -d= -f2 | sort -u || true)"
+      printf '%s\n' "$pids" | sed '/^$/d'
+      return 0
+    fi
+  fi
+
+  if command_exists netstat; then
+    if [[ "$proto" == "udp" ]]; then
+      out="$(netstat -lunp 2>/dev/null || true)"
+    else
+      out="$(netstat -ltnp 2>/dev/null || true)"
+    fi
+    if [[ -n "$out" ]]; then
+      pids="$(printf '%s\n' "$out" \
+        | awk -v port="$port" 'NR>1 && $4 ~ ("[:.]" port "$") {print}' \
+        | grep -oE '[0-9]+/' | cut -d/ -f1 | sort -u || true)"
+      printf '%s\n' "$pids" | sed '/^$/d'
+      return 0
+    fi
+  fi
+
+  if command_exists lsof; then
+    if [[ "$proto" == "udp" ]]; then
+      lsof -iUDP:"$port" -t 2>/dev/null | sort -u || true
+    else
+      lsof -iTCP:"$port" -sTCP:LISTEN -t 2>/dev/null | sort -u || true
+    fi
+  fi
+  return 0
+}
+
+# 取 PID 所属的 systemd 单元名（如 sing-box.service）；取不到输出空
+unit_of_pid() {
+  local pid="$1" unit=""
+  if [[ -r "/proc/${pid}/cgroup" ]]; then
+    unit="$(grep -oE '[^/]+\.service' "/proc/${pid}/cgroup" 2>/dev/null | head -n1 || true)"
+  fi
+  if [[ -z "$unit" ]]; then
+    unit="$(ps -o unit= -p "$pid" 2>/dev/null | tr -d '[:space:]' || true)"
+    if [[ "$unit" == "-" ]]; then
+      unit=""
+    fi
+  fi
+  printf '%s' "$unit"
+}
+
+# 端口占用者描述，例如 "sing-box(sing-box.service, pid 1234)"；查不到输出空
+port_holder_desc() {
+  local port="$1" proto="${2:-tcp}" pid comm unit desc=""
+  while IFS= read -r pid; do
+    [[ -n "$pid" && "$pid" != "0" ]] || continue
+    comm="$(ps -o comm= -p "$pid" 2>/dev/null | tr -d '[:space:]' || true)"
+    unit="$(unit_of_pid "$pid")"
+    if [[ -n "$desc" ]]; then
+      desc+="、"
+    fi
+    if [[ -n "$unit" ]]; then
+      desc+="${comm:-未知进程}(${unit}, pid ${pid})"
+    else
+      desc+="${comm:-未知进程}(pid ${pid})"
+    fi
+  done < <(port_holder_pids "$port" "$proto")
+  printf '%s' "$desc"
+}
+
+# 生成释放端口的命令建议（systemd / OpenRC）；查不到输出空
+port_holder_stop_hint() {
+  local port="$1" proto="${2:-tcp}" pid unit
+  while IFS= read -r pid; do
+    [[ -n "$pid" && "$pid" != "0" ]] || continue
+    unit="$(unit_of_pid "$pid")"
+    [[ -n "$unit" ]] || continue
+    if [[ "$INIT_SYSTEM" == "openrc" ]]; then
+      printf 'rc-service %s stop' "${unit%.service}"
+    else
+      printf 'systemctl stop %s' "${unit%.service}"
+    fi
+    return 0
+  done < <(port_holder_pids "$port" "$proto")
+  printf ''
+}
+
+# 端口是否被"本次部署将要接管/停止的同名服务"占用：
+# 同名服务会被本脚本重写并重启（例如重装，或 incudal 等面板预装的 sing-box），
+# 部署过程本身会释放该端口，因此不算冲突。
+port_held_by_service() {
+  local port="$1" proto="${2:-tcp}" svc="" pid unit pf pidfile_pid
+  shift 2
+  for svc in "$@"; do
+    [[ -n "$svc" ]] || continue
+    while IFS= read -r pid; do
+      [[ -n "$pid" && "$pid" != "0" ]] || continue
+      unit="$(unit_of_pid "$pid")"
+      if [[ "${unit%.service}" == "$svc" ]]; then
+        return 0
+      fi
+    done < <(port_holder_pids "$port" "$proto")
+
+    # 无 systemd（OpenRC / 容器）时用 pidfile 兜底
+    for pf in "/run/${svc}.pid" "/var/run/${svc}.pid"; do
+      [[ -r "$pf" ]] || continue
+      pidfile_pid="$(tr -dc '0-9' < "$pf" 2>/dev/null || true)"
+      [[ -n "$pidfile_pid" ]] || continue
+      if port_holder_pids "$port" "$proto" | grep -qx "$pidfile_pid"; then
+        return 0
+      fi
+    done
+  done
+  return 1
+}
+
+# 端口占用检查。第 3 个及以后的参数是"本次部署会接管/停止的服务名"，
+# 命中时只记一条日志，不再提示占用。
 ensure_port_available() {
   local port="$1"
   local label="$2"
+  shift 2
   validate_port "$port" || die "${label}端口无效：$port"
 
   # dry-run 只生成配置，不检查真实端口占用
@@ -682,12 +809,24 @@ ensure_port_available() {
   fi
 
   if port_in_use "$port"; then
+    local holder hint
+    holder="$(port_holder_desc "$port" tcp)"
+
+    if port_held_by_service "$port" tcp "$@"; then
+      log "${label}端口 $port 由 ${holder:-$*} 占用，本次部署会接管该服务，跳过占用提示。"
+      return 0
+    fi
+
     if [[ "$FORCE" == "true" ]]; then
-      warn "${label}端口 $port 已被占用，但 --force 已指定，继续。"
+      warn "${label}端口 $port 已被占用（${holder:-占用者未知}），但 --force 已指定，继续。"
     elif [[ "$NON_INTERACTIVE" == "true" ]]; then
-      die "${label}端口 $port 已被占用。"
+      die "${label}端口 $port 已被占用（${holder:-占用者未知}）。"
     else
-      warn "${label}端口 $port 已被占用。"
+      warn "${label}端口 $port 已被占用（${holder:-占用者未知}）。"
+      hint="$(port_holder_stop_hint "$port" tcp)"
+      if [[ -n "$hint" ]]; then
+        log "如需释放端口：${hint}；或改用其它端口，加 --force 可跳过本次询问。"
+      fi
       local ans
       read -r -p "是否仍要继续？[y/N]: " ans || true
       [[ "$ans" =~ ^[Yy]$ ]] || die "已取消。"
@@ -698,6 +837,7 @@ ensure_port_available() {
 ensure_udp_port_available() {
   local port="$1"
   local label="$2"
+  shift 2
   validate_port "$port" || die "${label}端口无效：$port"
 
   if [[ "$DRY_RUN" == "true" ]]; then
@@ -705,12 +845,24 @@ ensure_udp_port_available() {
   fi
 
   if port_in_use_udp "$port"; then
+    local holder hint
+    holder="$(port_holder_desc "$port" udp)"
+
+    if port_held_by_service "$port" udp "$@"; then
+      log "${label} UDP 端口 $port 由 ${holder:-$*} 占用，本次部署会接管该服务，跳过占用提示。"
+      return 0
+    fi
+
     if [[ "$FORCE" == "true" ]]; then
-      warn "${label} UDP 端口 $port 已被占用，但 --force 已指定，继续。"
+      warn "${label} UDP 端口 $port 已被占用（${holder:-占用者未知}），但 --force 已指定，继续。"
     elif [[ "$NON_INTERACTIVE" == "true" ]]; then
-      die "${label} UDP 端口 $port 已被占用。"
+      die "${label} UDP 端口 $port 已被占用（${holder:-占用者未知}）。"
     else
-      warn "${label} UDP 端口 $port 已被占用。"
+      warn "${label} UDP 端口 $port 已被占用（${holder:-占用者未知}）。"
+      hint="$(port_holder_stop_hint "$port" udp)"
+      if [[ -n "$hint" ]]; then
+        log "如需释放端口：${hint}；或改用其它端口，加 --force 可跳过本次询问。"
+      fi
       local ans
       read -r -p "是否仍要继续？[y/N]: " ans || true
       [[ "$ans" =~ ^[Yy]$ ]] || die "已取消。"
@@ -1937,7 +2089,12 @@ deploy_vless() {
   fi
   ensure_env
   prompt_vless
-  ensure_port_available "$VLESS_PORT" "VLESS-Reality"
+  # 占用者若是本次将接管的同名服务（重装 / incudal 等预装的 sing-box）则不提示
+  if [[ "$CORE" == "xray" ]]; then
+    ensure_port_available "$VLESS_PORT" "VLESS-Reality" xray sing-box
+  else
+    ensure_port_available "$VLESS_PORT" "VLESS-Reality" sing-box xray
+  fi
 
   # 切换核心时停掉另一个核心，避免端口冲突
   if [[ "$DRY_RUN" != "true" ]]; then
@@ -1997,7 +2154,11 @@ deploy_snell() {
   fi
   ensure_env
   prompt_snell
-  ensure_port_available "$SNELL_PORT" "Snell"
+  if [[ "$SNELL_ENGINE" == "official" ]]; then
+    ensure_port_available "$SNELL_PORT" "Snell" snell
+  else
+    ensure_port_available "$SNELL_PORT" "Snell" sing-box-snell
+  fi
 
   if [[ "$SNELL_ENGINE" == "official" ]]; then
     if ! check_snell_platform; then
@@ -2028,7 +2189,7 @@ deploy_anytls() {
   ensure_env
   install_singbox
   prompt_anytls
-  ensure_port_available "$ANYTLS_PORT" "AnyTLS"
+  ensure_port_available "$ANYTLS_PORT" "AnyTLS" sing-box-anytls
   validate_anytls_security
 
   if [[ "$ANYTLS_SECURITY" == "reality" ]]; then
@@ -2061,8 +2222,8 @@ deploy_nowhere() {
   fi
   ensure_env
   prompt_nowhere
-  ensure_port_available "$NOWHERE_PORT" "Nowhere"
-  ensure_udp_port_available "$NOWHERE_PORT" "Nowhere"
+  ensure_port_available "$NOWHERE_PORT" "Nowhere" nowhere
+  ensure_udp_port_available "$NOWHERE_PORT" "Nowhere" nowhere
   install_nowhere
   configure_nowhere
   write_nowhere_service

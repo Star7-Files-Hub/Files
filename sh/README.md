@@ -19,38 +19,37 @@
 
 ## 0. 一键命令（推荐，无需上传）
 
-脚本是自包含的，可以直接从 GitHub Raw 拉取运行：
+脚本是自包含的，可以直接从 GitHub Raw 拉取运行（Alpine / Debian 等系统一般自带 `wget` 和 `bash`）：
 
 ```bash
-# curl + 进程替换，交互菜单可用
-sudo bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
-
-# wget 版本
+# wget + 进程替换，交互菜单可用
 sudo bash <(wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
 
-# 先下载再运行
-curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh -o /tmp/node-deploy.sh
-sudo bash /tmp/node-deploy.sh
-
-# 先下载再运行（wget 版本）
+# 先下载再运行（推荐，退出码和报错更直观）
 wget -qO /tmp/node-deploy.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh
 sudo bash /tmp/node-deploy.sh
+
+# 只看信息 / 帮助，不需要 root
+bash /tmp/node-deploy.sh --info
+bash /tmp/node-deploy.sh --help
 ```
 
 如果 GitHub Raw 访问慢或刚推送后有缓存，可以用 jsDelivr 镜像：
 
 ```bash
-sudo bash <(curl -fsSL https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@latest/sh/deploy.sh)
+wget -qO /tmp/node-deploy.sh https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@latest/sh/deploy.sh
+sudo bash /tmp/node-deploy.sh
 ```
 
-Alpine（OpenRC）默认没有 bash，请先安装：
+Alpine（OpenRC）一般自带 `bash` 和 `wget`，无需额外安装；只有最小化安装提示 `bash: not found` 时才需要补装：
 
 ```sh
-apk add --no-cache bash curl
-bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
+apk add --no-cache bash
 ```
 
-> 不建议用 `curl ... | sudo bash`：管道会把 stdin 占用，交互菜单的 `read` 会读不到键盘输入。用 `bash <(curl ...)` 或先下载再运行即可正常交互。
+> 不建议用 `wget -qO- ... | sudo bash`：管道会把 stdin 占用，交互菜单的 `read` 会读不到键盘输入。用 `bash <(wget -qO- ...)` 或先下载再运行即可正常交互。
+
+> 机器上没有 `wget` 时，换用等价的 `curl` 即可：下载文件 `curl -fsSL <url> -o <文件>`，输出到标准输出 `curl -fsSL <url>`。
 
 ### Alpine 上的兼容性
 

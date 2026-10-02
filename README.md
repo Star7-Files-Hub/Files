@@ -11,5 +11,5 @@
 wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade
 
 # 节点部署
-wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh -O deploy.sh && sudo bash deploy.sh
+wget -qO deploy.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh && sudo bash deploy.sh
 ```

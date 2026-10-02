@@ -2786,8 +2786,8 @@ ${SCRIPT_NAME} v${SCRIPT_VERSION}
 
 用法：
   # 一键运行（无需上传）
-  sudo bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
   sudo bash <(wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
+  sudo bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh)
 
   # 本地运行
   bash deploy.sh [选项]

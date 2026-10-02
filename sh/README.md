@@ -13,6 +13,7 @@
 - 支持 systemd（Debian / Ubuntu / Rocky / Alma 等）和 OpenRC（Alpine）。
 - 默认核心为 **sing-box**；VLESS-Reality 可切换 **Xray**。
 - 官方 Snell 仅支持 glibc；Alpine/musl 上自动改用 sing-box Snell 引擎。
+- 部署完成后**默认自动启用 BBR**（`fq` + `bbr`），内核不支持或容器只读时自动跳过，可用 `--no-bbr` 关闭。
 
 ---
 
@@ -141,7 +142,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/s
 6. 同时部署 VLESS-Reality + AnyTLS
 7. 全部部署 VLESS + Snell + AnyTLS + Nowhere
 8. 查看节点信息
-9. 启用 BBR
+9. 启用 BBR（部署后默认已开启）
 10. 卸载所有组件
 0. 退出
 ```
@@ -244,7 +245,12 @@ sudo bash deploy.sh --mode all --address 1.2.3.4 -y --force
 ```bash
 sudo bash deploy.sh --info
 sudo bash deploy.sh --uninstall
+
+# 部署后已自动启用 BBR；这里可以单独再执行一次（幂等）
 sudo bash deploy.sh --bbr
+
+# 不想要 BBR，部署时跳过
+sudo bash deploy.sh --mode all --address 1.2.3.4 -y --no-bbr
 ```
 
 ---
@@ -307,7 +313,8 @@ Nowhere：
 
 其他：
     --singbox-version <版本>     指定 sing-box 版本；默认自动获取最新
-    --bbr                        启用 BBR
+    --bbr                        立即启用 BBR（默认部署后已自动启用）
+    --no-bbr                     不自动启用 BBR
     --no-firewall                不自动放行防火墙端口
     --info                       查看当前节点信息
     --uninstall                  卸载所有组件
@@ -422,6 +429,7 @@ Surge 目前不支持 Nowhere / Vector。
 7. **init 系统**：支持 systemd 和 OpenRC（Alpine）。Alpine 上需要先安装 `bash`；sing-box / Nowhere 会自动选择 musl 构建。
 8. **安全**：`/etc/node-deploy/config.env`、`/etc/sing-box/anytls.key`、`/etc/nowhere/nowhere.env` 包含私钥和密钥，权限为 600，请勿泄露。
 9. **端口占用检测**：部署前会检查端口，并显示占用进程与所属服务，例如 `sing-box(sing-box.service, pid 1234)`。如果占用者正是本次部署要重写并重启的同名服务（重装本脚本，或 incudal 等面板预装的 `sing-box`），脚本会自动接管该端口，不再提示；被其它进程占用时仍会提示，并给出 `systemctl stop <服务>` / `rc-service <服务> stop` 的释放建议，`--force` 可跳过询问。
+10. **BBR 默认开启**：部署完成后会自动写入 `/etc/sysctl.d/99-bbr.conf`（`net.core.default_qdisc = fq`、`net.ipv4.tcp_congestion_control = bbr`）并立即生效；Alpine/OpenRC 不读取 `/etc/sysctl.d`，脚本会额外写入 `/etc/sysctl.conf`，否则重启后可能失效。内核不支持 BBR、或容器内 `/proc/sys` 只读时会自动跳过并提示，不会导致部署失败。不需要时加 `--no-bbr`；`--dry-run` 不修改内核参数。`--uninstall` 不会回滚 BBR 配置，需要手动清理上述文件里的相关行。
 
 ---
 
@@ -450,3 +458,86 @@ bash deploy.sh --dry-run --mode all --address node.example.com \
 ```
 
 可以用它检查生成的 JSON / conf / systemd / OpenRC 文件是否符合预期。
+
+---
+
+## 10. 附：Lite 探针（Alpine / OpenRC 脚本）
+
+同目录下的 `lite-openrc.sh` 是 [Lite（komari-lite）](https://github.com/nuomiiiii/Lite) 探针在 **Alpine + OpenRC** 上的安装 / 升级脚本，和上面的节点部署脚本互不相关。
+
+官方 `install-lite.sh` 只支持 systemd 和 OpenWrt/procd：在 Alpine 上服务管理器判定为 `none`，会打印「未检测到 systemd 或 OpenWrt procd，已跳过服务创建」——二进制装好了，但没有服务、没有开机自启。本脚本补上这一段：写 `/etc/init.d/lite` + `rc-update add lite default`，并带备份、二进制校验、启动后健康检查与失败自动回滚。
+
+### 10.1 一键命令
+
+```bash
+# 升级（已安装时用；也是不带 action 时的默认动作）
+wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade
+
+# 首次安装（默认端口 27777）
+wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- install
+
+# 指定端口安装
+wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- install --port 8080
+
+# 查看状态（不需要 root）/ 回滚到上一版本 / 只演练不替换
+wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- status
+wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- rollback
+wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade --dry-run
+```
+
+先下载再运行（需要 `--help`、或要准确判断退出码时用这种）：
+
+```bash
+wget -qO /tmp/lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh
+sh /tmp/lite-openrc.sh --help
+sh /tmp/lite-openrc.sh install
+```
+
+GitHub Raw 慢或刚推送还在缓存时，可换 jsDelivr 镜像（路径相同）：`https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@latest/sh/lite-openrc.sh`。
+
+说明：`sh -s --` 里的 `--` 用于结束 `sh` 自身的参数解析，**action 要写在 `--` 后面**（`sh -s -- upgrade --port 8080`）。脚本只用 POSIX sh，不需要 bash / jq / curl（busybox 的 `sh` + `wget` 即可）；`install` / `upgrade` / `rollback` 需要 root，`status` 不需要。
+
+### 10.2 动作、参数与路径
+
+| 动作 | 说明 |
+| --- | --- |
+| `install` | 全新安装：探测架构 → 建目录 → 下载并校验 → 写 OpenRC 服务脚本 → 加入开机自启 → 启动 → 健康检查。**已存在 `/opt/lite/Lite` 时直接报错退出** |
+| `upgrade` | 升级 / 降级 / 重装；默认动作。版本与当前相同时跳过（`--force` 可强制） |
+| `rollback` | 用 `/root/lite-backups/.last_binary` 记录的备份还原二进制并重启 |
+| `status` | 版本、服务状态、开机自启、监听端口、HTTP 探测、内存占用、磁盘、备份列表 |
+
+| 参数 | 默认 | 说明 |
+| --- | --- | --- |
+| `--port N` | `27777` | 端口；只在 `install` 时写入服务脚本，升级时的 HTTP 健康检查也用它探测 |
+| `--version X.Y.Z` | 取最新 | 指定版本（当前上游 tag 形如 `2.3.6`，无 `v` 前缀） |
+| `--channel NAME` | `stable` | `snapshot` 走快照通道，其它取值按 `stable` 处理 |
+| `--force` | 关 | 目标版本与当前相同时仍执行（重装 / 降级） |
+| `--dry-run` | 关 | 下载并校验后退出，不替换、不重启 |
+| `--no-backup` | 关 | 升级时不备份（之后无法 `rollback`，不推荐） |
+
+| 路径 | 内容 |
+| --- | --- |
+| `/opt/lite/Lite` | 二进制（安装目录 `/opt/lite`） |
+| `/opt/lite/data` | 数据目录（脚本创建并纳入备份，实际数据位置请以探针自身为准） |
+| `/etc/init.d/lite` | OpenRC 服务脚本（服务名 `lite`，日志 `/var/log/lite.log`） |
+| `/root/lite-backups/` | 备份目录：二进制、`data.<时间戳>.tar.gz`、`initd.<时间戳>`、`.last_binary` |
+
+安装时若检测到 cgroup 内存上限，会按上限的一半（下限 32MiB）写入 `GOMEMLIMIT`、`GOGC=50`，避免 Go 探针在小容器里被 OOM。
+
+### 10.3 注意事项
+
+1. **跑过官方脚本的 Alpine 机器，装之前要先删二进制**：官方脚本会把二进制放到同一个 `/opt/lite/Lite`，但不会建 OpenRC 服务。这种机器上 `install` 会因为「已安装」直接退出，而 `upgrade` 从不生成服务脚本——服务永远建不出来。先 `rm -f /opt/lite/Lite`，再执行 `install`。
+2. **升级要带上和安装时相同的 `--port`**：端口只在 `install` 时写进服务脚本，`upgrade` 若用默认 27777 去探测一个装在 8080 的实例，健康检查会失败并触发自动回滚。
+3. **升级不会刷新服务脚本**：`GOMEMLIMIT` / `GOGC` / 日志等只在 `install` 时写入，要改这些配置只能重装（重装前记得删二进制）。
+4. **回滚只回滚二进制，且只能回退一个版本**：数据目录和服务脚本的备份只是留在磁盘上，需要人工处理。
+5. **管道执行时 `--help` 无效**：`usage()` 用 `sed -n '2,40p' "$0"` 从脚本文件读注释，`sh -s` 时 `$0` 是 `sh`，会报 `sed: can't read sh` 且退出码仍为 0。要看帮助请先下载再运行。
+6. **脚本没有卸载动作**，也没有 sha256 / 签名校验，只校验文件大小、ELF 魔数和能否执行 `version`（校验时会以 root 执行刚下载的二进制，安全性依赖 GitHub release 通道）。
+
+### 10.4 卸载（手动）
+
+```bash
+rc-service lite stop
+rc-update del lite default
+rm -f /etc/init.d/lite
+rm -rf /opt/lite /root/lite-backups /var/log/lite.log
+```

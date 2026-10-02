@@ -8,6 +8,7 @@
 #   - 交互式菜单 + 完整 CLI 参数，支持同时部署，复用出口 IP/域名，端口各自独立
 #   - 自动生成 UUID / Reality 密钥 / shortId / PSK，自动写入 systemd / OpenRC 服务并启动
 #   - 自动放行 ufw / firewalld / iptables 端口（可用 --no-firewall 关闭）
+#   - 部署完成后默认自动启用 BBR（fq + bbr；内核不支持或容器只读时自动跳过，--no-bbr 关闭）
 #   - 支持 --dry-run 生成配置到当前目录 dry-run/，不修改系统
 #
 # 用法:
@@ -36,7 +37,7 @@ set -Eeuo pipefail
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
 
 SCRIPT_NAME="node-deploy"
-SCRIPT_VERSION="1.2.0"
+SCRIPT_VERSION="1.3.0"
 
 # ---------------------------------------------------------------------------
 # 可被环境变量覆盖的路径
@@ -101,7 +102,8 @@ NOWHERE_LOG="info"
 SINGBOX_VERSION=""
 SINGBOX_VERSION_FALLBACK="1.14.2"
 
-ENABLE_BBR="false"
+# BBR：auto=部署后自动启用（默认），on=--bbr 立即启用，off=--no-bbr 跳过
+BBR_MODE="auto"
 FORCE="false"
 NON_INTERACTIVE="false"
 DRY_RUN="false"
@@ -2524,27 +2526,112 @@ show_info() {
 }
 
 # ---------------------------------------------------------------------------
-# BBR
+# BBR（默认自动启用，可用 --no-bbr 关闭）
 # ---------------------------------------------------------------------------
+
+# 内核是否支持 BBR（必要时尝试加载 tcp_bbr 模块）
+bbr_supported() {
+  local avail
+  avail="$(cat /proc/sys/net/ipv4/tcp_available_congestion_control 2>/dev/null || true)"
+  if [[ "$avail" == *bbr* ]]; then
+    return 0
+  fi
+  if command_exists modprobe; then
+    modprobe tcp_bbr >/dev/null 2>&1 || true
+  fi
+  avail="$(cat /proc/sys/net/ipv4/tcp_available_congestion_control 2>/dev/null || true)"
+  [[ "$avail" == *bbr* ]]
+}
+
+# 当前是否已经是 bbr + fq
+bbr_active() {
+  local cc qdisc
+  cc="$(sysctl -n net.ipv4.tcp_congestion_control 2>/dev/null || true)"
+  qdisc="$(sysctl -n net.core.default_qdisc 2>/dev/null || true)"
+  [[ "$cc" == "bbr" && "$qdisc" == "fq" ]]
+}
+
 enable_bbr() {
+  local conf="/etc/sysctl.d/99-bbr.conf"
+
   if [[ "$DRY_RUN" == "true" ]]; then
     log "DRY-RUN: 启用 BBR"
     return 0
   fi
-  log "启用 BBR..."
+
+  if ! bbr_supported; then
+    warn "当前内核不支持 BBR，跳过 BBR 配置（不影响节点运行）。"
+    return 0
+  fi
+
+  if [[ ! -w /proc/sys/net/ipv4/tcp_congestion_control ]]; then
+    warn "当前环境不允许修改内核参数（容器内 /proc/sys 只读），跳过 BBR。"
+    return 0
+  fi
+
+  # 真实写探测：容器里 /proc/sys 常被只读挂载或 netns 限制，且 root 绕过权限位，
+  # 所以用「把当前值写回」的方式确认是否真的可写（不会改变任何生效值）
+  local cur_cc
+  cur_cc="$(cat /proc/sys/net/ipv4/tcp_congestion_control 2>/dev/null || true)"
+  if [[ -n "$cur_cc" ]] && ! sysctl -w "net.ipv4.tcp_congestion_control=${cur_cc}" >/dev/null 2>&1; then
+    warn "当前环境不允许修改内核参数（容器内 /proc/sys 只读或受限），跳过 BBR。"
+    return 0
+  fi
+
+  log "启用 BBR（拥塞控制 bbr + 队列 fq）..."
   mkdir -p /etc/sysctl.d
-  cat > /etc/sysctl.d/99-bbr.conf <<EOF
+  if ! write_file "$conf" <<EOF
 net.core.default_qdisc = fq
 net.ipv4.tcp_congestion_control = bbr
 EOF
-  sysctl -p /etc/sysctl.d/99-bbr.conf >/dev/null 2>&1 || true
-  local cc
-  cc="$(sysctl -n net.ipv4.tcp_congestion_control 2>/dev/null || true)"
-  if [[ "$cc" == "bbr" ]]; then
-    log "BBR 已启用"
+  then
+    warn "写入 $conf 失败。"
+  fi
+
+  # Alpine / OpenRC 不会自动读取 /etc/sysctl.d，额外写入 /etc/sysctl.conf
+  if [[ "$INIT_SYSTEM" != "systemd" ]]; then
+    local begin="# >>> node-deploy BBR >>>"
+    local end="# <<< node-deploy BBR <<<"
+    if ! grep -qF "$begin" /etc/sysctl.conf 2>/dev/null; then
+      {
+        echo "$begin"
+        echo "net.core.default_qdisc = fq"
+        echo "net.ipv4.tcp_congestion_control = bbr"
+        echo "$end"
+      } >>/etc/sysctl.conf 2>/dev/null || warn "写入 /etc/sysctl.conf 失败，重启后 BBR 可能失效。"
+    fi
+  fi
+
+  # 立即生效：优先 sysctl --system（systemd 系统），否则逐个 -p
+  sysctl --system >/dev/null 2>&1 \
+    || sysctl -p "$conf" >/dev/null 2>&1 \
+    || sysctl -p >/dev/null 2>&1 \
+    || true
+
+  if bbr_active; then
+    log "BBR 已启用。"
   else
+    local cc
+    cc="$(sysctl -n net.ipv4.tcp_congestion_control 2>/dev/null || true)"
     warn "BBR 可能未启用，当前拥塞控制算法：${cc:-unknown}"
   fi
+}
+
+# 部署完成后自动启用 BBR（默认开启）
+maybe_enable_bbr() {
+  if [[ "$BBR_MODE" == "off" ]]; then
+    log "已跳过 BBR（--no-bbr）。"
+    return 0
+  fi
+  if [[ "$DRY_RUN" == "true" ]]; then
+    log "DRY-RUN: 跳过 BBR（仅演练，不修改内核参数）"
+    return 0
+  fi
+  if bbr_active; then
+    log "BBR 已启用（bbr + fq），无需重复设置。"
+    return 0
+  fi
+  enable_bbr
 }
 
 # ---------------------------------------------------------------------------
@@ -2592,7 +2679,7 @@ interactive_menu() {
     echo " 6. 同时部署 VLESS-Reality + AnyTLS"
     echo " 7. 全部部署 VLESS + Snell + AnyTLS + Nowhere"
     echo " 8. 查看节点信息"
-    echo " 9. 启用 BBR"
+    echo " 9. 启用 BBR（部署后默认已开启）"
     echo "10. 卸载所有组件"
     echo " 0. 退出"
     echo "=================================================="
@@ -2602,6 +2689,7 @@ interactive_menu() {
       1)
         MODE="vless"
         deploy_vless
+        maybe_enable_bbr
         save_config
         show_info
         ;;
@@ -2612,18 +2700,21 @@ interactive_menu() {
         fi
         MODE="snell"
         deploy_snell
+        maybe_enable_bbr
         save_config
         show_info
         ;;
       3)
         MODE="anytls"
         deploy_anytls
+        maybe_enable_bbr
         save_config
         show_info
         ;;
       4)
         MODE="nowhere"
         deploy_nowhere
+        maybe_enable_bbr
         save_config
         show_info
         ;;
@@ -2635,6 +2726,7 @@ interactive_menu() {
         MODE="both"
         deploy_vless
         deploy_snell
+        maybe_enable_bbr
         save_config
         show_info
         ;;
@@ -2642,6 +2734,7 @@ interactive_menu() {
         MODE="vless-anytls"
         deploy_vless
         deploy_anytls
+        maybe_enable_bbr
         save_config
         show_info
         ;;
@@ -2655,6 +2748,7 @@ interactive_menu() {
         deploy_snell
         deploy_anytls
         deploy_nowhere
+        maybe_enable_bbr
         save_config
         show_info
         ;;
@@ -2754,7 +2848,8 @@ Nowhere：
 
 其他：
       --singbox-version <版本>    指定 sing-box 版本；默认自动获取最新
-      --bbr                       启用 BBR
+      --bbr                       立即启用 BBR（默认部署后已自动启用）
+      --no-bbr                    不自动启用 BBR
       --no-firewall               不自动放行防火墙端口
       --info                      查看当前节点信息
       --uninstall                 卸载所有组件
@@ -2929,7 +3024,9 @@ parse_args() {
         need_value "$@"
         SINGBOX_VERSION="$2"; shift 2 ;;
       --bbr)
-        ENABLE_BBR="true"; shift ;;
+        BBR_MODE="on"; shift ;;
+      --no-bbr)
+        BBR_MODE="off"; shift ;;
       --no-firewall)
         NO_FIREWALL="true"; shift ;;
       --info)
@@ -3044,12 +3141,11 @@ main() {
     uninstall_all
     exit 0
   fi
-  if [[ "$ENABLE_BBR" == "true" ]]; then
-    enable_bbr
-  fi
-
-  # 只执行 --bbr 且没有显式 --mode 时，启用后退出
-  if [[ "$MODE_CLI" != "true" && "$ENABLE_BBR" == "true" && -z "$ACTION" ]]; then
+  # 只执行 --bbr / --no-bbr 且没有显式 --mode 时，处理完直接退出
+  if [[ "$MODE_CLI" != "true" && "$BBR_MODE" != "auto" && -z "$ACTION" ]]; then
+    if [[ "$BBR_MODE" == "on" ]]; then
+      enable_bbr
+    fi
     exit 0
   fi
 
@@ -3099,6 +3195,7 @@ main() {
       ;;
   esac
 
+  maybe_enable_bbr
   save_config
   show_info
 }

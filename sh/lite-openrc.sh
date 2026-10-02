@@ -11,23 +11,27 @@
 # 依赖：仅需 POSIX sh + wget/curl + OpenRC，不需要 bash / jq / curl
 #
 # 用法：
+#   sh lite-openrc.sh                           # 不带 action：已安装则升级，未安装则安装
 #   sh lite-openrc.sh install                    # 首次安装
 #   sh lite-openrc.sh install --port 8080        # 指定端口安装
-#   sh lite-openrc.sh upgrade                    # 升级到最新稳定版（不带 action 时默认执行它）
+#   sh lite-openrc.sh upgrade                    # 升级到最新稳定版
 #   sh lite-openrc.sh upgrade --version 2.3.6    # 升级到指定版本
 #   sh lite-openrc.sh upgrade --channel snapshot # 升级到快照版
 #   sh lite-openrc.sh upgrade --dry-run          # 只演练，不动线上
 #   sh lite-openrc.sh rollback                   # 回滚到上一版本
 #   sh lite-openrc.sh status                     # 查看运行状态
 #
-# 一键（管道执行，无需先下载）：
+# 一键（复制一行即可下载并执行；Alpine 一般自带 wget）：
+#   wget -O lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh && sh lite-openrc.sh
+#
+# 一键（不落地文件，管道执行；动作写在 -- 之后）：
 #   wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade
 #
 # 通用参数：
 #   --port N        端口（install 时写入服务脚本，默认 27777；upgrade/status/rollback
 #                   未显式指定时会自动从 /etc/init.d/lite 反解已有端口）
 #   --version X.Y.Z 指定版本（默认取最新）
-#   --channel NAME  stable（默认）| snapshot
+#   --channel NAME  stable（默认）| snapshot（仅 upgrade 生效，install 装稳定版）
 #   --force         版本相同时仍执行（用于重装 / 降级）
 #   --dry-run       演练：upgrade 只下载并校验（不替换、不重启、不写备份）；install 不做任何改动
 #   --no-backup     升级时不备份（不推荐）
@@ -62,6 +66,7 @@ FORCE=0
 DRYRUN=0
 DO_BACKUP=1
 ACTION="upgrade"
+ACTION_CLI=0
 
 # 提示语里引用自身；管道执行（wget | sh -s --）时 $0 是 sh/ash，不能直接拿来拼命令
 case "${0##*/}" in
@@ -90,23 +95,27 @@ usage() {
 Lite (komari-lite) —— Alpine / OpenRC 一键安装与升级脚本
 
 用法：
+  sh lite-openrc.sh                             # 不带 action：已安装则升级，未安装则安装
   sh lite-openrc.sh install                     # 首次安装（默认端口 27777）
   sh lite-openrc.sh install --port 8080         # 指定端口安装
-  sh lite-openrc.sh upgrade                     # 升级到最新稳定版（不带 action 时默认执行它）
+  sh lite-openrc.sh upgrade                     # 升级到最新稳定版
   sh lite-openrc.sh upgrade --version 2.3.6     # 升级到指定版本
   sh lite-openrc.sh upgrade --channel snapshot  # 升级到快照版
   sh lite-openrc.sh upgrade --dry-run           # 只演练，不动线上
   sh lite-openrc.sh rollback                    # 回滚到上一版本（仅还原二进制）
   sh lite-openrc.sh status                      # 查看运行状态（不需要 root）
 
-一键（管道执行，无需先下载）：
+一键（复制一行即可下载并执行；Alpine 一般自带 wget）：
+  wget -O lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh && sh lite-openrc.sh
+
+一键（不落地文件，管道执行；动作写在 -- 之后）：
   wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade
 
 参数：
   --port N        端口（install 时写入服务脚本，默认 27777；upgrade/status/rollback
                   未显式指定时会自动从 /etc/init.d/lite 反解已有端口）
   --version X.Y.Z 指定版本（默认取最新；当前上游 tag 形如 2.3.6）
-  --channel NAME  stable（默认）| snapshot
+  --channel NAME  stable（默认）| snapshot（仅 upgrade 生效，install 装稳定版）
   --force         版本与当前相同时仍执行（用于重装 / 降级）
   --dry-run       演练：upgrade 只下载并校验（不替换、不重启、不写备份）；install 不做任何改动
   --no-backup     升级时不备份（不推荐，之后无法 rollback）
@@ -223,8 +232,10 @@ dl_stdout() { # dl_stdout <url>
 # 版本
 # ------------------------------------------------------------------------------
 current_version() {
-	[ -x "$BINARY" ] || return 1
-	"$BINARY" version 2>/dev/null | tail -n 1 | awk '{print $1}'
+	[ -x "$BINARY" ] && [ -f "$BINARY" ] || return 1
+	cv=$("$BINARY" version 2>/dev/null | tail -n 1 | awk '{print $1}')
+	[ -n "$cv" ] || return 1
+	printf '%s\n' "$cv"
 }
 
 latest_version() {
@@ -410,18 +421,28 @@ health_check() {
 # ------------------------------------------------------------------------------
 do_install() {
 	need_root; check_openrc
+	# 已有服务脚本时沿用它的端口，避免重装把线上端口悄悄换成默认 27777
+	resolve_port
 	if [ -e "$BINARY" ] && [ -f "$INIT_SCRIPT" ]; then
-		die "已安装 Lite（$(current_version)）。升级请改用: sh $SELF upgrade"
+		if [ -x "$BINARY" ] && [ -f "$BINARY" ]; then
+			die "已安装 Lite（$(current_version)）。升级请改用: sh $SELF upgrade"
+		fi
+		die "$BINARY 存在但不是可执行文件（权限或损坏）。修复：chmod +x $BINARY 后执行 sh $SELF upgrade；确认要重装请先 rm -f $BINARY 再执行 sh $SELF install"
 	fi
 	if [ "$DRYRUN" = "1" ]; then
 		info "演练（--dry-run）：install 不做任何改动；真实执行会下载并安装 Lite、写 $INIT_SCRIPT 并启动服务"
 		exit 0
 	fi
-	if [ -e "$BINARY" ]; then
-		warn "$BINARY 已存在但没有服务脚本（例如官方 install-lite.sh 装的），继续安装并补建 OpenRC 服务"
+	if [ -e "$BINARY" ] || [ -f "$INIT_SCRIPT" ] || [ -d "$DATA_DIR" ]; then
 		CUR_VER=$(current_version 2>/dev/null || echo unknown)
+		if [ -f "$BINARY" ]; then
+			warn "$BINARY 已存在但没有服务脚本（例如官方 install-lite.sh 装的），继续安装并补建 OpenRC 服务"
+		else
+			warn "检测到旧安装痕迹（$INIT_SCRIPT / $DATA_DIR），但 $BINARY 不可用，重新安装并沿用端口 $PORT"
+		fi
 		do_backup
 	fi
+	[ "$CHANNEL" = "stable" ] || warn "--channel $CHANNEL 只对 upgrade 生效，install 安装的是稳定版"
 
 	arch=$(detect_arch)
 	ver=${OPT_VERSION:-$(latest_version)}
@@ -457,7 +478,13 @@ do_install() {
 do_upgrade() {
 	need_root; check_openrc
 	resolve_port
-	CUR_VER=$(current_version) || die "未检测到已安装的 Lite（$BINARY 不存在）。首次安装请用: sh $SELF install"
+	if [ ! -e "$BINARY" ]; then
+		[ -f "$INIT_SCRIPT" ] && warn "发现 $INIT_SCRIPT，但 $BINARY 不存在"
+		die "未检测到可用的 Lite 二进制。重新安装请用: sh $SELF install"
+	fi
+	[ -x "$BINARY" ] && [ -f "$BINARY" ] \
+		|| die "$BINARY 不是可执行文件（权限或损坏）。修复：chmod +x $BINARY；确认要重装：sh $SELF install"
+	CUR_VER=$(current_version) || die "无法读取 $BINARY 的版本号（二进制可能损坏）。确认要重装：sh $SELF install"
 
 	arch=$(detect_arch)
 	NEW_VER=${OPT_VERSION:-$(latest_version)}
@@ -556,7 +583,7 @@ do_status() {
 # ------------------------------------------------------------------------------
 while [ $# -gt 0 ]; do
 	case "$1" in
-		install|upgrade|rollback|status) ACTION="$1"; shift ;;
+		install|upgrade|rollback|status) ACTION="$1"; ACTION_CLI=1; shift ;;
 		--port)     [ $# -ge 2 ] || die "--port 缺少参数（端口号）"; PORT="$2"; PORT_CLI=1; shift 2 ;;
 		--version)  [ $# -ge 2 ] || die "--version 缺少参数（版本号）"; OPT_VERSION="$2"; shift 2 ;;
 		--channel)  [ $# -ge 2 ] || die "--channel 缺少参数（stable|snapshot）"; CHANNEL="$2"; shift 2 ;;
@@ -567,6 +594,19 @@ while [ $# -gt 0 ]; do
 		*) die "未知参数: $1（用 --help 查看用法）" ;;
 	esac
 done
+
+# 没写 action 时自动判断：已装就升级，没装就安装（下载即执行，无需先看文档）
+# 注意：只要发现安装痕迹但二进制不可用，就停下来让用户显式选，避免用默认端口重写线上服务脚本
+if [ "$ACTION_CLI" = "0" ]; then
+	if [ -x "$BINARY" ] && [ -f "$BINARY" ]; then
+		ACTION="upgrade"
+	elif [ -e "$BINARY" ] || [ -f "$INIT_SCRIPT" ] || [ -d "$DATA_DIR" ]; then
+		die "检测到 Lite 的安装痕迹（$INIT_SCRIPT 或 $DATA_DIR），但 $BINARY 不是可执行文件。请先确认：要用默认端口重装就执行 sh $SELF install；只是想升级就修复二进制后执行 sh $SELF upgrade"
+	else
+		ACTION="install"
+	fi
+	info "未指定动作，自动选择：$ACTION（已安装 → upgrade，未安装 → install；可直接写 action 跳过本判断）" >&2
+fi
 
 case "$ACTION" in
 	install)  do_install ;;

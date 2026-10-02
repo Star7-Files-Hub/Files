@@ -466,52 +466,66 @@ bash deploy.sh --dry-run --mode all --address node.example.com \
 
 官方 `install-lite.sh` 只支持 systemd 和 OpenWrt/procd：在 Alpine 上服务管理器判定为 `none`，会打印「未检测到 systemd 或 OpenWrt procd，已跳过服务创建」——二进制装好了，但没有服务、没有开机自启。本脚本补上这一段：写 `/etc/init.d/lite` + `rc-update add lite default`，并带备份、二进制校验、启动后健康检查与失败自动回滚。
 
-### 10.1 一键命令
+### 10.1 一键安装 / 升级
+
+官方原命令（供对照，只支持 systemd 和 OpenWrt/procd）：
 
 ```bash
-# 升级（已安装时用；也是不带 action 时的默认动作）
-wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade
+# Linux（systemd 主机）
+curl -fsSL https://raw.githubusercontent.com/nuomiiiii/lite/main/install-lite.sh -o install-lite.sh && sudo sh install-lite.sh
 
-# 首次安装（默认端口 27777）
-wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- install
+# OpenWrt / iStoreOS（root 登录，通常没有 bash、sudo、curl）
+wget -O install-lite.sh https://raw.githubusercontent.com/nuomiiiii/lite/main/install-lite.sh && sh install-lite.sh
+```
 
-# 指定端口安装
+Alpine / OpenRC 用本脚本，同样是「复制一行即可下载并执行」（Alpine 一般自带 `wget`，不需要 `curl`）：
+
+```bash
+# 最省事：没装就安装，已装就升级（默认端口 27777）
+wget -O lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh && sh lite-openrc.sh
+
+# 指定端口安装 / 升级 / 查看状态（不需要 root）/ 回滚 / 只演练
+wget -O lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh && sh lite-openrc.sh install --port 8080
+wget -O lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh && sh lite-openrc.sh upgrade
+wget -O lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh && sh lite-openrc.sh status
+wget -O lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh && sh lite-openrc.sh rollback
+wget -O lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh && sh lite-openrc.sh upgrade --dry-run
+```
+
+不落地文件也可以（管道执行，动作写在 `--` 之后）：
+
+```bash
 wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- install --port 8080
-
-# 查看状态（不需要 root）/ 回滚到上一版本 / 只演练不替换
+wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade
 wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- status
 wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- rollback
 wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade --dry-run
 ```
 
-先下载再运行（推荐，退出码和报错更直观；`--help` 两种方式都能用）：
-
-```bash
-wget -qO /tmp/lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh
-sh /tmp/lite-openrc.sh --help
-sh /tmp/lite-openrc.sh install
-```
+需要 root 的动作（`install` / `upgrade` / `rollback`）请用 root 执行；Alpine 默认没有 `sudo`，直接 root 登录或 `su -` 即可，`status` 不需要 root。
 
 GitHub Raw 慢或刚推送还在缓存时，可换 jsDelivr 镜像（路径相同）：`https://cdn.jsdelivr.net/gh/Star7-Files-Hub/Files@latest/sh/lite-openrc.sh`。
 
-说明：`sh -s --` 里的 `--` 用于结束 `sh` 自身的参数解析，**action 要写在 `--` 后面**（`sh -s -- upgrade --port 8080`）。脚本只用 POSIX sh，不需要 bash / jq / curl（busybox 的 `sh` + `wget` 即可）；`install` / `upgrade` / `rollback` 需要 root，`status` 不需要。
+说明：`sh -s --` 里的 `--` 用于结束 `sh` 自身的参数解析，**action 要写在 `--` 后面**（`sh -s -- upgrade --port 8080`）。脚本只用 POSIX sh，不需要 bash / jq / curl（busybox 的 `sh` + `wget` 即可）；`--help` 直接运行和管道执行都可用（要准确判断退出码时建议先 `wget -O` 落地再跑）。
 
 ### 10.2 动作、参数与路径
 
 | 动作 | 说明 |
 | --- | --- |
-| `install` | 全新安装：探测架构 → 建目录 → 下载并校验 → 写 OpenRC 服务脚本 → 加入开机自启 → 启动 → 健康检查。二进制和服务脚本都已存在时报错退出；**只有二进制、没有服务脚本时会继续安装并补建服务** |
-| `upgrade` | 升级 / 降级 / 重装；默认动作。版本与当前相同时跳过（`--force` 可强制）；**缺少服务脚本时会自动补建**（只补服务，不重新下载） |
+| （不带 action） | 自动判断：`/opt/lite/Lite` 存在就按 `upgrade` 执行，不存在就按 `install` 执行（想明确指定就直接写 action） |
+| （不带 action） | 自动判断：`/opt/lite/Lite` 是**可执行的普通文件**就按 `upgrade`；完全没装过就按 `install`。若发现安装痕迹（`/etc/init.d/lite` 或 `/opt/lite/data`）但二进制不可用，会停下来提示显式指定 action，不会擅自重写服务脚本 |
+| `install` | 全新安装：探测架构 → 建目录 → 下载并校验 → 写 OpenRC 服务脚本 → 加入开机自启 → 启动 → 健康检查。二进制和服务脚本都已存在时报错退出；**只有二进制、没有服务脚本时会继续安装并补建服务**；已有服务脚本时会**沿用其端口**、并先备份旧服务脚本 |
+| `upgrade` | 升级 / 降级 / 重装。版本与当前相同时跳过（`--force` 可强制）；**缺少服务脚本时会自动补建**（只补服务，不重新下载） |
 | `rollback` | 用 `/root/lite-backups/.last_binary` 记录的备份还原二进制并重启 |
-| `status` | 版本、服务状态、开机自启、监听端口、HTTP 探测、内存占用、磁盘、备份列表 |
+| `status` | 版本、服务状态、开机自启、监听端口、HTTP 探测、内存占用、磁盘、备份列表（未安装时退出码 1） |
 
 | 参数 | 默认 | 说明 |
 | --- | --- | --- |
-| `--port N` | `27777` | 端口；`install` 时写入服务脚本并用于健康检查。`upgrade` / `status` / `rollback` 未显式指定时会自动从 `/etc/init.d/lite` 反解已有端口（显式传入则以传入值为准） |
+| `--port N` | `27777` | 端口；`install` 时写入服务脚本并用于健康检查（已有服务脚本时默认沿用其端口）。`upgrade` / `status` / `rollback` 未显式指定时会自动从 `/etc/init.d/lite` 反解已有端口（显式传入则以传入值为准） |
 | `--version X.Y.Z` | 取最新 | 指定版本（当前上游 tag 形如 `2.3.6`，无 `v` 前缀） |
-| `--channel NAME` | `stable` | `snapshot` 走快照通道，其它取值按 `stable` 处理 |
+| `--channel NAME` | `stable` | `snapshot` 走快照通道，其它取值按 `stable` 处理；**只对 `upgrade` 生效**（`install` 装的是稳定版，传了会提示） |
 | `--force` | 关 | 目标版本与当前相同时仍执行（重装 / 降级） |
-| `--dry-run` | 关 | `upgrade`：下载并校验后退出，不替换、不重启、不写备份；`install`：只打印将要做的事，不做任何改动 |
+| `--dry-run` | 关 | `upgrade`：下载并校验后退出，不替换、不重启、不写备份；`install`：只打印将要做的事，不做任何改动。两种都要先通过 root 与 OpenRC 检查 |
 | `--no-backup` | 关 | 升级时不备份（之后无法 `rollback`，不推荐） |
 
 | 路径 | 内容 |

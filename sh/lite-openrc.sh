@@ -13,27 +13,33 @@
 # 用法：
 #   sh lite-openrc.sh install                    # 首次安装
 #   sh lite-openrc.sh install --port 8080        # 指定端口安装
-#   sh lite-openrc.sh upgrade                    # 升级到最新稳定版
+#   sh lite-openrc.sh upgrade                    # 升级到最新稳定版（不带 action 时默认执行它）
 #   sh lite-openrc.sh upgrade --version 2.3.6    # 升级到指定版本
 #   sh lite-openrc.sh upgrade --channel snapshot # 升级到快照版
 #   sh lite-openrc.sh upgrade --dry-run          # 只演练，不动线上
 #   sh lite-openrc.sh rollback                   # 回滚到上一版本
 #   sh lite-openrc.sh status                     # 查看运行状态
 #
+# 一键（管道执行，无需先下载）：
+#   wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade
+#
 # 通用参数：
-#   --port N        端口（仅 install 时生效，默认 27777）
+#   --port N        端口（install 时写入服务脚本，默认 27777；upgrade/status/rollback
+#                   未显式指定时会自动从 /etc/init.d/lite 反解已有端口）
 #   --version X.Y.Z 指定版本（默认取最新）
 #   --channel NAME  stable（默认）| snapshot
 #   --force         版本相同时仍执行（用于重装 / 降级）
-#   --dry-run       演练：下载并校验，但不替换、不重启
+#   --dry-run       演练：upgrade 只下载并校验（不替换、不重启、不写备份）；install 不做任何改动
 #   --no-backup     升级时不备份（不推荐）
+#   -h, --help      显示帮助（帮助文本内嵌，管道执行时也可用）
 #
 # 特性：
-#   - 升级前自动备份二进制 + 数据 + 服务脚本，失败可一键 rollback
+#   - 升级前自动备份二进制 + 数据 + 服务脚本（rollback 只还原二进制），失败可一键回滚
 #   - 新二进制先校验（ELF 头 + 能否执行 version）再上线
 #   - 启动后验证服务状态 / HTTP / 版本号，任一不过自动回滚
 #   - 按 cgroup 内存上限自动设置 GOMEMLIMIT + GOGC（Go 不感知 cgroup，否则会 OOM）
 #   - 备份与下载都在不停服时完成，真实停机只有几秒
+#   - 只有二进制、没有 OpenRC 服务脚本时（官方 install-lite.sh 装的）自动补建服务
 # ==============================================================================
 
 set -u
@@ -49,12 +55,19 @@ BACKUP_ROOT="/root/lite-backups"
 LAST_BINARY_MARK="$BACKUP_ROOT/.last_binary"
 
 PORT="27777"
+PORT_CLI=0
 CHANNEL="stable"
 OPT_VERSION=""
 FORCE=0
 DRYRUN=0
 DO_BACKUP=1
 ACTION="upgrade"
+
+# 提示语里引用自身；管道执行（wget | sh -s --）时 $0 是 sh/ash，不能直接拿来拼命令
+case "${0##*/}" in
+	sh|dash|ash|bash|ksh|zsh|busybox|"") SELF="lite-openrc.sh" ;;
+	*) SELF="$0" ;;
+esac
 
 # ------------------------------------------------------------------------------
 # 输出
@@ -73,7 +86,37 @@ die()  { printf '%b\n' "${C_RED}[FAIL]${C_RST} $1"; exit 1; }
 step() { printf '%b\n' "${C_BLU}==>${C_RST} $1"; }
 
 usage() {
-	sed -n '2,40p' "$0" | sed 's/^# \{0,1\}//'
+	cat <<'USAGE'
+Lite (komari-lite) —— Alpine / OpenRC 一键安装与升级脚本
+
+用法：
+  sh lite-openrc.sh install                     # 首次安装（默认端口 27777）
+  sh lite-openrc.sh install --port 8080         # 指定端口安装
+  sh lite-openrc.sh upgrade                     # 升级到最新稳定版（不带 action 时默认执行它）
+  sh lite-openrc.sh upgrade --version 2.3.6     # 升级到指定版本
+  sh lite-openrc.sh upgrade --channel snapshot  # 升级到快照版
+  sh lite-openrc.sh upgrade --dry-run           # 只演练，不动线上
+  sh lite-openrc.sh rollback                    # 回滚到上一版本（仅还原二进制）
+  sh lite-openrc.sh status                      # 查看运行状态（不需要 root）
+
+一键（管道执行，无需先下载）：
+  wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade
+
+参数：
+  --port N        端口（install 时写入服务脚本，默认 27777；upgrade/status/rollback
+                  未显式指定时会自动从 /etc/init.d/lite 反解已有端口）
+  --version X.Y.Z 指定版本（默认取最新；当前上游 tag 形如 2.3.6）
+  --channel NAME  stable（默认）| snapshot
+  --force         版本与当前相同时仍执行（用于重装 / 降级）
+  --dry-run       演练：upgrade 只下载并校验（不替换、不重启、不写备份）；install 不做任何改动
+  --no-backup     升级时不备份（不推荐，之后无法 rollback）
+  -h, --help      显示本帮助
+
+说明：
+  - 安装 / 升级 / 回滚需要 root，status 不需要
+  - 只用 POSIX sh，不需要 bash / jq / curl（busybox 的 sh + wget 即可）
+  - 只有二进制、没有 OpenRC 服务脚本时（官方 install-lite.sh 装的）会自动补建服务
+USAGE
 	exit 0
 }
 
@@ -106,12 +149,57 @@ detect_arch() {
 # 磁盘余量检查：二进制 ~42MB，需留 备份+下载 的余量
 check_space() {
 	need_kb=130000
-	avail=$(df -Pk "$INSTALL_DIR" 2>/dev/null | awk 'NR==2{print $4}')
+	# 安装目录可能还不存在（首次安装时 check_space 先于 mkdir），往上找最近的已存在目录
+	cs_dir="$INSTALL_DIR"
+	while [ -n "$cs_dir" ] && [ "$cs_dir" != "/" ] && [ ! -d "$cs_dir" ]; do
+		cs_dir=$(dirname "$cs_dir")
+	done
+	avail=$(df -Pk "$cs_dir" 2>/dev/null | awk 'NR==2{print $4}')
 	[ -n "$avail" ] || return 0
 	if [ "$avail" -lt "$need_kb" ]; then
-		die "磁盘空间不足：需要约 130MB，当前可用 $((avail / 1024))MB。请先清理旧备份或 Lite.bak.*"
+		die "磁盘空间不足：需要约 130MB，当前可用 $((avail / 1024))MB。请先清理 $BACKUP_ROOT 里的旧备份"
 	fi
 	ok "磁盘可用 $((avail / 1024))MB"
+}
+
+# ------------------------------------------------------------------------------
+# 端口：upgrade / status / rollback 未显式给 --port 时，从已有服务脚本里反解
+# ------------------------------------------------------------------------------
+detect_port_from_init() {
+	[ -f "$INIT_SCRIPT" ] || return 1
+	# 先看未注释的 command_args 行（生成的服务脚本里它就是启动参数），避免取到注释掉的旧端口
+	dp=$(sed -n '/^[[:space:]]*#/d; s/^[[:space:]]*command_args=.*0\.0\.0\.0:\([0-9][0-9]*\).*/\1/p' "$INIT_SCRIPT" | head -n 1)
+	# 退一步：任意未注释行的 0.0.0.0:PORT（兼容手工改写过的服务脚本）
+	if [ -z "$dp" ]; then
+		dp=$(sed -n '/^[[:space:]]*#/d; s/.*0\.0\.0\.0:\([0-9][0-9]*\).*/\1/p' "$INIT_SCRIPT" | head -n 1)
+	fi
+	[ -n "$dp" ] || return 1
+	printf '%s\n' "$dp"
+}
+
+resolve_port() {
+	[ "$PORT_CLI" = "1" ] && return 0
+	dp=$(detect_port_from_init) || {
+		[ -f "$INIT_SCRIPT" ] && warn "无法从 $INIT_SCRIPT 反解端口，将按 $PORT 探测（可显式传 --port 指定）"
+		return 0
+	}
+	[ -n "$dp" ] || return 0
+	if [ "$dp" != "$PORT" ]; then
+		PORT="$dp"
+		info "从 $INIT_SCRIPT 读取到监听端口：$PORT（需要改端口请显式传 --port）"
+	fi
+	return 0
+}
+
+# 补建缺失的 OpenRC 服务脚本（官方 install-lite.sh 在 Alpine 上只装二进制、不建服务）
+ensure_init_script() {
+	[ -f "$INIT_SCRIPT" ] && return 0
+	warn "未找到 $INIT_SCRIPT，正在补建 OpenRC 服务（端口 $PORT）"
+	write_init || return 1
+	rc-update add "$SERVICE" default >/dev/null 2>&1 \
+		&& ok "已加入开机自启（default runlevel）" \
+		|| warn "加入开机自启失败，可手动执行：rc-update add $SERVICE default"
+	return 0
 }
 
 # ------------------------------------------------------------------------------
@@ -183,12 +271,19 @@ verify_binary() { # verify_binary <file> <期望版本>
 # ------------------------------------------------------------------------------
 # 内存保护：Go runtime 不感知 cgroup，必须显式压制，否则小容器会 OOM
 # ------------------------------------------------------------------------------
-calc_memlimit() {
+# cgroup 内存上限（MB）；拿不到、或为 max / 无上限时输出空
+cgroup_limit_mb() {
 	lim=$(cat /sys/fs/cgroup/memory.max 2>/dev/null)
 	case "$lim" in ''|max) lim=$(cat /sys/fs/cgroup/memory/memory.limit_in_bytes 2>/dev/null);; esac
-	case "$lim" in ''|max|9223372036854771712) echo ""; return;; esac
+	case "$lim" in ''|max|9223372036854771712) return 0;; esac
 	mb=$((lim / 1048576))
-	[ "$mb" -gt 0 ] || { echo ""; return; }
+	[ "$mb" -gt 0 ] || return 0
+	echo "$mb"
+}
+
+calc_memlimit() {
+	mb=$(cgroup_limit_mb)
+	[ -n "$mb" ] || return 0
 	half=$((mb / 2))
 	[ "$half" -lt 32 ] && half=32
 	echo "${half}MiB"
@@ -200,8 +295,9 @@ calc_memlimit() {
 write_init() {
 	memlimit=$(calc_memlimit)
 	if [ -n "$memlimit" ]; then
+		mem_mb=$(cgroup_limit_mb)
 		mem_block="
-# 内存保护：本容器 cgroup 上限 ${mb:-?}MB，Go runtime 默认不感知该限制，
+# 内存保护：本容器 cgroup 上限 ${mem_mb:-?}MB，Go runtime 默认不感知该限制，
 # GOGC=100 会让 heap 翻倍增长直至 OOM，必须显式压制。
 export GOMEMLIMIT=\"${memlimit}\"
 export GOGC=\"50\""
@@ -238,7 +334,11 @@ depend() {
 	after firewall
 }
 EOF
-	chmod +x "$INIT_SCRIPT"
+	chmod +x "$INIT_SCRIPT" 2>/dev/null
+	if [ ! -f "$INIT_SCRIPT" ] || [ ! -s "$INIT_SCRIPT" ]; then
+		warn "写入 $INIT_SCRIPT 失败（请检查该路径是否为目录、权限与磁盘空间）"
+		return 1
+	fi
 	ok "服务脚本已写入 $INIT_SCRIPT${memlimit:+（内存保护 GOMEMLIMIT=$memlimit）}"
 }
 
@@ -259,10 +359,11 @@ do_backup() {
 			|| warn "数据备份失败（继续）"
 	fi
 	[ -f "$INIT_SCRIPT" ] && cp -a "$INIT_SCRIPT" "$BACKUP_ROOT/initd.$TS" 2>/dev/null
-	ok "备份完成（时间戳 $TS），回滚命令：sh $0 rollback"
+	ok "备份完成（时间戳 $TS），回滚命令：sh $SELF rollback"
 }
 
 do_rollback() {
+	resolve_port
 	last=$(cat "$LAST_BINARY_MARK" 2>/dev/null)
 	[ -n "$last" ] && [ -f "$last" ] || die "没有可用的回滚备份（找过 $LAST_BINARY_MARK）"
 	step "回滚到 $last"
@@ -309,23 +410,36 @@ health_check() {
 # ------------------------------------------------------------------------------
 do_install() {
 	need_root; check_openrc
-	[ -e "$BINARY" ] && die "已安装 Lite（$(current_version)）。升级请改用: sh $0 upgrade"
+	if [ -e "$BINARY" ] && [ -f "$INIT_SCRIPT" ]; then
+		die "已安装 Lite（$(current_version)）。升级请改用: sh $SELF upgrade"
+	fi
+	if [ "$DRYRUN" = "1" ]; then
+		info "演练（--dry-run）：install 不做任何改动；真实执行会下载并安装 Lite、写 $INIT_SCRIPT 并启动服务"
+		exit 0
+	fi
+	if [ -e "$BINARY" ]; then
+		warn "$BINARY 已存在但没有服务脚本（例如官方 install-lite.sh 装的），继续安装并补建 OpenRC 服务"
+		CUR_VER=$(current_version 2>/dev/null || echo unknown)
+		do_backup
+	fi
 
 	arch=$(detect_arch)
 	ver=${OPT_VERSION:-$(latest_version)}
 	url=$(download_url "$arch" "$ver")
 
 	step "安装 Lite $ver (${arch}) 到 $INSTALL_DIR"
+	mkdir -p "$INSTALL_DIR" "$DATA_DIR" || die "无法创建 $INSTALL_DIR / $DATA_DIR"
 	check_space
-	mkdir -p "$INSTALL_DIR" "$DATA_DIR"
 
 	step "下载 $url"
 	dl "$url" "$BINARY.dl" || die "下载失败"
 	verify_binary "$BINARY.dl" "$ver" || { rm -f "$BINARY.dl"; die "新二进制校验失败，已中止"; }
-	mv -f "$BINARY.dl" "$BINARY"
+	mv -f "$BINARY.dl" "$BINARY" || die "替换二进制失败"
 
-	write_init
-	rc-update add "$SERVICE" default >/dev/null 2>&1 && ok "已加入开机自启（default runlevel）"
+	write_init || die "写入 $INIT_SCRIPT 失败"
+	rc-update add "$SERVICE" default >/dev/null 2>&1 \
+		&& ok "已加入开机自启（default runlevel）" \
+		|| warn "加入开机自启失败，可手动执行：rc-update add $SERVICE default"
 	rc-service "$SERVICE" start >/dev/null 2>&1
 	sleep 6
 
@@ -342,7 +456,8 @@ do_install() {
 # ------------------------------------------------------------------------------
 do_upgrade() {
 	need_root; check_openrc
-	CUR_VER=$(current_version) || die "未检测到已安装的 Lite（$BINARY 不存在）。首次安装请用: sh $0 install"
+	resolve_port
+	CUR_VER=$(current_version) || die "未检测到已安装的 Lite（$BINARY 不存在）。首次安装请用: sh $SELF install"
 
 	arch=$(detect_arch)
 	NEW_VER=${OPT_VERSION:-$(latest_version)}
@@ -350,12 +465,26 @@ do_upgrade() {
 
 	step "升级 Lite：$CUR_VER → $NEW_VER （通道 $CHANNEL）"
 	if [ "$CUR_VER" = "$NEW_VER" ] && [ "$FORCE" != "1" ]; then
-		ok "当前已是 $CUR_VER，无需升级。（强制重装/降级加 --force）"
+		if [ -f "$INIT_SCRIPT" ]; then
+			ok "当前已是 $CUR_VER，无需升级。（强制重装/降级加 --force）"
+			exit 0
+		fi
+		if [ "$DRYRUN" = "1" ]; then
+			ok "演练：当前已是 $CUR_VER，但缺少 $INIT_SCRIPT；真实执行会补建服务并启动（本次不做任何改动）"
+			exit 0
+		fi
+		ok "当前已是 $CUR_VER，但缺少 OpenRC 服务脚本，只补建服务（不重新下载）"
+		ensure_init_script || die "补建服务脚本失败"
+		rc-service "$SERVICE" start >/dev/null 2>&1
+		sleep 6
+		health_check || die "启动后健康检查失败，请看 $LOG_FILE"
+		ok "服务已补建并启动（端口 $PORT）"
 		exit 0
 	fi
 
 	check_space
-	do_backup
+	# --dry-run 不写备份（否则会用同版本备份覆盖真正的回滚点）
+	[ "$DRYRUN" = "1" ] || do_backup
 
 	step "下载 $url"
 	dl "$url" "$BINARY.dl" || die "下载失败，线上服务未受影响"
@@ -371,6 +500,7 @@ do_upgrade() {
 	fi
 
 	step "切换版本（停机中）"
+	ensure_init_script
 	rc-service "$SERVICE" stop >/dev/null 2>&1
 	sleep 2
 	mv -f "$BINARY.dl" "$BINARY" || die "替换二进制失败"
@@ -391,6 +521,7 @@ do_upgrade() {
 # 状态
 # ------------------------------------------------------------------------------
 do_status() {
+	resolve_port
 	printf '%b\n' "${C_BLU}=== Lite 运行状态 ===${C_RST}"
 	if [ -x "$BINARY" ]; then
 		info "版本      : $(current_version) $("$BINARY" version 2>/dev/null | tail -n1 | awk '{print $2}')"
@@ -405,7 +536,13 @@ do_status() {
 	info "监听端口  : $(netstat -tlnp 2>/dev/null | grep "${PORT}" | head -n1 || echo '无')"
 	info "HTTP      : $(http_ok && echo "正常 (127.0.0.1:$PORT)" || echo '异常')"
 	if [ -f /sys/fs/cgroup/memory.current ]; then
-		info "cgroup占用: $(( $(cat /sys/fs/cgroup/memory.current) / 1048576 ))MB / $(( $(cat /sys/fs/cgroup/memory.max) / 1048576 ))MB"
+		mem_now=$(( $(cat /sys/fs/cgroup/memory.current) / 1048576 ))
+		lim_raw=$(cat /sys/fs/cgroup/memory.max 2>/dev/null)
+		case "$lim_raw" in
+			''|max|9223372036854771712) mem_max="无限制" ;;
+			*) mem_max="$((lim_raw / 1048576))MB" ;;
+		esac
+		info "cgroup占用: ${mem_now}MB / ${mem_max}"
 	fi
 	info "磁盘剩余  : $(df -Ph "$INSTALL_DIR" | awk 'NR==2{print $4}')"
 	if [ -d "$BACKUP_ROOT" ]; then
@@ -420,9 +557,9 @@ do_status() {
 while [ $# -gt 0 ]; do
 	case "$1" in
 		install|upgrade|rollback|status) ACTION="$1"; shift ;;
-		--port)     PORT="$2"; shift 2 ;;
-		--version)  OPT_VERSION="$2"; shift 2 ;;
-		--channel)  CHANNEL="$2"; shift 2 ;;
+		--port)     [ $# -ge 2 ] || die "--port 缺少参数（端口号）"; PORT="$2"; PORT_CLI=1; shift 2 ;;
+		--version)  [ $# -ge 2 ] || die "--version 缺少参数（版本号）"; OPT_VERSION="$2"; shift 2 ;;
+		--channel)  [ $# -ge 2 ] || die "--channel 缺少参数（stable|snapshot）"; CHANNEL="$2"; shift 2 ;;
 		--force)    FORCE=1; shift ;;
 		--dry-run)  DRYRUN=1; shift ;;
 		--no-backup) DO_BACKUP=0; shift ;;

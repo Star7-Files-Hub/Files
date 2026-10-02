@@ -484,7 +484,7 @@ wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-o
 wget -qO- https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh | sh -s -- upgrade --dry-run
 ```
 
-先下载再运行（需要 `--help`、或要准确判断退出码时用这种）：
+先下载再运行（推荐，退出码和报错更直观；`--help` 两种方式都能用）：
 
 ```bash
 wget -qO /tmp/lite-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-openrc.sh
@@ -500,18 +500,18 @@ GitHub Raw 慢或刚推送还在缓存时，可换 jsDelivr 镜像（路径相�
 
 | 动作 | 说明 |
 | --- | --- |
-| `install` | 全新安装：探测架构 → 建目录 → 下载并校验 → 写 OpenRC 服务脚本 → 加入开机自启 → 启动 → 健康检查。**已存在 `/opt/lite/Lite` 时直接报错退出** |
-| `upgrade` | 升级 / 降级 / 重装；默认动作。版本与当前相同时跳过（`--force` 可强制） |
+| `install` | 全新安装：探测架构 → 建目录 → 下载并校验 → 写 OpenRC 服务脚本 → 加入开机自启 → 启动 → 健康检查。二进制和服务脚本都已存在时报错退出；**只有二进制、没有服务脚本时会继续安装并补建服务** |
+| `upgrade` | 升级 / 降级 / 重装；默认动作。版本与当前相同时跳过（`--force` 可强制）；**缺少服务脚本时会自动补建**（只补服务，不重新下载） |
 | `rollback` | 用 `/root/lite-backups/.last_binary` 记录的备份还原二进制并重启 |
 | `status` | 版本、服务状态、开机自启、监听端口、HTTP 探测、内存占用、磁盘、备份列表 |
 
 | 参数 | 默认 | 说明 |
 | --- | --- | --- |
-| `--port N` | `27777` | 端口；只在 `install` 时写入服务脚本，升级时的 HTTP 健康检查也用它探测 |
+| `--port N` | `27777` | 端口；`install` 时写入服务脚本并用于健康检查。`upgrade` / `status` / `rollback` 未显式指定时会自动从 `/etc/init.d/lite` 反解已有端口（显式传入则以传入值为准） |
 | `--version X.Y.Z` | 取最新 | 指定版本（当前上游 tag 形如 `2.3.6`，无 `v` 前缀） |
 | `--channel NAME` | `stable` | `snapshot` 走快照通道，其它取值按 `stable` 处理 |
 | `--force` | 关 | 目标版本与当前相同时仍执行（重装 / 降级） |
-| `--dry-run` | 关 | 下载并校验后退出，不替换、不重启 |
+| `--dry-run` | 关 | `upgrade`：下载并校验后退出，不替换、不重启、不写备份；`install`：只打印将要做的事，不做任何改动 |
 | `--no-backup` | 关 | 升级时不备份（之后无法 `rollback`，不推荐） |
 
 | 路径 | 内容 |
@@ -525,11 +525,11 @@ GitHub Raw 慢或刚推送还在缓存时，可换 jsDelivr 镜像（路径相�
 
 ### 10.3 注意事项
 
-1. **跑过官方脚本的 Alpine 机器，装之前要先删二进制**：官方脚本会把二进制放到同一个 `/opt/lite/Lite`，但不会建 OpenRC 服务。这种机器上 `install` 会因为「已安装」直接退出，而 `upgrade` 从不生成服务脚本——服务永远建不出来。先 `rm -f /opt/lite/Lite`，再执行 `install`。
-2. **升级要带上和安装时相同的 `--port`**：端口只在 `install` 时写进服务脚本，`upgrade` 若用默认 27777 去探测一个装在 8080 的实例，健康检查会失败并触发自动回滚。
-3. **升级不会刷新服务脚本**：`GOMEMLIMIT` / `GOGC` / 日志等只在 `install` 时写入，要改这些配置只能重装（重装前记得删二进制）。
+1. **跑过官方脚本的机器可以直接 `install`**：官方 `install-lite.sh` 会把二进制放到同一个 `/opt/lite/Lite`，但在 Alpine 上判定服务管理器为 `none`、不建 OpenRC 服务。现在遇到「只有二进制、没有服务脚本」会自动补建服务：`install` 会继续安装（覆盖前先把旧二进制备份到 `/root/lite-backups`），`upgrade` 也会补建，**不需要先删二进制**。
+2. **端口不用重复传**：`--port` 只在 `install` 时写进服务脚本；`upgrade` / `status` / `rollback` 不带 `--port` 时会自动从 `/etc/init.d/lite` 读出实际端口，避免用默认 27777 探测不到、误判健康检查失败而回滚。
+3. **升级不会主动重写服务脚本**：`GOMEMLIMIT` / `GOGC` / 日志等只在 `install` 和补建服务时生成。想按当前 cgroup 上限重新生成，执行 `rm -f /etc/init.d/lite` 后跑一次 `upgrade`（会自动补建）即可。
 4. **回滚只回滚二进制，且只能回退一个版本**：数据目录和服务脚本的备份只是留在磁盘上，需要人工处理。
-5. **管道执行时 `--help` 无效**：`usage()` 用 `sed -n '2,40p' "$0"` 从脚本文件读注释，`sh -s` 时 `$0` 是 `sh`，会报 `sed: can't read sh` 且退出码仍为 0。要看帮助请先下载再运行。
+5. **`--channel` 只识别 `snapshot`**，其它取值按 `stable` 处理且不报错；上游目前没有 `Snapshot-` 前缀的 release，所以传 `--channel snapshot` 会静默退回稳定版。
 6. **脚本没有卸载动作**，也没有 sha256 / 签名校验，只校验文件大小、ELF 魔数和能否执行 `version`（校验时会以 root 执行刚下载的二进制，安全性依赖 GitHub release 通道）。
 
 ### 10.4 卸载（手动）

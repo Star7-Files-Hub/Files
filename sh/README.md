@@ -1,11 +1,13 @@
 # node-deploy
 
-一个面向 VPS 的一键部署脚本，支持四种协议：
+一个面向 VPS 的一键部署脚本，支持六种协议：
 
 - **VLESS-Reality**（sing-box 或 Xray 核心）
 - **Snell**（官方 `snell-server` 或 sing-box Snell 入站）
 - **AnyTLS**（sing-box，TLS 或 Reality）
 - **Nowhere**（官方 Rust Portal，TCP+UDP 同端口）
+- **SOCKS5**（sing-box `socks` 入站，独立服务 `sing-box-socks`）
+- **MTProto**（mtg v2，Telegram 代理，FakeTLS）
 
 可单独部署，也可同时部署。同时部署时复用同一个出口 IP / 域名，**端口分别设置**。
 
@@ -59,6 +61,8 @@ apk add --no-cache bash
 | Snell | ✅（sing-box 引擎） | 官方 `snell-server` 依赖 glibc，Alpine 上会自动改用 `--snell-engine singbox`，仅支持 v5/v6 + HTTP 混淆 |
 | AnyTLS | ✅ | sing-box musl 构建 |
 | Nowhere | ✅ | 官方提供 `nowhere-<arch>-unknown-linux-musl.tar.gz` |
+| SOCKS5 | ✅ | sing-box `socks` 入站，复用同一个 musl 二进制，无额外依赖 |
+| MTProto | ✅ | mtg 官方静态二进制（`mtg-<版本>-linux-<arch>.tar.gz`），不依赖 glibc |
 
 在 Alpine 交互菜单里选择官方 Snell 时会提示错误，**按任意键返回菜单**，不会直接退出；只有命令行 `--mode snell --snell-engine official` 才会报错退出。
 
@@ -95,6 +99,21 @@ apk add --no-cache bash
 - 官方提供 glibc / musl、x86_64 / aarch64 四种构建。
 - Surge 目前不支持 Nowhere / Vector，请使用官方 Anywhere / Vector 客户端。
 
+### SOCKS5：sing-box socks 入站
+
+- 直接用 sing-box 内置的 `socks` 入站（兼容 socks4 / socks4a / socks5 服务端），复用已安装的 sing-box 二进制，不需要额外依赖。
+- 独立进程 / 独立服务 `sing-box-socks`，配置写到 `/etc/sing-box/socks.json`，和 VLESS / Snell / AnyTLS 的服务互不影响，可以单独重启。
+- 默认端口 **1080**，默认用户名 `socksuser` + 随机密码，默认**放行 UDP 端口**（`--socks5-udp false` 改为只放行 TCP）。
+- `--socks5-no-auth` 可以关掉认证（等于开放代理，需要自行用防火墙限制来源 IP，见 §7）。
+
+### MTProto：mtg v2（Telegram 代理）
+
+- 项目：`https://github.com/9seconds/mtg`（mtg v2，官方静态二进制，当前最新 **v2.2.8**）。
+- 配置 `/etc/mtg/mtg.toml`，服务名 `mtg`，默认端口 **443**。
+- 默认 FakeTLS：secret 是 `ee` 开头的 hex 形式，由 `mtg generate-secret --hex <伪装域名>` 生成，默认伪装域名 `www.cloudflare.com`。
+- 默认并发 8192；`--mtproto-version latest` 表示安装时自动取最新版本。
+- 客户端链接由 `mtg access` 输出，形如 `https://t.me/proxy?server=1.2.3.4&port=443&secret=ee...`，手机点开即可添加。
+
 ---
 
 ## 2. 文件
@@ -125,6 +144,11 @@ apk add --no-cache bash
 | `/etc/nowhere/nowhere.env` | Nowhere 配置 |
 | `/etc/nowhere/run.sh` | Nowhere 启动包装脚本 |
 | `/etc/systemd/system/nowhere.service` 或 `/etc/init.d/nowhere` | Nowhere 服务 |
+| `/etc/sing-box/socks.json` | SOCKS5 配置（sing-box `socks` 入站） |
+| `/etc/systemd/system/sing-box-socks.service` 或 `/etc/init.d/sing-box-socks` | SOCKS5 服务 |
+| `/usr/local/bin/mtg` | mtg 可执行文件（MTProto，官方静态二进制） |
+| `/etc/mtg/mtg.toml` | mtg 配置（FakeTLS secret、端口、并发） |
+| `/etc/systemd/system/mtg.service` 或 `/etc/init.d/mtg` | MTProto 服务 |
 
 ---
 
@@ -137,16 +161,18 @@ apk add --no-cache bash
 2. 部署/重装 Snell
 3. 部署/重装 AnyTLS
 4. 部署/重装 Nowhere
-5. 同时部署 VLESS-Reality + Snell
-6. 同时部署 VLESS-Reality + AnyTLS
-7. 全部部署 VLESS + Snell + AnyTLS + Nowhere
-8. 查看节点信息
-9. 启用 BBR（部署后默认已开启）
-10. 卸载所有组件
+5. 部署/重装 SOCKS5
+6. 部署/重装 MTProto（Telegram 代理）
+7. 同时部署 VLESS-Reality + Snell
+8. 同时部署 VLESS-Reality + AnyTLS
+9. 全部部署（VLESS+Snell+AnyTLS+Nowhere+SOCKS5+MTProto）
+10. 查看节点信息
+11. 启用 BBR（部署后默认已开启）
+12. 卸载所有组件
 0. 退出
 ```
 
-交互模式下会依次询问节点地址、各协议端口、伪装域名/SNI、Snell 引擎与混淆、AnyTLS 安全类型、Nowhere 客户端类型等。
+交互模式下会依次询问节点地址、各协议端口、伪装域名/SNI、Snell 引擎与混淆、AnyTLS 安全类型、Nowhere 客户端类型、SOCKS5 用户名密码与 UDP 开关、MTProto 的 FakeTLS 伪装域名与并发数等。
 
 ---
 
@@ -231,7 +257,67 @@ sudo bash deploy.sh --mode nowhere --address 1.2.3.4 \
   --nowhere-port 2077 --nowhere-client both
 ```
 
-### 4.7 全部部署，使用默认值
+### 4.7 只部署 SOCKS5
+
+```bash
+# 一行跑完（默认 1080 端口，用户名 socksuser + 随机密码，UDP 默认开启）
+wget -qO /tmp/node-deploy.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh && sudo bash /tmp/node-deploy.sh --mode socks5 --address 1.2.3.4 --socks5-port 1080 -y
+
+# 本地已有脚本时等价写法
+sudo bash deploy.sh --mode socks5 --address 1.2.3.4 \
+  --socks5-port 1080 --socks5-user socksuser --socks5-udp true
+
+# 只跑 TCP，不要 UDP
+sudo bash deploy.sh --mode socks5 --address 1.2.3.4 \
+  --socks5-port 1080 --socks5-udp false
+
+# 不要认证（开放代理，务必配合防火墙限制来源 IP）
+sudo bash deploy.sh --mode socks5 --address 1.2.3.4 \
+  --socks5-port 1080 --socks5-no-auth -y
+```
+
+- SOCKS5 复用 sing-box 二进制，服务名 `sing-box-socks`，配置在 `/etc/sing-box/socks.json`。
+- 密码不传时会自动生成并写入 `/etc/node-deploy/config.env`，重跑不会无故更换。
+
+### 4.8 只部署 MTProto
+
+```bash
+# 一行跑完（默认 443 端口，FakeTLS 伪装域名 www.cloudflare.com，并发 8192）
+wget -qO /tmp/node-deploy.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh && sudo bash /tmp/node-deploy.sh --mode mtproto --address 1.2.3.4 --mtproto-port 443 -y
+
+# 本地已有脚本时等价写法（显式指定伪装域名与并发数）
+sudo bash deploy.sh --mode mtproto --address 1.2.3.4 \
+  --mtproto-port 443 --mtproto-domain www.cloudflare.com --mtproto-concurrency 8192
+
+# 装 mtg 时自动取最新版本
+sudo bash deploy.sh --mode mtproto --address 1.2.3.4 \
+  --mtproto-port 443 --mtproto-domain www.cloudflare.com --mtproto-version latest
+```
+
+- `--mtproto-domain` 是 FakeTLS 伪装域名，会编码进 secret；建议用大站域名。
+- 部署完成后 `--info` 会输出 `t.me` 一键导入链接、`tg://` 链接和二维码。
+
+### 4.9 自由组合：VLESS + SOCKS5 + MTProto
+
+```bash
+# 一行跑完：VLESS 占 443，SOCKS5 用 1080，MTProto 用 8448
+wget -qO /tmp/node-deploy.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/deploy.sh && sudo bash /tmp/node-deploy.sh --mode vless,socks5,mtproto --address node.example.com --vless-port 443 --vless-sni www.microsoft.com --socks5-port 1080 --mtproto-port 8448 -y
+
+# 本地已有脚本时等价写法
+sudo bash deploy.sh \
+  --mode vless,socks5,mtproto \
+  --address node.example.com \
+  --core sing-box \
+  --vless-port 443 \
+  --vless-sni www.microsoft.com \
+  --socks5-port 1080 \
+  --mtproto-port 8448
+```
+
+- `--mode` 支持逗号组合，想要哪几种就写哪几种，顺序无关（`vless,socks5,mtproto` / `mtproto,socks5` 都行）。
+- 同一批部署里 MTProto 的端口和其它协议撞了（例如都想要 443），脚本会自动改用 **8448** 并打印 `WARN`；想固定用别的端口就显式传 `--mtproto-port`。
+
+### 4.10 全部部署，使用默认值
 
 ```bash
 sudo bash deploy.sh --mode all --address 1.2.3.4 -y --force
@@ -239,7 +325,10 @@ sudo bash deploy.sh --mode all --address 1.2.3.4 -y --force
 
 未指定的端口 / 域名 / 密钥会使用脚本默认值或自动生成。
 
-### 4.8 查看信息 / 卸载 / 启用 BBR
+- `--mode all` 现在是**六种全部**（VLESS + Snell + AnyTLS + Nowhere + SOCKS5 + MTProto）。
+- 只想装回原来的四种（不含 SOCKS5 / MTProto）用 `--mode all4`。
+
+### 4.11 查看信息 / 卸载 / 启用 BBR
 
 ```bash
 sudo bash deploy.sh --info
@@ -257,9 +346,12 @@ sudo bash deploy.sh --mode all --address 1.2.3.4 -y --no-bbr
 ## 5. 完整参数
 
 ```text
--m, --mode <vless|snell|anytls|nowhere|vless-anytls|both|all>
-                                 部署模式；both=VLESS+Snell，vless-anytls=VLESS+AnyTLS，
-                                 all=四种全部部署
+-m, --mode <协议[,协议...]>      部署模式，支持逗号组合；协议：vless / snell / anytls /
+                                 nowhere / socks5 / mtproto
+                                 别名：both=VLESS+Snell，vless-anytls=VLESS+AnyTLS，
+                                 all4=原来的四种（VLESS+Snell+AnyTLS+Nowhere），
+                                 all=六种全部（含 SOCKS5 与 MTProto）
+                                 不指定则进入交互菜单
 -a, --address <域名|IP>          客户端连接地址；同时部署时复用
     --core <xray|sing-box>       VLESS-Reality 核心，默认 sing-box
 
@@ -309,6 +401,20 @@ Nowhere：
     --nowhere-rate <Mbps>        限速，0=不限速
     --nowhere-etar <Mbps>        Etar 限速，0=不限速
     --nowhere-log <级别>         日志级别，默认 info
+
+SOCKS5（sing-box socks 入站，独立服务 sing-box-socks）：
+    --socks5-port <端口>         监听端口，默认 1080
+    --socks5-user <用户名>       用户名，默认 socksuser
+    --socks5-pass <密码>         密码，默认随机生成
+    --socks5-udp <true|false>    是否放行 UDP 端口，默认 true（false=仅 TCP）
+    --socks5-no-auth             不启用认证（等同开放代理，务必用防火墙限制来源 IP）
+
+MTProto（mtg v2，Telegram 代理）：
+    --mtproto-port <端口>        监听端口，默认 443（同批部署撞端口时自动改用 8448）
+    --mtproto-domain <域名>      FakeTLS 伪装域名，默认 www.cloudflare.com
+    --mtproto-secret <secret>    自定义 secret（ee 开头 hex 或 base64），默认随机生成
+    --mtproto-concurrency <N>    最大并发连接数，默认 8192
+    --mtproto-version <版本>     mtg 版本，默认 2.2.8，可写 latest
 
 其他：
     --singbox-version <版本>     指定 sing-box 版本；默认自动获取最新
@@ -415,6 +521,58 @@ nowhere 'vector://KEY@node.example.com:2077?up=tcp&down=tcp&mux=0&sni=none&pin=n
 
 Surge 目前不支持 Nowhere / Vector。
 
+### 6.6 SOCKS5
+
+`--info` 会同时输出分享链接、Clash.Meta 配置和 sing-box 出站配置：
+
+```text
+socks5://socksuser:PASSWORD@node.example.com:1080#node-deploy-socks5
+```
+
+```yaml
+# Clash.Meta / mihomo
+proxies:
+  - name: "node-deploy-socks5"
+    type: socks5
+    server: node.example.com
+    port: 1080
+    udp: true
+    username: "socksuser"
+    password: "PASSWORD"
+```
+
+```json
+// sing-box 出站
+{
+  "type": "socks",
+  "tag": "socks-out",
+  "server": "node.example.com",
+  "server_port": 1080,
+  "version": "5",
+  "username": "socksuser",
+  "password": "PASSWORD"
+}
+```
+
+- 用 `--socks5-no-auth` 部署时，上面三份配置里的用户名密码都不会出现（URI 变成 `socks5://node.example.com:1080#node-deploy-socks5`）。
+- `udp:` 和防火墙放行联动：`true` 时脚本会同时放行该端口的 TCP 与 UDP；`--socks5-udp false` 时只放行 TCP，这里也会输出 `udp: false`（sing-box 的 socks 入站本身没有关 UDP 的开关，关闭的是端口放行）。
+- 任何支持 SOCKS5 的客户端（Surge、Clash.Meta、sing-box、浏览器插件、系统的「代理服务器」设置）都能直接填地址 + 端口 + 用户名密码使用。
+
+### 6.7 MTProto（mtg）
+
+`--info` 会输出 `t.me` 一键导入链接、`tg://` 链接和二维码：
+
+```text
+https://t.me/proxy?server=node.example.com&port=443&secret=ee0123456789abcdef0123456789abcdef7777772e636c6f7564666c6172652e636f6d
+
+tg://proxy?server=node.example.com&port=443&secret=ee0123456789abcdef0123456789abcdef7777772e636c6f7564666c6172652e636f6d
+```
+
+- 手机上点开 `https://t.me/proxy?...` 链接，Telegram 会弹出「启用代理」确认框，确认即添加完成。
+- 也可以把 `tg://` 链接发到 Telegram 的「Saved Messages」，点开同样能添加代理。
+- 桌面端 Telegram 可以扫 `--info` 输出的二维码。
+- `secret` 以 `ee` 开头表示 FakeTLS 模式，伪装域名已经编码在 secret 里，端口和 secret 必须完全照抄。
+
 ---
 
 ## 7. 注意事项
@@ -429,6 +587,12 @@ Surge 目前不支持 Nowhere / Vector。
 8. **安全**：`/etc/node-deploy/config.env`、`/etc/sing-box/anytls.key`、`/etc/nowhere/nowhere.env` 包含私钥和密钥，权限为 600，请勿泄露。
 9. **端口占用检测**：部署前会检查端口，并显示占用进程与所属服务，例如 `sing-box(sing-box.service, pid 1234)`。如果占用者正是本次部署要重写并重启的同名服务（重装本脚本，或 incudal 等面板预装的 `sing-box`），脚本会自动接管该端口，不再提示；被其它进程占用时仍会提示，并给出 `systemctl stop <服务>` / `rc-service <服务> stop` 的释放建议，`--force` 可跳过询问。
 10. **BBR 默认开启**：部署完成后会自动写入 `/etc/sysctl.d/99-bbr.conf`（`net.core.default_qdisc = fq`、`net.ipv4.tcp_congestion_control = bbr`）并立即生效；Alpine/OpenRC 不读取 `/etc/sysctl.d`，脚本会额外写入 `/etc/sysctl.conf`，否则重启后可能失效。内核不支持 BBR、或容器内 `/proc/sys` 只读时会自动跳过并提示，不会导致部署失败。不需要时加 `--no-bbr`；`--dry-run` 不修改内核参数。`--uninstall` 不会回滚 BBR 配置，需要手动清理上述文件里的相关行。
+11. **SOCKS5 认证与开放代理风险**：默认是 `socksuser` + 随机密码的用户名密码认证；`--socks5-no-auth` 会关掉认证，等于把服务器变成**开放代理**，任何人都能借你的 IP 上网，很快会被扫描器收录并滥用，进而导致 IP 被封或收到投诉。确实需要免认证时，务必用云厂商安全组 / iptables 只放行你自己的来源 IP。
+12. **SOCKS5 是明文协议**：它没有 VLESS-Reality / AnyTLS 那样的抗封锁伪装，链路特征明显，建议只给自己或小范围使用；端口也别指望「藏起来」，被扫描到只是时间问题。
+13. **SOCKS5 的 UDP 与防火墙**：默认开启 UDP，此时安全组和系统防火墙都要放行同一个端口的 **TCP + UDP**，否则 UDP ASSOCIATE（DNS、QUIC 等）会超时、表现为「能连但很慢」。完全不需要 UDP 时加 `--socks5-udp false`，只放行 TCP 即可。
+14. **MTProto 的滥用与被封风险**：`t.me` 一键导入链接本身就是凭据，转发出去任何人都能用你的服务器做 Telegram 代理；被大量陌生人使用容易触发 Telegram 侧风控或机房滥用投诉。链接只发给自己。发现异常流量需要换 secret 时：重跑部署并显式传 `--mtproto-secret <新值>`（不加这个参数时脚本会**复用**已有 secret，避免让已分发的链接失效），或直接改 `/etc/mtg/mtg.toml` 里的 `secret` 后重启 `mtg`。
+15. **MTProto 伪装域名选择**：`--mtproto-domain` 会被编码进 secret，客户端握手时看到的 TLS SNI 就是它。建议用大站域名（默认 `www.cloudflare.com`），并且**和 VLESS 的 `--vless-sni` 用不同域名**，避免两条链路的 TLS 特征完全一致、被一起识别。
+16. **MTProto 的 443 端口与 VLESS 共用问题**：两者默认都想要 443，同一条 IP 上不能共存。同一批部署时脚本检测到端口冲突会自动把 MTProto 改用 **8448** 并打印 `WARN`；分开部署时请显式传 `--mtproto-port 8448`（或其它空闲端口），否则会因端口被 VLESS 占用而停下询问（`-y` 非交互模式下直接报错退出）。
 
 ---
 
@@ -438,7 +602,7 @@ Surge 目前不支持 Nowhere / Vector。
 sudo bash deploy.sh --uninstall
 ```
 
-会停止并删除 Xray / sing-box / Snell / AnyTLS / Nowhere 的服务、二进制、配置和 `/etc/node-deploy`。防火墙规则不会自动删除。
+会停止并删除 Xray / sing-box / Snell / AnyTLS / Nowhere / **SOCKS5（`sing-box-socks`）** / **MTProto（`mtg`）** 的服务、二进制、配置，以及 `/etc/node-deploy`、`/etc/mtg`。防火墙规则不会自动删除。
 
 ---
 
@@ -447,12 +611,14 @@ sudo bash deploy.sh --uninstall
 `--dry-run` 只会在当前目录生成 `dry-run/`，不修改系统：
 
 ```bash
-# 全部四种协议
+# 全部六种协议
 bash deploy.sh --dry-run --mode all --address node.example.com \
   --vless-port 443 --vless-sni www.microsoft.com \
   --snell-engine singbox --snell-port 8443 --snell-obfs http \
   --anytls-port 9443 --anytls-sni www.microsoft.com --anytls-security tls \
   --nowhere-port 2077 --nowhere-client both \
+  --socks5-port 1080 \
+  --mtproto-port 8448 \
   --non-interactive
 ```
 

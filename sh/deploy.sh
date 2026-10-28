@@ -37,7 +37,7 @@ set -Eeuo pipefail
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
 
 SCRIPT_NAME="node-deploy"
-SCRIPT_VERSION="1.3.0"
+SCRIPT_VERSION="1.4.0"
 
 # ---------------------------------------------------------------------------
 # 可被环境变量覆盖的路径
@@ -101,6 +101,24 @@ NOWHERE_LOG="info"
 
 SINGBOX_VERSION=""
 SINGBOX_VERSION_FALLBACK="1.14.2"
+
+# SOCKS5（sing-box socks 入站，独立服务 sing-box-socks）
+SOCKS_PORT=""
+SOCKS_USER="socksuser"
+SOCKS_PASS=""
+SOCKS_LISTEN="0.0.0.0"
+SOCKS_UDP="true"
+SOCKS_NO_AUTH="false"
+
+# MTProto（mtg v2，FakeTLS）
+MTG_BIN="/usr/local/bin/mtg"
+MTG_PORT_CLI="false"
+MTG_PORT=""
+MTG_SECRET=""
+MTG_FAKETLS_DOMAIN="www.cloudflare.com"
+MTG_CONCURRENCY="8192"
+MTG_VERSION="2.2.8"
+MTG_ARCH=""
 
 # BBR：auto=部署后自动启用（默认），on=--bbr 立即启用，off=--no-bbr 跳过
 BBR_MODE="auto"
@@ -211,6 +229,8 @@ init_paths() {
     ANYTLS_KEY="${DRY_RUN_DIR}/etc/sing-box/anytls.key"
     NOWHERE_CONFIG="${DRY_RUN_DIR}/etc/nowhere/nowhere.env"
     NOWHERE_RUNNER="${DRY_RUN_DIR}/etc/nowhere/run.sh"
+    SOCKS_CONFIG="${DRY_RUN_DIR}/etc/sing-box/socks.json"
+    MTG_CONFIG="${DRY_RUN_DIR}/etc/mtg/mtg.toml"
     if [[ "$INIT_SYSTEM" == "openrc" ]]; then
       XRAY_SERVICE="${DRY_RUN_DIR}/etc/init.d/xray"
       SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/init.d/sing-box"
@@ -218,6 +238,8 @@ init_paths() {
       SNELL_SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/init.d/sing-box-snell"
       ANYTLS_SERVICE="${DRY_RUN_DIR}/etc/init.d/sing-box-anytls"
       NOWHERE_SERVICE="${DRY_RUN_DIR}/etc/init.d/nowhere"
+      SOCKS_SERVICE="${DRY_RUN_DIR}/etc/init.d/sing-box-socks"
+      MTG_SERVICE="${DRY_RUN_DIR}/etc/init.d/mtg"
     else
       XRAY_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/xray.service"
       SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/sing-box.service"
@@ -225,6 +247,8 @@ init_paths() {
       SNELL_SINGBOX_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/sing-box-snell.service"
       ANYTLS_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/sing-box-anytls.service"
       NOWHERE_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/nowhere.service"
+      SOCKS_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/sing-box-socks.service"
+      MTG_SERVICE="${DRY_RUN_DIR}/etc/systemd/system/mtg.service"
     fi
   else
     CONFIG_DIR="/etc/node-deploy"
@@ -238,6 +262,8 @@ init_paths() {
     ANYTLS_KEY="/etc/sing-box/anytls.key"
     NOWHERE_CONFIG="/etc/nowhere/nowhere.env"
     NOWHERE_RUNNER="/etc/nowhere/run.sh"
+    SOCKS_CONFIG="/etc/sing-box/socks.json"
+    MTG_CONFIG="/etc/mtg/mtg.toml"
     if [[ "$INIT_SYSTEM" == "openrc" ]]; then
       XRAY_SERVICE="/etc/init.d/xray"
       SINGBOX_SERVICE="/etc/init.d/sing-box"
@@ -245,6 +271,8 @@ init_paths() {
       SNELL_SINGBOX_SERVICE="/etc/init.d/sing-box-snell"
       ANYTLS_SERVICE="/etc/init.d/sing-box-anytls"
       NOWHERE_SERVICE="/etc/init.d/nowhere"
+      SOCKS_SERVICE="/etc/init.d/sing-box-socks"
+      MTG_SERVICE="/etc/init.d/mtg"
     else
       XRAY_SERVICE="/etc/systemd/system/xray.service"
       SINGBOX_SERVICE="/etc/systemd/system/sing-box.service"
@@ -252,6 +280,8 @@ init_paths() {
       SNELL_SINGBOX_SERVICE="/etc/systemd/system/sing-box-snell.service"
       ANYTLS_SERVICE="/etc/systemd/system/sing-box-anytls.service"
       NOWHERE_SERVICE="/etc/systemd/system/nowhere.service"
+      SOCKS_SERVICE="/etc/systemd/system/sing-box-socks.service"
+      MTG_SERVICE="/etc/systemd/system/mtg.service"
     fi
   fi
 }
@@ -317,24 +347,28 @@ detect_arch() {
       XRAY_ASSET="Xray-linux-64.zip"
       SNELL_ARCH="amd64"
       SINGBOX_ARCH="amd64"
+      MTG_ARCH="amd64"
       ;;
     aarch64|arm64)
       ARCH="arm64"
       XRAY_ASSET="Xray-linux-arm64-v8a.zip"
       SNELL_ARCH="aarch64"
       SINGBOX_ARCH="arm64"
+      MTG_ARCH="arm64"
       ;;
     armv7l|armv7)
       ARCH="armv7"
       XRAY_ASSET="Xray-linux-arm32-v7a.zip"
       SNELL_ARCH="armv7l"
       SINGBOX_ARCH="armv7"
+      MTG_ARCH="armv7"
       ;;
     i386|i686)
       ARCH="386"
       XRAY_ASSET="Xray-linux-32.zip"
       SNELL_ARCH=""
       SINGBOX_ARCH="386"
+      MTG_ARCH="386"
       ;;
     *)
       die "不支持的 CPU 架构：$ARCH_RAW"
@@ -563,6 +597,16 @@ url_encode() {
   else
     printf '%s' "$s" | sed -e 's/%/%25/g' -e 's/ /%20/g' -e 's/#/%23/g' -e 's/&/%26/g' -e 's/?/%3F/g'
   fi
+}
+
+json_escape() {
+  local s="$1"
+  s="${s//\\/\\\\}"
+  s="${s//\"/\\\"}"
+  s="${s//$'\n'/\\n}"
+  s="${s//$'\r'/\\r}"
+  s="${s//$'\t'/\\t}"
+  printf '%s' "$s"
 }
 
 format_host_for_url() {
@@ -1031,6 +1075,17 @@ save_config() {
     printf 'NOWHERE_RATE=%q\n' "$NOWHERE_RATE"
     printf 'NOWHERE_ETAR=%q\n' "$NOWHERE_ETAR"
     printf 'NOWHERE_LOG=%q\n' "$NOWHERE_LOG"
+    printf 'SOCKS_PORT=%q\n' "$SOCKS_PORT"
+    printf 'SOCKS_USER=%q\n' "$SOCKS_USER"
+    printf 'SOCKS_PASS=%q\n' "$SOCKS_PASS"
+    printf 'SOCKS_LISTEN=%q\n' "$SOCKS_LISTEN"
+    printf 'SOCKS_UDP=%q\n' "$SOCKS_UDP"
+    printf 'SOCKS_NO_AUTH=%q\n' "$SOCKS_NO_AUTH"
+    printf 'MTG_PORT=%q\n' "$MTG_PORT"
+    printf 'MTG_SECRET=%q\n' "$MTG_SECRET"
+    printf 'MTG_FAKETLS_DOMAIN=%q\n' "$MTG_FAKETLS_DOMAIN"
+    printf 'MTG_CONCURRENCY=%q\n' "$MTG_CONCURRENCY"
+    printf 'MTG_VERSION=%q\n' "$MTG_VERSION"
   } > "$CONFIG_FILE"
   chmod 600 "$CONFIG_FILE" 2>/dev/null || true
 }
@@ -2235,6 +2290,361 @@ deploy_nowhere() {
 }
 
 # ---------------------------------------------------------------------------
+# SOCKS5（sing-box socks 入站，独立服务 sing-box-socks）
+# ---------------------------------------------------------------------------
+configure_socks5() {
+  log "生成 SOCKS5 配置..."
+  local users_json=""
+  if [[ "$SOCKS_NO_AUTH" != "true" ]]; then
+    users_json="$(printf ',\n      "users": [\n        {\n          "username": "%s",\n          "password": "%s"\n        }\n      ]' \
+      "$(json_escape "$SOCKS_USER")" "$(json_escape "$SOCKS_PASS")")"
+  fi
+
+  write_file "$SOCKS_CONFIG" <<EOF
+{
+  "log": {
+    "level": "warn",
+    "timestamp": true
+  },
+  "inbounds": [
+    {
+      "type": "socks",
+      "tag": "socks-in",
+      "listen": "${SOCKS_LISTEN}",
+      "listen_port": ${SOCKS_PORT}${users_json}
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "direct"
+    }
+  ]
+}
+EOF
+  chmod 600 "$SOCKS_CONFIG" 2>/dev/null || true
+
+  if [[ -x "$SINGBOX_BIN" ]]; then
+    if ! "$SINGBOX_BIN" check -c "$SOCKS_CONFIG" >/dev/null 2>&1; then
+      "$SINGBOX_BIN" check -c "$SOCKS_CONFIG" || die "sing-box SOCKS5 配置校验失败"
+    fi
+    log "SOCKS5 配置校验通过"
+  else
+    warn "未找到 sing-box 可执行文件，跳过配置校验"
+  fi
+}
+
+write_socks_service() {
+  write_singbox_aux_service sing-box-socks "$SOCKS_CONFIG" "$SOCKS_SERVICE"
+}
+
+prompt_socks5() {
+  if [[ -z "$NODE_ADDRESS" ]]; then
+    local detected
+    detected="$(detect_public_ip)"
+    NODE_ADDRESS="$(prompt_host "节点地址（客户端连接用，域名或 IP）" "$detected")"
+  fi
+  validate_host "$NODE_ADDRESS" || die "节点地址无效：$NODE_ADDRESS"
+
+  SOCKS_PORT="$(prompt_port "SOCKS5 监听端口" "${SOCKS_PORT:-1080}")"
+
+  if [[ "$SOCKS_NO_AUTH" == "true" ]]; then
+    warn "已指定 --socks5-no-auth：SOCKS5 将允许匿名访问，等于开放代理，请务必用防火墙限制来源 IP。"
+  else
+    SOCKS_USER="$(prompt_value "SOCKS5 用户名" "${SOCKS_USER:-socksuser}")"
+    [[ -n "$SOCKS_USER" ]] || die "SOCKS5 用户名不能为空"
+    [[ -n "$SOCKS_PASS" ]] || SOCKS_PASS="$(gen_psk)"
+    SOCKS_PASS="$(prompt_value "SOCKS5 密码" "$SOCKS_PASS")"
+    [[ -n "$SOCKS_PASS" ]] || die "SOCKS5 密码不能为空"
+  fi
+
+  SOCKS_UDP="$(prompt_value "SOCKS5 是否支持 UDP (true/false)" "${SOCKS_UDP:-true}")"
+  case "$SOCKS_UDP" in
+    true|false) ;;
+    *) die "SOCKS5 UDP 只能是 true 或 false，当前：$SOCKS_UDP" ;;
+  esac
+}
+
+deploy_socks5() {
+  if [[ "$DRY_RUN" != "true" && "$INIT_SYSTEM" == "unknown" ]]; then
+    die "未检测到 systemd 或 OpenRC，当前脚本仅支持 systemd / OpenRC 系统"
+  fi
+  ensure_env
+  install_singbox
+  prompt_socks5
+  ensure_port_available "$SOCKS_PORT" "SOCKS5" sing-box-socks
+  if [[ "$SOCKS_UDP" == "true" ]]; then
+    ensure_udp_port_available "$SOCKS_PORT" "SOCKS5" sing-box-socks
+  fi
+
+  configure_socks5
+  write_socks_service
+  service_enable_start sing-box-socks
+  open_firewall_port "$SOCKS_PORT" tcp
+  if [[ "$SOCKS_UDP" == "true" ]]; then
+    open_firewall_port "$SOCKS_PORT" udp
+  fi
+  log "SOCKS5 已就绪：${SOCKS_LISTEN}:${SOCKS_PORT}（认证：$([[ "$SOCKS_NO_AUTH" == "true" ]] && echo 无 || echo 用户名密码)）"
+}
+
+# ---------------------------------------------------------------------------
+# MTProto（mtg v2，FakeTLS）
+# ---------------------------------------------------------------------------
+validate_mtg_secret() {
+  local sec="$1"
+  [[ "$sec" =~ ^ee[0-9a-fA-F]{32,}$ ]] && return 0
+  [[ "$sec" =~ ^[A-Za-z0-9_+/=-]{16,}$ ]] && return 0
+  return 1
+}
+
+get_latest_mtg_version() {
+  local tag=""
+  if command_exists curl; then
+    tag="$(curl -fsSL --connect-timeout 10 --max-time 20 \
+      'https://api.github.com/repos/9seconds/mtg/releases/latest' 2>/dev/null \
+      | grep -m1 '"tag_name"' \
+      | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/' || true)"
+  fi
+  if [[ -z "$tag" ]] && command_exists curl; then
+    tag="$(curl -fsSL --connect-timeout 10 --max-time 20 \
+      'https://gh-proxy.com/https://api.github.com/repos/9seconds/mtg/releases/latest' 2>/dev/null \
+      | grep -m1 '"tag_name"' \
+      | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/' || true)"
+  fi
+  tag="${tag#v}"
+  if [[ -z "$tag" ]]; then
+    tag="$MTG_VERSION"
+  fi
+  printf '%s\n' "$tag"
+}
+
+install_mtg() {
+  if [[ -x "$MTG_BIN" ]]; then
+    log "已存在 mtg：$MTG_BIN（$("$MTG_BIN" --version 2>/dev/null | head -1 || true)）"
+    return 0
+  fi
+  if [[ "$DRY_RUN" == "true" ]]; then
+    log "DRY-RUN: 跳过下载 mtg"
+    return 0
+  fi
+  [[ -n "$MTG_ARCH" ]] || die "mtg 官方二进制不支持当前架构：$ARCH_RAW"
+
+  local version tmp url bin
+  version="$MTG_VERSION"
+  if [[ -z "$version" || "$version" == "latest" ]]; then
+    version="$(get_latest_mtg_version)"
+  fi
+  version="${version#v}"
+
+  log "安装 mtg v${version}..."
+  tmp="$(mktemp -d)"
+  url="https://github.com/9seconds/mtg/releases/download/v${version}/mtg-${version}-linux-${MTG_ARCH}.tar.gz"
+  download "$url" "${tmp}/mtg.tar.gz"
+  tar -xzf "${tmp}/mtg.tar.gz" -C "$tmp" || die "mtg 解压失败"
+  bin="$(find "$tmp" -type f -name mtg -print -quit)"
+  [[ -n "$bin" ]] || die "mtg 解压失败（未找到 mtg 可执行文件）"
+  install -m 0755 "$bin" "$MTG_BIN"
+  rm -rf "$tmp"
+  log "mtg 版本：$("$MTG_BIN" --version 2>/dev/null | head -1 || true)"
+}
+
+configure_mtg() {
+  log "生成 mtg 配置..."
+
+  # 重装/升级时复用已有 secret，避免让已分发的客户端链接失效
+  if [[ -z "$MTG_SECRET" && -f "$MTG_CONFIG" ]]; then
+    local existing
+    existing="$(grep -m1 '^secret *= *"' "$MTG_CONFIG" 2>/dev/null | sed -E 's/^secret *= *"([^"]+)".*/\1/' || true)"
+    if [[ -n "$existing" ]]; then
+      MTG_SECRET="$existing"
+      log "复用已有 MTProto secret（重新生成会让已分发的链接失效）"
+    fi
+  fi
+
+  if [[ -z "$MTG_SECRET" ]]; then
+    if [[ ! -x "$MTG_BIN" ]]; then
+      if [[ "$DRY_RUN" == "true" ]]; then
+        MTG_SECRET="ee0123456789abcdef0123456789abcdef7777772e636c6f7564666c6172652e636f6d"
+        warn "DRY-RUN: 未找到 mtg，使用占位 secret"
+      else
+        die "未找到 mtg 可执行文件，无法生成 secret"
+      fi
+    else
+      MTG_SECRET="$("$MTG_BIN" generate-secret --hex "$MTG_FAKETLS_DOMAIN" 2>/dev/null || true)"
+      [[ -n "$MTG_SECRET" ]] || die "生成 MTProto secret 失败（mtg generate-secret --hex $MTG_FAKETLS_DOMAIN）"
+    fi
+  fi
+
+  validate_mtg_secret "$MTG_SECRET" || die "MTProto secret 格式无效：应为 ee 开头的 hex 或 base64 字符串"
+
+  mkdir -p "$(dirname "$MTG_CONFIG")"
+  {
+    echo "# node-deploy: MTProto (mtg) —— FakeTLS"
+    echo "# secret 为 FakeTLS 形式（ee 开头 hex），等价于客户端链接里的 secret"
+    echo "secret = \"${MTG_SECRET}\""
+    echo "bind-to = \"0.0.0.0:${MTG_PORT}\""
+    echo "concurrency = ${MTG_CONCURRENCY}"
+    echo "auto-update = false"
+    # 指定公网 IP 后 mtg 不再依赖外部服务探测 IP，生成链接更稳
+    if [[ -n "$NODE_ADDRESS" ]] && is_ipv4 "$NODE_ADDRESS"; then
+      echo "public-ipv4 = \"${NODE_ADDRESS}\""
+    fi
+  } > "$MTG_CONFIG"
+  chmod 600 "$MTG_CONFIG" 2>/dev/null || true
+
+  if [[ -x "$MTG_BIN" ]]; then
+    if ! "$MTG_BIN" access "$MTG_CONFIG" >/dev/null 2>&1; then
+      "$MTG_BIN" access "$MTG_CONFIG" || die "mtg 配置校验失败"
+    fi
+    log "mtg 配置校验通过"
+  else
+    warn "未找到 mtg 可执行文件，跳过配置校验"
+  fi
+}
+
+write_mtg_service() {
+  if [[ "$INIT_SYSTEM" == "openrc" ]]; then
+    write_file "$MTG_SERVICE" <<EOF
+#!/sbin/openrc-run
+name="mtg"
+description="mtg - MTProto proxy server"
+command="${MTG_BIN}"
+command_args="run ${MTG_CONFIG}"
+pidfile="/run/mtg.pid"
+command_background="yes"
+output_log="/var/log/mtg.log"
+error_log="/var/log/mtg.err"
+supervisor=supervise-daemon
+supervise_daemon_args="--respawn-max 0 --respawn-delay 5"
+
+depend() {
+    need net
+    after firewall
+}
+
+start_pre() {
+    checkpath --directory --mode 0755 /var/log
+    checkpath --directory --mode 0755 /run
+}
+EOF
+    chmod +x "$MTG_SERVICE" 2>/dev/null || true
+    return 0
+  fi
+
+  write_file "$MTG_SERVICE" <<EOF
+[Unit]
+Description=mtg - MTProto proxy server
+Documentation=https://github.com/9seconds/mtg
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=${MTG_BIN} run ${MTG_CONFIG}
+Restart=always
+RestartSec=3
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+EOF
+}
+
+prompt_mtproto() {
+  if [[ -z "$NODE_ADDRESS" ]]; then
+    local detected
+    detected="$(detect_public_ip)"
+    NODE_ADDRESS="$(prompt_host "节点地址（客户端连接用，域名或 IP）" "$detected")"
+  fi
+  validate_host "$NODE_ADDRESS" || die "节点地址无效：$NODE_ADDRESS"
+
+  MTG_PORT="$(prompt_port "MTProto 监听端口" "${MTG_PORT:-443}")"
+  MTG_FAKETLS_DOMAIN="$(prompt_host "MTProto FakeTLS 伪装域名（建议用大站域名）" "${MTG_FAKETLS_DOMAIN:-www.cloudflare.com}")"
+  MTG_CONCURRENCY="$(prompt_value "MTProto 最大并发连接数" "${MTG_CONCURRENCY:-8192}")"
+  [[ "$MTG_CONCURRENCY" =~ ^[0-9]+$ ]] || die "并发连接数必须是数字，当前：$MTG_CONCURRENCY"
+  MTG_VERSION="$(prompt_value "mtg 版本（latest=自动取最新）" "${MTG_VERSION:-2.2.8}")"
+}
+
+deploy_mtproto() {
+  if [[ "$DRY_RUN" != "true" && "$INIT_SYSTEM" == "unknown" ]]; then
+    die "未检测到 systemd 或 OpenRC，当前脚本仅支持 systemd / OpenRC 系统"
+  fi
+  ensure_env
+  prompt_mtproto
+
+  # 同批次部署时避免与其它协议撞端口：仅在端口未被显式指定时自动改端口
+  local p taken=""
+  for p in "$VLESS_PORT" "$SNELL_PORT" "$ANYTLS_PORT" "$NOWHERE_PORT" "$SOCKS_PORT"; do
+    if [[ -n "$p" && "$p" == "$MTG_PORT" ]]; then
+      taken="yes"
+    fi
+  done
+  if [[ -n "$taken" ]]; then
+    if [[ "$MTG_PORT_CLI" == "true" ]]; then
+      die "MTProto 端口 ${MTG_PORT} 已被本次部署的其它协议占用，请用 --mtproto-port 指定其它端口。"
+    fi
+    local candidate
+    for candidate in 8448 9448 10808; do
+      taken=""
+      for p in "$VLESS_PORT" "$SNELL_PORT" "$ANYTLS_PORT" "$NOWHERE_PORT" "$SOCKS_PORT"; do
+        [[ -n "$p" && "$p" == "$candidate" ]] && taken="yes"
+      done
+      if [[ -z "$taken" ]]; then
+        warn "MTProto 端口 ${MTG_PORT} 已被本次部署的其它协议使用，自动改用 ${candidate}（可用 --mtproto-port 指定）"
+        MTG_PORT="$candidate"
+        break
+      fi
+    done
+    [[ -n "$taken" ]] && die "MTProto 没有可用备用端口，请用 --mtproto-port 指定。"
+  fi
+
+  ensure_port_available "$MTG_PORT" "MTProto" mtg
+  install_mtg
+  configure_mtg
+  write_mtg_service
+  service_enable_start mtg
+  open_firewall_port "$MTG_PORT" tcp
+
+  if [[ "$DRY_RUN" != "true" ]]; then
+    sleep 1
+    if port_in_use "$MTG_PORT"; then
+      log "MTProto 已在 ${MTG_PORT}/tcp 监听（FakeTLS 伪装域名：${MTG_FAKETLS_DOMAIN}）"
+    else
+      warn "mtg 端口 ${MTG_PORT} 未在监听，请检查服务：systemctl status mtg / rc-service mtg status"
+    fi
+  fi
+}
+
+# 生成客户端链接：优先用 mtg 自己的 access 输出（secret 编码最准确）
+generate_mtproto_tg() {
+  local tg="" host
+  if [[ -x "$MTG_BIN" && -f "$MTG_CONFIG" && "$DRY_RUN" != "true" ]]; then
+    tg="$("$MTG_BIN" access "$MTG_CONFIG" 2>/dev/null \
+      | grep -m1 '"tg_url"' \
+      | sed -E 's/.*"tg_url": *"([^"]+)".*/\1/' || true)"
+  fi
+  if [[ -z "$tg" ]]; then
+    host="${NODE_ADDRESS:-<服务器IP>}"
+    tg="tg://proxy?server=${host}&port=${MTG_PORT}&secret=${MTG_SECRET}"
+  fi
+  printf '%s\n' "$tg"
+}
+
+generate_mtproto_tme() {
+  local tme="" tg
+  if [[ -x "$MTG_BIN" && -f "$MTG_CONFIG" && "$DRY_RUN" != "true" ]]; then
+    tme="$("$MTG_BIN" access "$MTG_CONFIG" 2>/dev/null \
+      | grep -m1 '"tme_url"' \
+      | sed -E 's/.*"tme_url": *"([^"]+)".*/\1/' || true)"
+  fi
+  if [[ -z "$tme" ]]; then
+    tg="$(generate_mtproto_tg)"
+    tme="${tg/tg:\/\/proxy/https:\/\/t.me\/proxy}"
+  fi
+  printf '%s\n' "$tme"
+}
+
+# ---------------------------------------------------------------------------
 # 信息输出
 # ---------------------------------------------------------------------------
 generate_vless_link() {
@@ -2412,6 +2822,45 @@ generate_nowhere_vector() {
     "$key" "$host" "$NOWHERE_PORT" "$NOWHERE_MORPH" "$name"
 }
 
+generate_socks5_uri() {
+  local auth="" host
+  host="${NODE_ADDRESS:-<服务器IP>}"
+  if [[ "$SOCKS_NO_AUTH" != "true" ]]; then
+    auth="$(url_encode "$SOCKS_USER"):$(url_encode "$SOCKS_PASS")@"
+  fi
+  printf 'socks5://%s%s:%s#node-deploy-socks5\n' "$auth" "$host" "$SOCKS_PORT"
+}
+
+generate_socks5_clash() {
+  echo "proxies:"
+  echo "  - name: \"node-deploy-socks5\""
+  echo "    type: socks5"
+  echo "    server: ${NODE_ADDRESS}"
+  echo "    port: ${SOCKS_PORT}"
+  echo "    udp: ${SOCKS_UDP}"
+  if [[ "$SOCKS_NO_AUTH" != "true" ]]; then
+    echo "    username: \"$(json_escape "$SOCKS_USER")\""
+    echo "    password: \"$(json_escape "$SOCKS_PASS")\""
+  fi
+}
+
+generate_socks5_singbox() {
+  local auth=""
+  if [[ "$SOCKS_NO_AUTH" != "true" ]]; then
+    auth="$(printf ',\n  "username": "%s",\n  "password": "%s"' \
+      "$(json_escape "$SOCKS_USER")" "$(json_escape "$SOCKS_PASS")")"
+  fi
+  cat <<JSON
+{
+  "type": "socks",
+  "tag": "socks-out",
+  "server": "${NODE_ADDRESS}",
+  "server_port": ${SOCKS_PORT},
+  "version": "5"${auth}
+}
+JSON
+}
+
 show_qr() {
   local link="$1"
   if command_exists qrencode; then
@@ -2429,7 +2878,7 @@ show_info() {
   echo "部署模式 : ${MODE:-<未配置>}"
   echo "配置文件 : ${CONFIG_FILE}"
 
-  if [[ "${MODE}" == "vless" || "${MODE}" == "vless-anytls" || "${MODE}" == "both" || "${MODE}" == "all" ]]; then
+  if mode_includes vless; then
     echo
     info "--- VLESS-Reality ---"
     echo "核心       : ${CORE}"
@@ -2449,7 +2898,7 @@ show_info() {
     show_qr "$link"
   fi
 
-  if [[ "${MODE}" == "snell" || "${MODE}" == "both" || "${MODE}" == "all" ]]; then
+  if mode_includes snell; then
     echo
     info "--- Snell ---"
     echo "服务端     : ${SNELL_ENGINE}"
@@ -2471,7 +2920,7 @@ show_info() {
     generate_snell_clash
   fi
 
-  if [[ "${MODE}" == "anytls" || "${MODE}" == "vless-anytls" || "${MODE}" == "all" ]]; then
+  if mode_includes anytls; then
     echo
     info "--- AnyTLS ---"
     echo "安全类型   : ${ANYTLS_SECURITY}"
@@ -2494,7 +2943,7 @@ show_info() {
     generate_anytls_uri
   fi
 
-  if [[ ( "${MODE}" == "nowhere" || "${MODE}" == "all" ) && -n "$NOWHERE_KEY" ]]; then
+  if mode_includes nowhere && [[ -n "$NOWHERE_KEY" ]]; then
     build_nowhere_portal
     echo
     info "--- Nowhere ---"
@@ -2522,6 +2971,52 @@ show_info() {
       echo "请使用 Anywhere 客户端导入上面的 nowhere:// 链接。"
     fi
   fi
+  if mode_includes socks5 && [[ -n "$SOCKS_PORT" ]]; then
+    echo
+    info "--- SOCKS5 ---"
+    echo "端口       : ${SOCKS_PORT}（$([[ "$SOCKS_UDP" == "true" ]] && echo TCP+UDP || echo TCP)）"
+    if [[ "$SOCKS_NO_AUTH" == "true" ]]; then
+      echo "认证       : 无（开放代理，请用防火墙限制来源 IP）"
+    else
+      echo "用户名     : ${SOCKS_USER}"
+      echo "密码       : ${SOCKS_PASS}"
+    fi
+    echo
+    echo "分享链接："
+    local suri
+    suri="$(generate_socks5_uri)"
+    echo "$suri"
+    echo
+    show_qr "$suri"
+    echo
+    echo "Clash.Meta 配置："
+    generate_socks5_clash
+    echo
+    echo "sing-box 出站配置："
+    generate_socks5_singbox
+  fi
+
+  if mode_includes mtproto && [[ -n "$MTG_PORT" ]]; then
+    echo
+    info "--- MTProto (mtg) ---"
+    echo "端口       : ${MTG_PORT}/tcp"
+    echo "FakeTLS    : ${MTG_FAKETLS_DOMAIN}"
+    echo "Secret     : ${MTG_SECRET}"
+    echo "并发上限   : ${MTG_CONCURRENCY}"
+    echo
+    echo "Telegram 一键导入（点开或粘贴到浏览器/Telegram）："
+    generate_mtproto_tme
+    echo
+    echo "tg:// 链接："
+    local mtg_link
+    mtg_link="$(generate_mtproto_tg)"
+    echo "$mtg_link"
+    echo
+    show_qr "$mtg_link"
+    echo
+    echo "提示：手机上用 Telegram 打开上面的 t.me 链接即可添加代理；桌面端可扫二维码。"
+  fi
+
   echo "=================================================="
 }
 
@@ -2645,27 +3140,92 @@ uninstall_all() {
   fi
 
   load_config || true
-  log "停止并卸载 Xray / sing-box / Snell / AnyTLS / Nowhere..."
+  log "停止并卸载 Xray / sing-box / Snell / AnyTLS / Nowhere / SOCKS5 / MTProto..."
   service_stop_disable xray
   service_stop_disable sing-box
   service_stop_disable snell
   service_stop_disable sing-box-snell
   service_stop_disable sing-box-anytls
   service_stop_disable nowhere
+  service_stop_disable sing-box-socks
+  service_stop_disable mtg
 
   rm -f "$XRAY_SERVICE" "$SINGBOX_SERVICE" "$SNELL_SERVICE"
   rm -f "$SNELL_SINGBOX_SERVICE" "$ANYTLS_SERVICE" "$NOWHERE_SERVICE"
-  rm -f "$XRAY_BIN" "$SINGBOX_BIN" "$SNELL_BIN" "$NOWHERE_BIN"
-  rm -rf /usr/local/etc/xray /etc/sing-box /etc/snell /etc/nowhere
+  rm -f "$SOCKS_SERVICE" "$MTG_SERVICE"
+  rm -f "$XRAY_BIN" "$SINGBOX_BIN" "$SNELL_BIN" "$NOWHERE_BIN" "$MTG_BIN"
+  rm -rf /usr/local/etc/xray /etc/sing-box /etc/snell /etc/nowhere /etc/mtg
   rm -rf "$CONFIG_DIR"
   init_reload >/dev/null 2>&1 || true
   log "卸载完成。防火墙规则未自动删除，如有需要请手动清理。"
 }
 
 # ---------------------------------------------------------------------------
+# 部署模式（支持逗号组合与别名）
+# ---------------------------------------------------------------------------
+mode_list() {
+  local m p out=""
+  for m in ${MODE//,/ }; do
+    case "$m" in
+      both)         m="vless snell" ;;
+      vless-anytls) m="vless anytls" ;;
+      all4)         m="vless snell anytls nowhere" ;;
+      all)          m="vless snell anytls nowhere socks5 mtproto" ;;
+      vless|snell|anytls|nowhere|socks5|mtproto) ;;
+      "")           continue ;;
+      *)            die "--mode 含未知协议：$m（支持 vless/snell/anytls/nowhere/socks5/mtproto；别名 both/vless-anytls/all4/all；也可用逗号组合）" ;;
+    esac
+    for p in $m; do
+      case " $out " in
+        *" $p "*) ;;
+        *) out="${out} ${p}" ;;
+      esac
+    done
+  done
+  [[ -n "$out" ]] || return 0
+  out="${out# }"
+  printf '%s\n' "${out// /$'\n'}"
+}
+
+mode_includes() {
+  local want="$1" m
+  for m in $(mode_list); do
+    [[ "$m" == "$want" ]] && return 0
+  done
+  return 1
+}
+
+deploy_by_mode() {
+  case "$1" in
+    vless)   deploy_vless ;;
+    snell)   deploy_snell ;;
+    anytls)  deploy_anytls ;;
+    nowhere) deploy_nowhere ;;
+    socks5)  deploy_socks5 ;;
+    mtproto) deploy_mtproto ;;
+  esac
+}
+
+# 菜单/命令行共用的完整流程：部署 → BBR → 保存配置 → 展示信息
+run_mode_flow() {
+  MODE="$1"
+  local m
+  for m in $(mode_list); do
+    deploy_by_mode "$m"
+  done
+  maybe_enable_bbr
+  save_config
+  show_info
+}
+
+# ---------------------------------------------------------------------------
 # 交互菜单
 # ---------------------------------------------------------------------------
 interactive_menu() {
+  local snell_blocked="false"
+  if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
+    snell_blocked="true"
+  fi
   while true; do
     echo
     echo "=================================================="
@@ -2675,90 +3235,68 @@ interactive_menu() {
     echo " 2. 部署/重装 Snell"
     echo " 3. 部署/重装 AnyTLS"
     echo " 4. 部署/重装 Nowhere"
-    echo " 5. 同时部署 VLESS-Reality + Snell"
-    echo " 6. 同时部署 VLESS-Reality + AnyTLS"
-    echo " 7. 全部部署 VLESS + Snell + AnyTLS + Nowhere"
-    echo " 8. 查看节点信息"
-    echo " 9. 启用 BBR（部署后默认已开启）"
-    echo "10. 卸载所有组件"
+    echo " 5. 部署/重装 SOCKS5"
+    echo " 6. 部署/重装 MTProto（Telegram 代理）"
+    echo " 7. 同时部署 VLESS-Reality + Snell"
+    echo " 8. 同时部署 VLESS-Reality + AnyTLS"
+    echo " 9. 全部部署（VLESS+Snell+AnyTLS+Nowhere+SOCKS5+MTProto）"
+    echo "10. 查看节点信息"
+    echo "11. 启用 BBR（部署后默认已开启）"
+    echo "12. 卸载所有组件"
     echo " 0. 退出"
     echo "=================================================="
     local choice=""
-    read -r -p "请选择 [0-10]: " choice || true
+    read -r -p "请选择 [0-12]: " choice || true
     case "$choice" in
       1)
-        MODE="vless"
-        deploy_vless
-        maybe_enable_bbr
-        save_config
-        show_info
+        run_mode_flow vless
         ;;
       2)
-        if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
+        if [[ "$snell_blocked" == "true" ]]; then
+          warn "当前系统无法运行官方 Snell，请用 --snell-engine singbox 或改用 sing-box 引擎"
           pause_any_key
           continue
         fi
-        MODE="snell"
-        deploy_snell
-        maybe_enable_bbr
-        save_config
-        show_info
+        run_mode_flow snell
         ;;
       3)
-        MODE="anytls"
-        deploy_anytls
-        maybe_enable_bbr
-        save_config
-        show_info
+        run_mode_flow anytls
         ;;
       4)
-        MODE="nowhere"
-        deploy_nowhere
-        maybe_enable_bbr
-        save_config
-        show_info
+        run_mode_flow nowhere
         ;;
       5)
-        if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
-          pause_any_key
-          continue
-        fi
-        MODE="both"
-        deploy_vless
-        deploy_snell
-        maybe_enable_bbr
-        save_config
-        show_info
+        run_mode_flow socks5
         ;;
       6)
-        MODE="vless-anytls"
-        deploy_vless
-        deploy_anytls
-        maybe_enable_bbr
-        save_config
-        show_info
+        run_mode_flow mtproto
         ;;
       7)
-        if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
+        if [[ "$snell_blocked" == "true" ]]; then
+          warn "当前系统无法运行官方 Snell，请用 --snell-engine singbox 或改用 sing-box 引擎"
           pause_any_key
           continue
         fi
-        MODE="all"
-        deploy_vless
-        deploy_snell
-        deploy_anytls
-        deploy_nowhere
-        maybe_enable_bbr
-        save_config
-        show_info
+        run_mode_flow both
         ;;
       8)
-        show_info
+        run_mode_flow vless-anytls
         ;;
       9)
-        enable_bbr
+        if [[ "$snell_blocked" == "true" ]]; then
+          warn "当前系统无法运行官方 Snell，请用 --snell-engine singbox 或改用 sing-box 引擎"
+          pause_any_key
+          continue
+        fi
+        run_mode_flow all
         ;;
       10)
+        show_info
+        ;;
+      11)
+        enable_bbr
+        ;;
+      12)
         local ans=""
         read -r -p "确认卸载所有组件？[y/N]: " ans || true
         if [[ "$ans" =~ ^[Yy]$ ]]; then
@@ -2782,7 +3320,7 @@ interactive_menu() {
 usage() {
   cat <<EOF
 ${SCRIPT_NAME} v${SCRIPT_VERSION}
-一键部署 VLESS-Reality / Snell / AnyTLS / Nowhere 节点
+一键部署 VLESS-Reality / Snell / AnyTLS / Nowhere / SOCKS5 / MTProto 节点
 
 用法：
   # 一键运行（无需上传）
@@ -2793,9 +3331,13 @@ ${SCRIPT_NAME} v${SCRIPT_VERSION}
   bash deploy.sh [选项]
 
 模式：
-  -m, --mode <vless|snell|anytls|nowhere|vless-anytls|both|all>
-                                  部署模式；both=VLESS+Snell，vless-anytls=VLESS+AnyTLS，
-                                  all=四种全部部署；不指定则进入交互菜单
+  -m, --mode <协议[,协议...]>
+                                  部署模式，支持逗号组合；协议：vless / snell / anytls /
+                                  nowhere / socks5 / mtproto
+                                  别名：both=VLESS+Snell，vless-anytls=VLESS+AnyTLS，
+                                  all4=原来的四种（VLESS+Snell+AnyTLS+Nowhere），
+                                  all=六种全部（含 SOCKS5 与 MTProto）
+                                  不指定则进入交互菜单
   -a, --address <域名|IP>         客户端连接地址；同时部署时复用
       --core <xray|sing-box>      VLESS-Reality 核心，默认 sing-box
 
@@ -2846,6 +3388,20 @@ Nowhere：
       --nowhere-etar <Mbps>       Etar 限速，0=不限速
       --nowhere-log <级别>        日志级别，默认 info
 
+SOCKS5（sing-box socks 入站，独立服务 sing-box-socks）：
+      --socks5-port <端口>        监听端口，默认 1080
+      --socks5-user <用户名>      用户名，默认 socksuser
+      --socks5-pass <密码>        密码，默认随机生成
+      --socks5-udp <true|false>   是否放行 UDP 端口，默认 true（false=仅 TCP）
+      --socks5-no-auth            不启用认证（等同开放代理，务必用防火墙限制来源 IP）
+
+MTProto（mtg v2，Telegram 代理）：
+      --mtproto-port <端口>       监听端口，默认 443（同批部署撞端口时自动改用 8448）
+      --mtproto-domain <域名>     FakeTLS 伪装域名，默认 www.cloudflare.com
+      --mtproto-secret <secret>   自定义 secret（ee 开头 hex 或 base64），默认随机生成
+      --mtproto-concurrency <N>   最大并发连接数，默认 8192
+      --mtproto-version <版本>    mtg 版本，默认 2.2.8，可写 latest
+
 其他：
       --singbox-version <版本>    指定 sing-box 版本；默认自动获取最新
       --bbr                       立即启用 BBR（默认部署后已自动启用）
@@ -2887,8 +3443,21 @@ Nowhere：
   bash $0 --mode nowhere --address 1.2.3.4 --nowhere-port 2077 \\
     --nowhere-client both
 
-  # 全部部署（VLESS + Snell + AnyTLS + Nowhere）
+  # 只部署 SOCKS5（默认 1080，用户名密码认证）
+  bash $0 --mode socks5 --address 1.2.3.4 --socks5-port 1080 -y
+
+  # 只部署 MTProto（Telegram 代理，默认 443）
+  bash $0 --mode mtproto --address 1.2.3.4 --mtproto-port 443 -y
+
+  # 自由组合：VLESS + SOCKS5 + MTProto
+  bash $0 --mode vless,socks5,mtproto --address node.example.com \\
+    --vless-port 443 --socks5-port 1080 --mtproto-port 8448 -y
+
+  # 全部部署（六种）
   bash $0 --mode all --address 1.2.3.4 -y --force
+
+  # 兼容旧行为：只部署原来的四种
+  bash $0 --mode all4 --address 1.2.3.4 -y --force
 
   # 查看信息 / 卸载
   bash $0 --info
@@ -3020,6 +3589,35 @@ parse_args() {
       --nowhere-log)
         need_value "$@"
         NOWHERE_LOG="$2"; shift 2 ;;
+      --socks5-port)
+        need_value "$@"
+        SOCKS_PORT="$2"; shift 2 ;;
+      --socks5-user)
+        need_value "$@"
+        SOCKS_USER="$2"; shift 2 ;;
+      --socks5-pass)
+        need_value "$@"
+        SOCKS_PASS="$2"; shift 2 ;;
+      --socks5-udp)
+        need_value "$@"
+        SOCKS_UDP="$2"; shift 2 ;;
+      --socks5-no-auth)
+        SOCKS_NO_AUTH="true"; shift ;;
+      --mtproto-port)
+        need_value "$@"
+        MTG_PORT="$2"; MTG_PORT_CLI="true"; shift 2 ;;
+      --mtproto-domain)
+        need_value "$@"
+        MTG_FAKETLS_DOMAIN="$2"; shift 2 ;;
+      --mtproto-secret)
+        need_value "$@"
+        MTG_SECRET="$2"; shift 2 ;;
+      --mtproto-concurrency)
+        need_value "$@"
+        MTG_CONCURRENCY="$2"; shift 2 ;;
+      --mtproto-version)
+        need_value "$@"
+        MTG_VERSION="$2"; shift 2 ;;
       --singbox-version)
         need_value "$@"
         SINGBOX_VERSION="$2"; shift 2 ;;
@@ -3051,10 +3649,23 @@ parse_args() {
   done
 
   if [[ -n "$MODE" ]]; then
-    case "$MODE" in
-      vless|snell|anytls|nowhere|vless-anytls|both|all) ;;
-      *) die "--mode 必须是 vless、snell、anytls、nowhere、vless-anytls、both 或 all，当前：$MODE" ;;
-    esac
+    # 校验协议名（未知会直接退出）；别名与逗号组合都支持
+    mode_list >/dev/null
+  fi
+
+  case "$SOCKS_UDP" in
+    true|false) ;;
+    *) die "--socks5-udp 只能是 true 或 false，当前：$SOCKS_UDP" ;;
+  esac
+  [[ "$MTG_CONCURRENCY" =~ ^[1-9][0-9]*$ ]] || die "--mtproto-concurrency 必须是正整数，当前：$MTG_CONCURRENCY"
+  if [[ -n "$MTG_SECRET" ]]; then
+    validate_mtg_secret "$MTG_SECRET" || die "--mtproto-secret 格式无效：应为 ee 开头的 hex 或 base64 字符串"
+  fi
+  if [[ -n "$SOCKS_PORT" ]]; then
+    validate_port "$SOCKS_PORT" || die "--socks5-port 无效：$SOCKS_PORT"
+  fi
+  if [[ -n "$MTG_PORT" ]]; then
+    validate_port "$MTG_PORT" || die "--mtproto-port 无效：$MTG_PORT"
   fi
 
   if [[ -n "$SNELL_ENGINE" ]]; then
@@ -3160,40 +3771,15 @@ main() {
     exit 0
   fi
 
-  case "$MODE" in
-    vless)
-      deploy_vless
-      ;;
-    snell)
-      deploy_snell
-      ;;
-    anytls)
-      deploy_anytls
-      ;;
-    nowhere)
-      deploy_nowhere
-      ;;
-    vless-anytls)
-      deploy_vless
-      deploy_anytls
-      ;;
-    both)
-      if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
-        die "当前系统无法运行官方 Snell，请使用 --snell-engine singbox。"
-      fi
-      deploy_vless
-      deploy_snell
-      ;;
-    all)
-      if [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
-        die "当前系统无法运行官方 Snell，请使用 --snell-engine singbox。"
-      fi
-      deploy_vless
-      deploy_snell
-      deploy_anytls
-      deploy_nowhere
-      ;;
-  esac
+  # 校验 Snell 引擎可用性（官方 snell-server 仅 glibc）
+  if mode_includes snell && [[ "$SNELL_ENGINE_CLI" == "true" && "$SNELL_ENGINE" == "official" ]] && ! check_snell_platform; then
+    die "当前系统无法运行官方 Snell，请使用 --snell-engine singbox。"
+  fi
+
+  local _m
+  for _m in $(mode_list); do
+    deploy_by_mode "$_m"
+  done
 
   maybe_enable_bbr
   save_config

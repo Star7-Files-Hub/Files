@@ -1,9 +1,9 @@
 [fq2.txt] 添加规则：16 条，重复规则：0 条
-[adguard_filter_1.txt] 添加规则：186175 条，重复规则：0 条
+[adguard_filter_1.txt] 添加规则：186393 条，重复规则：0 条
 [adguard_filter_2.txt] 添加规则：8562 条，重复规则：0 条
 [fqnovel-fxxk_ads.txt] 添加规则：43 条，重复规则：7 条
 [qimao-ads.txt] 添加规则：17 条，重复规则：0 条
-[b_ads.txt] 添加规则：6 条，重复规则：0 条
+[b_ads.txt] 下载失败：404 Client Error: Not Found for url: https://gcore.jsdelivr.net/gh/changzhaoCZ/fqnovel-adrules@refs/heads/main/b_ads
 [aiqiyi.txt] 添加规则：17 条，重复规则：0 条
 [genery_rules.txt] 添加规则：6168 条，重复规则：707 条
 [xmlyjsb.txt] 添加规则：4 条，重复规则：6 条

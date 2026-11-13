@@ -133,3 +133,199 @@
 ||aichat4search.com^
 ||ksord.com^
 ||starrydyn.com^
+! ---------------------------------------------------------------
+! 微软 Microsoft —— Windows / Office / Edge 遥测
+! ---------------------------------------------------------------
+
+! Windows 兼容性遥测与设备设置信息收集
+||settings-win.data.microsoft.com^
+! Windows 遥测事件管道 Vortex 主端点(应用使用行为)
+||vortex.data.microsoft.com^
+! Windows 消费版遥测事件管道(旧版客户端)
+||vortex-win.data.microsoft.com^
+! Windows 错误报告 WER 上传(崩溃转储)
+||watson.telemetry.microsoft.com^
+! Windows 错误报告预发布环境
+||watson.ppe.telemetry.microsoft.com^
+! 客户体验改善计划 SQM(Win7/8 时代)
+||sqm.telemetry.microsoft.com^
+! 微软通用遥测汇聚域
+||telemetry.microsoft.com^
+! Bing/Edge 体验改进遥测
+||telemetry.appex.bing.com^
+! URL 信誉服务遥测
+||telemetry.urs.microsoft.com^
+! Windows 应用商店统计上报
+||statsfe1.ws.microsoft.com^
+||statsfe2.ws.microsoft.com^
+! 错误诊断数据上传
+||diagnostics.support.microsoft.com^
+! OneCollector 统一遥测(Office/Edge/Win11 核心埋点) [重]
+||self.events.data.microsoft.com^
+! OneCollector 统一遥测主端点 [重]
+||events.data.microsoft.com^
+! 移动端 OneCollector 遥测
+||mobile.events.data.microsoft.com^
+! Edge/MSN 浏览行为遥测
+||browser.events.data.msn.com^
+||browser.events.data.msn.cn^
+! Office 客户端配置下发与遥测 [重]
+||officeclient.microsoft.com^
+! 遥测加入选择提示
+||choice.microsoft.com^
+
+! ---------------------------------------------------------------
+! 谷歌 Google —— Chrome / Android / 网页分析追踪
+! ---------------------------------------------------------------
+
+! Google Analytics 4 [重]
+||analytics.google.com^
+! Google Analytics 经典埋点
+||www.google-analytics.com^
+||ssl.google-analytics.com^
+! Google Tag Manager [重]
+||googletagmanager.com^
+||www.googletagmanager.com^
+! Google 广告服务与转化跟踪
+||googleadservices.com^
+||www.googleadservices.com^
+! DoubleClick 广告追踪 [重]
+||doubleclick.net^
+||ad.doubleclick.net^
+||stats.g.doubleclick.net^
+! Firebase Analytics 应用分析
+||app-measurement.com^
+! Firebase 日志上报
+||firebaselogging-pa.googleapis.com^
+||firebaselogging.googleapis.com^
+! Android 应用崩溃上报
+||mobilecrashreporting-pa.googleapis.com^
+! Firebase 实例 ID(推送/远程配置依赖) [重]
+||firebaseinstallations.googleapis.com^
+! Android 网络连通性探测(泄露网络指纹) [重]
+||connectivitycheck.gstatic.com^
+! Chrome 优化指引与 A/B 实验上报
+||optimizationguide-pa.googleapis.com^
+! Chrome 地址栏联想上报
+||clients1.google.com^
+
+! ---------------------------------------------------------------
+! 苹果 Apple —— macOS / iOS 遥测
+! ---------------------------------------------------------------
+
+! 苹果 A/B 实验平台与设备遥测
+||xp.apple.com^
+! 苹果统计上报节点(域名存活备用)
+||api.stats.apple.com^
+! 苹果广告/媒体效果测量
+||securemvt.apple.com^
+! App Store 行为统计
+||bookkeeper.itunes.apple.com^
+
+! ---------------------------------------------------------------
+! Mozilla Firefox 遥测
+! ---------------------------------------------------------------
+
+||incoming.telemetry.mozilla.org^
+||self-repair.mozilla.org^
+! Firefox 赞助商快捷磁贴
+||contile.services.mozilla.com^
+
+! ---------------------------------------------------------------
+! 三星 Samsung —— One UI 遥测与广告
+! ---------------------------------------------------------------
+
+! 三星广告平台根域 [重]
+||samsungads.com^
+! 三星数据归因/分析平台(域名存活备用)
+||samsungacr.com^
+! 三星开放服务平台统计(域名存活备用)
+||samsungosp.com^
+
+! ---------------------------------------------------------------
+! 小米 Xiaomi —— MIUI / HyperOS 遥测与广告
+! ---------------------------------------------------------------
+
+! MIUI 核心数据统计 MiStat
+||data.mistat.xiaomi.com^
+||data.mistat.intl.xiaomi.com^
+||data.mistat.india.xiaomi.com^
+! MIUI 埋点跟踪
+||tracking.miui.com^
+||tracking.intl.miui.com^
+||tracking.india.miui.com^
+! 小米广告 API 与日志
+||api.ad.xiaomi.com^
+||log.ad.xiaomi.com^
+! MIUI 系统广告配置下发 [重]
+||adv.sec.miui.com^
+
+! ---------------------------------------------------------------
+! 华为 Huawei —— EMUI / HarmonyOS 遥测
+! (hippos.hicloud.com 等已下线,经核实剔除)
+! ---------------------------------------------------------------
+
+||logservice.hicloud.com^
+||metrics.data.hicloud.com^
+
+! ---------------------------------------------------------------
+! 腾讯 Tencent —— 埋点 SDK 与广告
+! ---------------------------------------------------------------
+
+! 腾讯灯塔 Beacon 埋点 SDK 根域 [重]
+||beacon.qq.com^
+! 腾讯网页统计脚本
+||pingjs.qq.com^
+! 腾讯优量汇广告联盟
+||mi.gdt.qq.com^
+
+! ---------------------------------------------------------------
+! 字节跳动 ByteDance —— 抖音 / 今日头条 / TikTok 埋点
+! ---------------------------------------------------------------
+
+||log.snssdk.com^
+||mon.snssdk.com^
+||log.byteoversea.com^
+||log.tiktokv.com^
+||log-va.tiktokv.com^
+
+! ---------------------------------------------------------------
+! 阿里巴巴 Alibaba —— 淘宝 / UC / 网页统计
+! ---------------------------------------------------------------
+
+||log.mmstat.com^
+||gm.mmstat.com^
+! 阿里前端监控 RetCode
+||retcode.taobao.com^
+
+! ---------------------------------------------------------------
+! 百度 Baidu —— 网页与移动统计
+! ---------------------------------------------------------------
+
+! 百度统计 hm.js [重]
+||hm.baidu.com^
+! 百度移动统计 MTJ
+||hmma.baidu.com^
+
+! ---------------------------------------------------------------
+! 360 奇虎 —— 网站统计
+! ---------------------------------------------------------------
+
+||s.360.cn^
+
+! ---------------------------------------------------------------
+! Meta / TikTok / X / LinkedIn / Pinterest —— 社交平台广告追踪
+! ---------------------------------------------------------------
+
+! Meta/Facebook 追踪像素 [重]
+||pixel.facebook.com^
+! Facebook SDK/像素脚本分发
+||connect.facebook.net^
+! TikTok 网页分析像素
+||analytics.tiktok.com^
+! X(Twitter) 广告像素
+||static.ads-twitter.com^
+! LinkedIn Insight 广告追踪标签
+||px.ads.linkedin.com^
+! Pinterest 转化追踪标签
+||ct.pinterest.com^

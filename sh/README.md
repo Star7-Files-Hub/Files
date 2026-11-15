@@ -626,13 +626,71 @@ bash deploy.sh --dry-run --mode all --address node.example.com \
 
 ---
 
-## 10. 附：Lite 探针（Alpine / OpenRC 脚本）
+## 10. 附：Lite / Lite-Plus 探针（Alpine / OpenRC 脚本）
 
-同目录下的 `lite-openrc.sh` 是 [Lite（komari-lite）](https://github.com/nuomiiiii/Lite) 探针在 **Alpine + OpenRC** 上的安装 / 升级脚本，和上面的节点部署脚本互不相关。
+同目录下的三个脚本用于 [Lite-Plus](https://github.com/nuomiiiii/Lite-Plus) 探针在 **Alpine + OpenRC** 上的安装、升级与迁移，和上面的节点部署脚本互不相关。官方 `install-lite.sh` 只支持 systemd 和 OpenWrt/procd：在 Alpine 上服务管理器判定为 `none`，会打印「未检测到 systemd 或 OpenWrt procd，已跳过服务创建」——二进制装好了，但没有服务、没有开机自启。这些脚本补上这一段：写 OpenRC 服务脚本 + `rc-update add`，并带备份、二进制校验、启动后健康检查与失败自动回滚。
+
+| 脚本 | 用途 |
+| --- | --- |
+| `lite-plus-openrc.sh` | **Lite-Plus**（新项目，推荐）在 Alpine / OpenRC 上的安装 / 升级 / 状态 / 回滚；服务名 `lite-plus`，新装默认端口 `28777` |
+| `lite-migrate-to-plus.sh` | 从旧项目 **Lite** 一键迁移到 **Lite-Plus**；保留端口与数据目录，服务名 `lite` → `lite-plus`，失败自动回滚 |
+| `lite-openrc.sh` | 旧版 **Lite** 的安装 / 升级脚本，已由 Lite-Plus 取代，仅用于仍在跑 Lite 的旧机器 |
+
+### 10.1 Lite-Plus 一键安装 / 升级（`lite-plus-openrc.sh`）
+
+```bash
+# 最省事：没装就安装，已装就升级（新装默认端口 28777）
+wget -O lite-plus-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-plus-openrc.sh && sh lite-plus-openrc.sh
+
+# 指定端口安装 / 升级 / 查看状态（不需要 root）/ 回滚 / 只演练
+wget -O lite-plus-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-plus-openrc.sh && sh lite-plus-openrc.sh install --port 8080
+wget -O lite-plus-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-plus-openrc.sh && sh lite-plus-openrc.sh upgrade
+wget -O lite-plus-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-plus-openrc.sh && sh lite-plus-openrc.sh status
+wget -O lite-plus-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-plus-openrc.sh && sh lite-plus-openrc.sh rollback
+wget -O lite-plus-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-plus-openrc.sh && sh lite-plus-openrc.sh upgrade --dry-run
+```
+
+参数与旧版 `lite-openrc.sh` 基本一致（`--port` / `--version` / `--channel` / `--force` / `--dry-run` / `--no-backup`，详见下文旧版表格），主要区别：
+
+- 新装默认端口 **28777**（Lite-Plus 默认；旧 Lite 是 27777）
+- 上游 tag 形如 **`0.2.0`**（旧 Lite 是 `2.3.6`）
+- 服务名 / 服务脚本为 **`lite-plus`** / `/etc/init.d/lite-plus`，日志 `/var/log/lite-plus.log`
+- 额外注入 `GODEBUG=disablethp=1`（与官方 systemd / procd 单元一致）
+- 检测到旧服务脚本 `/etc/init.d/lite` 时会拒绝 `install` / `upgrade`，提示改用迁移脚本
+- 二进制仍是 `/opt/lite/Lite`、数据目录 `/opt/lite/data`
+
+### 10.2 从 Lite 迁移到 Lite-Plus（`lite-migrate-to-plus.sh`）
+
+官方要求从 Lite 迁移时保留监听端口、沿用 `data` 目录，且首次启动会做数据库迁移。本脚本自动完成迁移前的完整备份与失败回滚：
+
+```bash
+# 先演练（只打印计划，不做改动）
+wget -O lite-migrate-to-plus.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-migrate-to-plus.sh && sh lite-migrate-to-plus.sh --dry-run
+
+# 正式迁移：备份 → 下载校验 Lite-Plus → 停机替换 → 服务名 lite→lite-plus → 启动并等待数据库迁移
+wget -O lite-migrate-to-plus.sh https://raw.githubusercontent.com/Star7-Files-Hub/Files/main/sh/lite-migrate-to-plus.sh && sh lite-migrate-to-plus.sh
+
+# 迁移到指定版本 / 显式指定保留端口
+sh lite-migrate-to-plus.sh --version 0.2.0
+sh lite-migrate-to-plus.sh --port 27777
+
+# 需要回退到迁移前的 Lite
+sh lite-migrate-to-plus.sh rollback
+```
+
+要点：
+
+- 迁移前完整备份二进制、`/opt/lite/data` 与旧服务脚本到 `/root/lite-backups`（回滚记录 `.last_migrate`）
+- 监听端口按旧服务脚本原值保留（检测不到时默认 27777，可用 `--port` 覆盖）
+- 首次启动等待健康检查通过，最长约 3 分钟，**期间请勿中断**
+- `rollback` 会还原二进制 + 数据目录 + 旧服务（Lite-Plus 迁移会改写数据库，所以必须连数据一起还原）
+- 已存在 `/etc/init.d/lite-plus` 时默认拒绝重跑（确认要强跑加 `--force`）；迁移后的日常升级用 `lite-plus-openrc.sh upgrade`
+
+### 10.3 旧版 Lite 一键安装 / 升级（`lite-openrc.sh`）
+
+同目录下的 `lite-openrc.sh` 是 [Lite（komari-lite）](https://github.com/nuomiiiii/Lite) 探针在 **Alpine + OpenRC** 上的安装 / 升级脚本。Lite 已由 [Lite-Plus](https://github.com/nuomiiiii/Lite-Plus) 取代：新装请优先用 `lite-plus-openrc.sh`，仍在跑 Lite 的旧机器用 `lite-migrate-to-plus.sh` 迁移。
 
 官方 `install-lite.sh` 只支持 systemd 和 OpenWrt/procd：在 Alpine 上服务管理器判定为 `none`，会打印「未检测到 systemd 或 OpenWrt procd，已跳过服务创建」——二进制装好了，但没有服务、没有开机自启。本脚本补上这一段：写 `/etc/init.d/lite` + `rc-update add lite default`，并带备份、二进制校验、启动后健康检查与失败自动回滚。
-
-### 10.1 一键安装 / 升级
 
 官方原命令（供对照，只支持 systemd 和 OpenWrt/procd）：
 
@@ -674,7 +732,7 @@ GitHub Raw 慢或刚推送还在缓存时，可换 jsDelivr 镜像（路径相�
 
 说明：`sh -s --` 里的 `--` 用于结束 `sh` 自身的参数解析，**action 要写在 `--` 后面**（`sh -s -- upgrade --port 8080`）。脚本只用 POSIX sh，不需要 bash / jq / curl（busybox 的 `sh` + `wget` 即可）；`--help` 直接运行和管道执行都可用（要准确判断退出码时建议先 `wget -O` 落地再跑）。
 
-### 10.2 动作、参数与路径
+### 10.4 动作、参数与路径（旧版 `lite-openrc.sh`）
 
 | 动作 | 说明 |
 | --- | --- |
@@ -703,7 +761,7 @@ GitHub Raw 慢或刚推送还在缓存时，可换 jsDelivr 镜像（路径相�
 
 安装时若检测到 cgroup 内存上限，会按上限的一半（下限 32MiB）写入 `GOMEMLIMIT`、`GOGC=50`，避免 Go 探针在小容器里被 OOM。
 
-### 10.3 注意事项
+### 10.5 注意事项（旧版 `lite-openrc.sh`）
 
 1. **跑过官方脚本的机器可以直接 `install`**：官方 `install-lite.sh` 会把二进制放到同一个 `/opt/lite/Lite`，但在 Alpine 上判定服务管理器为 `none`、不建 OpenRC 服务。现在遇到「只有二进制、没有服务脚本」会自动补建服务：`install` 会继续安装（覆盖前先把旧二进制备份到 `/root/lite-backups`），`upgrade` 也会补建，**不需要先删二进制**。
 2. **端口不用重复传**：`--port` 只在 `install` 时写进服务脚本；`upgrade` / `status` / `rollback` 不带 `--port` 时会自动从 `/etc/init.d/lite` 读出实际端口，避免用默认 27777 探测不到、误判健康检查失败而回滚。
@@ -712,7 +770,7 @@ GitHub Raw 慢或刚推送还在缓存时，可换 jsDelivr 镜像（路径相�
 5. **`--channel` 只识别 `snapshot`**，其它取值按 `stable` 处理且不报错；上游目前没有 `Snapshot-` 前缀的 release，所以传 `--channel snapshot` 会静默退回稳定版。
 6. **脚本没有卸载动作**，也没有 sha256 / 签名校验，只校验文件大小、ELF 魔数和能否执行 `version`（校验时会以 root 执行刚下载的二进制，安全性依赖 GitHub release 通道）。
 
-### 10.4 卸载（手动）
+### 10.6 卸载（旧版 `lite-openrc.sh`，手动）
 
 ```bash
 rc-service lite stop

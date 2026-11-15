@@ -476,8 +476,7 @@ do_rollback() {
 	cp -a "$last" "$BINARY" || die "恢复二进制失败"
 	chmod +x "$BINARY"
 	rc-service "$SERVICE" start >/dev/null 2>&1
-	sleep 6
-	if service_up && http_ok; then
+	if wait_healthy_loop; then
 		ok "回滚成功，当前版本 $(current_version)"
 	else
 		die "回滚后服务仍异常，请检查 $LOG_FILE"
@@ -508,6 +507,23 @@ health_check() {
 	[ -n "$v" ] || { warn "无法读取版本号"; return 1; }
 	ok "健康检查通过：版本 $v，服务 started，HTTP 正常"
 	return 0
+}
+
+# 轮询等待服务就绪：最多约 2 分钟。
+# 新版首次启动可能做数据迁移 / 大库压缩，8 秒固定等待往往不够，容易误判回滚。
+wait_healthy_loop() {
+	n=1
+	while [ "$n" -le 40 ]; do
+		if service_up && http_ok && [ -n "$(current_version 2>/dev/null)" ]; then
+			return 0
+		fi
+		if [ $((n % 10)) -eq 0 ]; then
+			info "  仍在等待服务就绪（${n}/40，约 $((n * 3)) 秒）…"
+		fi
+		sleep 3
+		n=$((n + 1))
+	done
+	return 1
 }
 
 # ------------------------------------------------------------------------------
@@ -558,7 +574,7 @@ do_install() {
 		&& ok "已加入开机自启（default runlevel）" \
 		|| warn "加入开机自启失败，可手动执行：rc-update add $SERVICE default"
 	rc-service "$SERVICE" start >/dev/null 2>&1
-	sleep 6
+	wait_healthy_loop || warn "等待服务就绪超时（约 2 分钟）"
 
 	health_check || die "启动后健康检查失败，请看 $LOG_FILE"
 	write_last_release_mark
@@ -602,7 +618,7 @@ do_upgrade() {
 			ok "当前已是 $CUR_VER，但缺少 OpenRC 服务脚本，只补建服务（不重新下载）"
 			ensure_init_script || die "补建服务脚本失败"
 			rc-service "$SERVICE" start >/dev/null 2>&1
-			sleep 6
+			wait_healthy_loop || warn "等待服务就绪超时（约 2 分钟）"
 			health_check || die "启动后健康检查失败，请看 $LOG_FILE"
 			write_last_release_mark
 			ok "服务已补建并启动（端口 $PORT）"
@@ -633,7 +649,8 @@ do_upgrade() {
 	sleep 2
 	mv -f "$BINARY.dl" "$BINARY" || die "替换二进制失败"
 	rc-service "$SERVICE" start >/dev/null 2>&1
-	sleep 8
+	info "已启动新版本，等待服务就绪（首次启动可能做数据迁移，最多约 2 分钟）"
+	wait_healthy_loop || warn "等待服务就绪超时（约 2 分钟）"
 
 	if health_check; then
 		write_last_release_mark

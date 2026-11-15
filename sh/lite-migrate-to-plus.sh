@@ -330,18 +330,18 @@ http_ok() {
 	return 1
 }
 
-health_ok() {
-	service_up "$SERVICE" || return 1
+health_ok() { # health_ok [name]
+	service_up "${1:-$SERVICE}" || return 1
 	http_ok || return 1
 	[ -n "$(current_version)" ] || return 1
 	return 0
 }
 
 # 等待迁移完成：首次启动会做数据库迁移，可能较慢。最多约 3 分钟。
-wait_healthy() {
+wait_healthy() { # wait_healthy [name]
 	n=1
 	while [ "$n" -le 60 ]; do
-		if health_ok; then
+		if health_ok "${1:-$SERVICE}"; then
 			return 0
 		fi
 		if [ $((n % 10)) -eq 0 ]; then
@@ -426,8 +426,7 @@ do_rollback() {
 		rc-update add "$LEGACY_SERVICE" default >/dev/null 2>&1 || true
 		rc-service "$LEGACY_SERVICE" start >/dev/null 2>&1
 		PORT="$old_port"
-		sleep 6
-		if service_up "$LEGACY_SERVICE" && http_ok; then
+		if wait_healthy "$LEGACY_SERVICE"; then
 			ok "回滚成功：Lite $(current_version)，服务 $LEGACY_SERVICE（端口 $PORT）"
 		else
 			die "回滚后服务仍异常，请检查日志"

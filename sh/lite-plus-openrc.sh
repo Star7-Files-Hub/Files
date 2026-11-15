@@ -138,7 +138,7 @@ Lite-Plus —— Alpine / OpenRC 一键安装与升级脚本
   - 安装 / 升级 / 回滚需要 root，status 不需要
   - 只用 POSIX sh，不需要 bash / jq（busybox 的 sh + wget 即可）
   - 只有二进制、没有 OpenRC 服务脚本时（官方 install-lite.sh 装的）会自动补建服务
-  - 同版本号但有更新的发布（按 GitHub 发布时间比较）时，upgrade 会自动更新；--force 无条件执行
+  - 同版本号但有更新的发布（按 GitHub 最近更新时间 updated_at 比较）时，upgrade 会自动更新；--force 无条件执行
   - 若检测到旧 Lite 的服务脚本 /etc/init.d/lite，本脚本会拒绝操作，请改用迁移脚本
 USAGE
 	exit 0
@@ -265,14 +265,24 @@ current_version() {
 	printf '%s\n' "$cv"
 }
 
-# 取某个 tag 的发布时间（GitHub API 的 published_at，ISO8601 UTC）
-release_time_for_tag() { # release_time_for_tag <tag>
-	dl_stdout "https://api.github.com/repos/${REPO}/releases/tags/$1" \
-		| grep '"published_at"' | head -n 1 \
-		| sed -e 's/.*"published_at" *: *"//' -e 's/".*//'
+# 从 GitHub release JSON 里取「最近更新时间」：优先 updated_at（同 tag 重新上传产物时会变），
+# 其次 published_at（首次发布时间；重新发布时才会变）。两者都是 ISO8601 UTC。
+json_time() { # json_time <json>
+	t=$(printf '%s\n' "$1" | grep '"updated_at"' | head -n 1 \
+		| sed -e 's/.*"updated_at" *: *"//' -e 's/".*//')
+	if [ -z "$t" ]; then
+		t=$(printf '%s\n' "$1" | grep '"published_at"' | head -n 1 \
+			| sed -e 's/.*"published_at" *: *"//' -e 's/".*//')
+	fi
+	printf '%s\n' "$t"
 }
 
-# 解析目标版本与发布时间，写入全局 NEW_VER / NEW_TIME
+# 取某个 tag 的最近更新时间
+release_time_for_tag() { # release_time_for_tag <tag>
+	json_time "$(dl_stdout "https://api.github.com/repos/${REPO}/releases/tags/$1")"
+}
+
+# 解析目标版本与最近更新时间，写入全局 NEW_VER / NEW_TIME
 resolve_target() {
 	if [ -n "$OPT_VERSION" ]; then
 		NEW_VER="$OPT_VERSION"
@@ -290,8 +300,7 @@ resolve_target() {
 	json=$(dl_stdout "https://api.github.com/repos/${REPO}/releases/latest")
 	NEW_VER=$(printf '%s\n' "$json" | grep '"tag_name"' | head -n 1 \
 		| sed -e 's/.*"tag_name" *: *"//' -e 's/".*//')
-	NEW_TIME=$(printf '%s\n' "$json" | grep '"published_at"' | head -n 1 \
-		| sed -e 's/.*"published_at" *: *"//' -e 's/".*//')
+	NEW_TIME=$(json_time "$json")
 	# 保险：拿不到就退回 GitHub 的 latest 重定向
 	if [ -z "$NEW_VER" ]; then
 		NEW_VER=$(dl_stdout "https://github.com/${REPO}/releases/latest" \
@@ -320,8 +329,8 @@ is_lex_less() { # is_lex_less <a> <b>
 	printf '%s\n%s\n' "$1" "$2" | sort -c >/dev/null 2>&1
 }
 
-# 同版本更新判断：release 发布时间是否比「上次安装的 release 时间」新
-# 无标记时退回比较本机二进制 mtime 与发布时间的 epoch 秒
+# 同版本更新判断：release 最近更新时间是否比「上次安装的 release 时间」新
+# 无标记时退回比较本机二进制 mtime 与发布/更新时间的 epoch 秒
 release_newer_than_last() {
 	[ -n "$NEW_TIME" ] || return 1
 	last_time=$(sed -n 's/^[^|]*|//p' "$LAST_RELEASE_MARK" 2>/dev/null | head -n 1)
@@ -334,7 +343,7 @@ release_newer_than_last() {
 	[ -n "$mt" ] && [ -n "$rt" ] && [ "$rt" -gt "$mt" ]
 }
 
-# 记录本次成功安装 / 升级的 release 发布时间
+# 记录本次成功安装 / 升级的 release 最近更新时间
 write_last_release_mark() {
 	[ -n "${NEW_TIME:-}" ] || return 0
 	mkdir -p "$BACKUP_ROOT"

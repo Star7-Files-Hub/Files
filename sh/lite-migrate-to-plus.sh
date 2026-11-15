@@ -184,11 +184,16 @@ latest_version() {
 	echo "$v"
 }
 
-# 取某个 tag 的发布时间（GitHub API 的 published_at，ISO8601 UTC）
+# 取某个 tag 的最近更新时间：优先 updated_at，其次 published_at（ISO8601 UTC）
 release_time_for_tag() { # release_time_for_tag <tag>
-	dl_stdout "https://api.github.com/repos/${REPO}/releases/tags/$1" \
-		| grep '"published_at"' | head -n 1 \
-		| sed -e 's/.*"published_at" *: *"//' -e 's/".*//'
+	json=$(dl_stdout "https://api.github.com/repos/${REPO}/releases/tags/$1")
+	t=$(printf '%s\n' "$json" | grep '"updated_at"' | head -n 1 \
+		| sed -e 's/.*"updated_at" *: *"//' -e 's/".*//')
+	if [ -z "$t" ]; then
+		t=$(printf '%s\n' "$json" | grep '"published_at"' | head -n 1 \
+			| sed -e 's/.*"published_at" *: *"//' -e 's/".*//')
+	fi
+	printf '%s\n' "$t"
 }
 
 download_url() { # download_url <arch> <version>

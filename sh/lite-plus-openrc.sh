@@ -37,7 +37,7 @@
 #                   未显式指定时会自动从 /etc/init.d/lite-plus 反解已有端口）
 #   --version X.Y.Z 指定版本（默认取最新；当前上游 tag 形如 0.2.0）
 #   --channel NAME  stable（默认）| snapshot（仅 upgrade 生效，install 装稳定版）
-#   --force         版本相同时仍执行（用于重装 / 降级）
+#   --force         无条件执行（跳过同版本/版本新旧判断，用于重装 / 降级）
 #   --dry-run       演练：upgrade 只下载并校验（不替换、不重启、不写备份）；install 不做任何改动
 #   --no-backup     升级时不备份（不推荐）
 #   -h, --help      显示帮助（帮助文本内嵌，管道执行时也可用）
@@ -64,6 +64,9 @@ LEGACY_INIT_SCRIPT="/etc/init.d/lite"
 LOG_FILE="/var/log/lite-plus.log"
 BACKUP_ROOT="/root/lite-backups"
 LAST_BINARY_MARK="$BACKUP_ROOT/.last_binary"
+LAST_RELEASE_MARK="$BACKUP_ROOT/.last_release"
+NEW_VER=""
+NEW_TIME=""
 
 PORT="28777"
 PORT_CLI=0
@@ -126,7 +129,7 @@ Lite-Plus —— Alpine / OpenRC 一键安装与升级脚本
                   未显式指定时会自动从 /etc/init.d/lite-plus 反解已有端口）
   --version X.Y.Z 指定版本（默认取最新；当前上游 tag 形如 0.2.0）
   --channel NAME  stable（默认）| snapshot（仅 upgrade 生效，install 装稳定版）
-  --force         版本与当前相同时仍执行（用于重装 / 降级）
+  --force         无条件执行（跳过同版本/版本新旧判断，用于重装 / 降级）
   --dry-run       演练：upgrade 只下载并校验（不替换、不重启、不写备份）；install 不做任何改动
   --no-backup     升级时不备份（不推荐，之后无法 rollback）
   -h, --help      显示本帮助
@@ -135,6 +138,7 @@ Lite-Plus —— Alpine / OpenRC 一键安装与升级脚本
   - 安装 / 升级 / 回滚需要 root，status 不需要
   - 只用 POSIX sh，不需要 bash / jq（busybox 的 sh + wget 即可）
   - 只有二进制、没有 OpenRC 服务脚本时（官方 install-lite.sh 装的）会自动补建服务
+  - 同版本号但有更新的发布（按 GitHub 发布时间比较）时，upgrade 会自动更新；--force 无条件执行
   - 若检测到旧 Lite 的服务脚本 /etc/init.d/lite，本脚本会拒绝操作，请改用迁移脚本
 USAGE
 	exit 0
@@ -261,23 +265,80 @@ current_version() {
 	printf '%s\n' "$cv"
 }
 
-latest_version() {
+# 取某个 tag 的发布时间（GitHub API 的 published_at，ISO8601 UTC）
+release_time_for_tag() { # release_time_for_tag <tag>
+	dl_stdout "https://api.github.com/repos/${REPO}/releases/tags/$1" \
+		| grep '"published_at"' | head -n 1 \
+		| sed -e 's/.*"published_at" *: *"//' -e 's/".*//'
+}
+
+# 解析目标版本与发布时间，写入全局 NEW_VER / NEW_TIME
+resolve_target() {
+	if [ -n "$OPT_VERSION" ]; then
+		NEW_VER="$OPT_VERSION"
+		NEW_TIME=$(release_time_for_tag "$NEW_VER")
+		return 0
+	fi
 	if [ "$CHANNEL" = "snapshot" ]; then
-		v=$(dl_stdout "https://api.github.com/repos/${REPO}/releases" \
+		NEW_VER=$(dl_stdout "https://api.github.com/repos/${REPO}/releases" \
 			| grep '"tag_name"' | grep 'Snapshot-' | head -n 1 \
 			| sed -e 's/.*"tag_name" *: *"//' -e 's/".*//')
-	else
-		v=$(dl_stdout "https://api.github.com/repos/${REPO}/releases/latest" \
-			| grep '"tag_name"' | head -n 1 \
-			| sed -e 's/.*"tag_name" *: *"//' -e 's/".*//')
+		[ -n "$NEW_VER" ] || die "获取最新 snapshot 版本号失败（GitHub API 可能限流，可稍后重试或用 --version 指定）"
+		NEW_TIME=$(release_time_for_tag "$NEW_VER")
+		return 0
 	fi
+	json=$(dl_stdout "https://api.github.com/repos/${REPO}/releases/latest")
+	NEW_VER=$(printf '%s\n' "$json" | grep '"tag_name"' | head -n 1 \
+		| sed -e 's/.*"tag_name" *: *"//' -e 's/".*//')
+	NEW_TIME=$(printf '%s\n' "$json" | grep '"published_at"' | head -n 1 \
+		| sed -e 's/.*"published_at" *: *"//' -e 's/".*//')
 	# 保险：拿不到就退回 GitHub 的 latest 重定向
-	if [ -z "$v" ]; then
-		v=$(dl_stdout "https://github.com/${REPO}/releases/latest" \
+	if [ -z "$NEW_VER" ]; then
+		NEW_VER=$(dl_stdout "https://github.com/${REPO}/releases/latest" \
 			| grep -o "releases/tag/[0-9][^\"']*" | head -n 1 | sed 's|releases/tag/||')
 	fi
-	[ -n "$v" ] || die "获取最新版本号失败（GitHub API 可能限流，可稍后重试或用 --version 指定）"
-	echo "$v"
+	if [ -n "$NEW_VER" ] && [ -z "$NEW_TIME" ]; then
+		NEW_TIME=$(release_time_for_tag "$NEW_VER")
+	fi
+	[ -n "$NEW_VER" ] || die "获取最新版本号失败（GitHub API 可能限流，可稍后重试或用 --version 指定）"
+}
+
+# ISO8601(UTC) → epoch 秒；busybox 没有 date -d，用 awk 手算
+iso_to_epoch() {
+	printf '%s\n' "$1" | awk -F'[-T:Z]' '{
+		Y=$1; M=$2; D=$3; h=$4; mi=$5; s=$6
+		if (M <= 2) { Y--; M += 12 }
+		A = int(Y / 100); B = 2 - A + int(A / 4)
+		days = int(365.25 * (Y + 4716)) + int(30.6001 * (M + 1)) + D + B - 1524 - 2440588
+		print days * 86400 + h * 3600 + mi * 60 + s
+	}'
+}
+
+# 字符串按字典序比较 a < b（ISO8601 UTC 时间可直接比）
+is_lex_less() { # is_lex_less <a> <b>
+	[ "$1" != "$2" ] || return 1
+	printf '%s\n%s\n' "$1" "$2" | sort -c >/dev/null 2>&1
+}
+
+# 同版本更新判断：release 发布时间是否比「上次安装的 release 时间」新
+# 无标记时退回比较本机二进制 mtime 与发布时间的 epoch 秒
+release_newer_than_last() {
+	[ -n "$NEW_TIME" ] || return 1
+	last_time=$(sed -n 's/^[^|]*|//p' "$LAST_RELEASE_MARK" 2>/dev/null | head -n 1)
+	if [ -n "$last_time" ]; then
+		is_lex_less "$last_time" "$NEW_TIME"
+		return $?
+	fi
+	mt=$(stat -c %Y "$BINARY" 2>/dev/null) || return 1
+	rt=$(iso_to_epoch "$NEW_TIME") || return 1
+	[ -n "$mt" ] && [ -n "$rt" ] && [ "$rt" -gt "$mt" ]
+}
+
+# 记录本次成功安装 / 升级的 release 发布时间
+write_last_release_mark() {
+	[ -n "${NEW_TIME:-}" ] || return 0
+	mkdir -p "$BACKUP_ROOT"
+	printf '%s|%s\n' "${NEW_VER:-}" "$NEW_TIME" > "$LAST_RELEASE_MARK"
 }
 
 download_url() { # download_url <arch> <version>
@@ -470,7 +531,8 @@ do_install() {
 	[ "$CHANNEL" = "stable" ] || warn "--channel $CHANNEL 只对 upgrade 生效，install 安装的是稳定版"
 
 	arch=$(detect_arch)
-	ver=${OPT_VERSION:-$(latest_version)}
+	resolve_target
+	ver="$NEW_VER"
 	url=$(download_url "$arch" "$ver")
 
 	step "安装 Lite-Plus $ver (${arch}) 到 $INSTALL_DIR"
@@ -490,6 +552,7 @@ do_install() {
 	sleep 6
 
 	health_check || die "启动后健康检查失败，请看 $LOG_FILE"
+	write_last_release_mark
 	ip=$(ip -4 route get 1 2>/dev/null | awk '{for(i=1;i<=NF;i++) if($i=="src"){print $(i+1); exit}}')
 	[ -z "$ip" ] && ip="<本机IP>"
 	info ""
@@ -513,26 +576,29 @@ do_upgrade() {
 	CUR_VER=$(current_version) || die "无法读取 $BINARY 的版本号（二进制可能损坏）。确认要重装：sh $SELF install"
 
 	arch=$(detect_arch)
-	NEW_VER=${OPT_VERSION:-$(latest_version)}
+	resolve_target
 	url=$(download_url "$arch" "$NEW_VER")
 
 	step "升级 Lite-Plus：$CUR_VER → $NEW_VER （通道 $CHANNEL）"
 	if [ "$CUR_VER" = "$NEW_VER" ] && [ "$FORCE" != "1" ]; then
-		if [ -f "$INIT_SCRIPT" ]; then
-			ok "当前已是 $CUR_VER，无需升级。（强制重装/降级加 --force）"
+		if release_newer_than_last; then
+			info "版本号未变（$NEW_VER），但检测到更新的发布（$NEW_TIME），继续同版本更新"
+		elif [ -f "$INIT_SCRIPT" ]; then
+			ok "当前已是 $CUR_VER，且没有更新的同版本发布，无需升级。（无条件重装/降级加 --force）"
 			exit 0
-		fi
-		if [ "$DRYRUN" = "1" ]; then
+		elif [ "$DRYRUN" = "1" ]; then
 			ok "演练：当前已是 $CUR_VER，但缺少 $INIT_SCRIPT；真实执行会补建服务并启动（本次不做任何改动）"
 			exit 0
+		else
+			ok "当前已是 $CUR_VER，但缺少 OpenRC 服务脚本，只补建服务（不重新下载）"
+			ensure_init_script || die "补建服务脚本失败"
+			rc-service "$SERVICE" start >/dev/null 2>&1
+			sleep 6
+			health_check || die "启动后健康检查失败，请看 $LOG_FILE"
+			write_last_release_mark
+			ok "服务已补建并启动（端口 $PORT）"
+			exit 0
 		fi
-		ok "当前已是 $CUR_VER，但缺少 OpenRC 服务脚本，只补建服务（不重新下载）"
-		ensure_init_script || die "补建服务脚本失败"
-		rc-service "$SERVICE" start >/dev/null 2>&1
-		sleep 6
-		health_check || die "启动后健康检查失败，请看 $LOG_FILE"
-		ok "服务已补建并启动（端口 $PORT）"
-		exit 0
 	fi
 
 	check_space
@@ -561,6 +627,7 @@ do_upgrade() {
 	sleep 8
 
 	if health_check; then
+		write_last_release_mark
 		ok "升级完成：$CUR_VER → $(current_version)"
 		info "官方回滚点（面板内可用）: ls $INSTALL_DIR/backup/"
 	else

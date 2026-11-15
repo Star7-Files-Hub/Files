@@ -43,6 +43,9 @@ LEGACY_INIT_SCRIPT="/etc/init.d/lite"
 LOG_FILE="/var/log/lite-plus.log"
 BACKUP_ROOT="/root/lite-backups"
 MIGRATE_MARK="$BACKUP_ROOT/.last_migrate"
+LAST_RELEASE_MARK="$BACKUP_ROOT/.last_release"
+NEW_VER=""
+NEW_TIME=""
 
 PORT="27777"
 PORT_CLI=0
@@ -179,6 +182,13 @@ latest_version() {
 	fi
 	[ -n "$v" ] || die "获取最新版本号失败（GitHub API 可能限流，可稍后重试或用 --version 指定）"
 	echo "$v"
+}
+
+# 取某个 tag 的发布时间（GitHub API 的 published_at，ISO8601 UTC）
+release_time_for_tag() { # release_time_for_tag <tag>
+	dl_stdout "https://api.github.com/repos/${REPO}/releases/tags/$1" \
+		| grep '"published_at"' | head -n 1 \
+		| sed -e 's/.*"published_at" *: *"//' -e 's/".*//'
 }
 
 download_url() { # download_url <arch> <version>
@@ -447,6 +457,7 @@ do_migrate() {
 
 	arch=$(detect_arch)
 	NEW_VER=${OPT_VERSION:-$(latest_version)}
+	NEW_TIME=$(release_time_for_tag "$NEW_VER")
 	url=$(download_url "$arch" "$NEW_VER")
 
 	step "准备从 Lite $CUR_VER 迁移到 Lite-Plus $NEW_VER (${arch})"
@@ -487,6 +498,10 @@ do_migrate() {
 	rc-service "$SERVICE" start >/dev/null 2>&1
 
 	if wait_healthy; then
+		if [ -n "$NEW_TIME" ]; then
+			mkdir -p "$BACKUP_ROOT"
+			printf '%s|%s\n' "$NEW_VER" "$NEW_TIME" > "$LAST_RELEASE_MARK"
+		fi
 		ok "迁移完成：Lite $CUR_VER → Lite-Plus $(current_version)（端口 $PORT）"
 		info "请打开管理页面确认节点、历史曲线、账单与远程功能正常；备份保留在 $BACKUP_ROOT"
 		info "如需回退：sh $SELF rollback"

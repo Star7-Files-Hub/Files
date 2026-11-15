@@ -657,6 +657,7 @@ wget -O lite-plus-openrc.sh https://raw.githubusercontent.com/Star7-Files-Hub/Fi
 - 服务名 / 服务脚本为 **`lite-plus`** / `/etc/init.d/lite-plus`，日志 `/var/log/lite-plus.log`
 - 额外注入 `GODEBUG=disablethp=1`（与官方 systemd / procd 单元一致）
 - 检测到旧服务脚本 `/etc/init.d/lite` 时会拒绝 `install` / `upgrade`，提示改用迁移脚本
+- **支持同版本更新**：版本号相同但 GitHub 发布（`published_at`）比上次安装的更新时，`upgrade` 会自动更新；`--force` 无条件执行
 - 二进制仍是 `/opt/lite/Lite`、数据目录 `/opt/lite/data`
 
 ### 10.2 从 Lite 迁移到 Lite-Plus（`lite-migrate-to-plus.sh`）
